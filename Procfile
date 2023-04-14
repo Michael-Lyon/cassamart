@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn payskul.wsgi
+web: python manage.py migrate && gunicorn casamart.wsgi
