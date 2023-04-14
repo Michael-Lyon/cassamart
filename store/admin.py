@@ -16,7 +16,16 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'slug', 'price', 'stock', 'available', 'created', 'updated']
+    list_display = ["category", "get_store", "get_owner", 'title', 'slug', 'price', 'stock', 'available', 'created', 'updated']
     list_filter = ['available', 'created', 'updated']
     list_editable = ['price', 'stock', 'available']
     prepopulated_fields = {'slug': ('title',)}
+    
+    def get_store(self, obj):
+        return obj.category.store
+    
+    def get_owner(self, obj):
+        return obj.category.store.owner
+    
+    get_owner.short_description = 'Owner'
+    get_store.short_description = 'Store'
