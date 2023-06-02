@@ -105,3 +105,17 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+
+    def validate(self, data):
+        print(data)
+        user = authenticate(**data)
+        if user and user.is_active:
+            return user
+        raise serializers.ValidationError("Unable to log in with provided credentials.")
+        # return data

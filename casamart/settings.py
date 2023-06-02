@@ -2,6 +2,7 @@
 import datetime
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,16 +28,21 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "daphne", 
     "django.contrib.staticfiles",
     'store',
     'accounts',
+    "chat",
     
     # packages
+    'channels',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'corsheaders',
-]
+    "python_paystack"
+    ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -68,7 +74,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "casamart.wsgi.application"
-
+ASGI_APPLICATION = 'casamart.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -143,7 +149,7 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://cassamart.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://cassamart.up.railway.app', "http://localhost:8000"]
 
 
 SIMPLE_JWT = {
@@ -154,9 +160,17 @@ SIMPLE_JWT = {
 
 
 DATABASE_URL = "postgresql://postgres:LHktxD2bmPBBouMW70XE@containers-us-west-106.railway.app:6947/railway"
+
 DATABASES = {
     "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
 }
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    },
+}
+
 
 LOGGING = {
     'version': 1,
@@ -181,3 +195,22 @@ LOGGING = {
         },
     },
 }
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+    'DEFAULT_PERMISSION_CLASSES ': [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ],
+}
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'casamart.com.ng'
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")

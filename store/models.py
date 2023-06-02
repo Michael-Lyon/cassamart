@@ -36,6 +36,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name="products", on_delete=models.CASCADE)
+    
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, db_index=True)
     image = models.ImageField(upload_to='media/')
@@ -49,6 +50,58 @@ class Product(models.Model):
     class Meta:
         ordering = ('title',)
         index_together = (('id', 'slug'))
+
+    def __str__(self):
+        return self.title
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField(Product, through='CartItem')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    paid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Cart {self.pk} {self.user}"
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.cart} - {self.product}"
+
+
+class Checkout(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('paid', "Paid"),
+        ("not-paid", "Not Paid")
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    cart = models.OneToOneField('Cart', on_delete=models.CASCADE)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_status = models.BooleanField(default=False)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="not-paid")
+    received_status = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    reference = models.CharField(max_length=200, blank=True, null=True)
+    delivery_address = models.CharField(max_length=1000, null=True, blank=True )
+
+    def __str__(self):
+        return f"Checkout {self.pk}"
+
+
+class Ticket(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    resolved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

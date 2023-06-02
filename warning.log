@@ -1,0 +1,787 @@
+Not Found: /favicon.ico
+Not Found: /api/seller/category/create/
+Method Not Allowed: /api/seller/category-create/
+Not Found: /api/seller/category/create/
+Method Not Allowed: /api/seller/category/create/
+Method Not Allowed: /api/seller/category/create/
+Not Found: /api/seller/category-list/
+Not Found: /api/product/create
+Method Not Allowed: /api/seller/product/create/
+Method Not Allowed: /api/accounts/register/seller/
+Not Found: /api/accounts/
+Not Found: /api/buyer/
+Method Not Allowed: /api/accounts/register/seller/
+Method Not Allowed: /api/accounts/register/buyer/
+Unauthorized: /api/accounts/change-password/
+Method Not Allowed: /api/seller/category/create/
+Method Not Allowed: /api/seller/product/create/
+Not Found: /api/api/ seller/store-edit/
+Not Found: /api/api/ seller/store-edit/3
+Not Found: /api/api/ seller/store-edit/2
+Internal Server Error: /api/seller/store-edit/2/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/generics.py", line 252, in get
+    return self.retrieve(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/mixins.py", line 54, in retrieve
+    instance = self.get_object()
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/generics.py", line 88, in get_object
+    assert lookup_url_kwarg in self.kwargs, (
+AssertionError: Expected view StoreDetailUpdateView to be called with a URL keyword argument named "owner". Fix your URL conf, or set the `.lookup_field` attribute on the view correctly.
+Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/utils/deprecation.py", line 135, in __call__
+    response = self.process_request(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/http/request.py", line 152, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Bad Request: /
+Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/utils/deprecation.py", line 135, in __call__
+    response = self.process_request(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/http/request.py", line 152, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Not Found: /
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Forbidden (CSRF token from POST incorrect.): /admin/login/
+Forbidden (CSRF token from POST incorrect.): /admin/login/
+Not Found: /favicon.ico
+Not Found: /favicon.ico
+Not Found: /
+Not Found: /api/chat/2
+[33mHTTP GET /api/chat/2 404 [0.02, 127.0.0.1:41562][0m
+Not Found: /api/chat/2
+[33mHTTP GET /api/chat/2 404 [0.06, 127.0.0.1:37840][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.02, 127.0.0.1:37840][0m
+Internal Server Error: /api/chat/2/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/chat/views.py", line 34, in get
+    if Room.objects.filter(buyer=sender, seller=receiver).exists():
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "first-buyer": Must be "BuyerProfile" instance.
+[35;1mHTTP GET /api/chat/2/ 500 [6.19, 127.0.0.1:51710][0m
+Internal Server Error: /api/chat/2/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/chat/views.py", line 53, in get
+    room = Room.objects.create(buyer=receiver, seller=sender, name=receiver.username+sender.username)
+AttributeError: 'SellerProfile' object has no attribute 'username'
+[35;1mHTTP GET /api/chat/2/ 500 [3.84, 127.0.0.1:47284][0m
+Internal Server Error: /api/chat/2/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/chat/views.py", line 53, in get
+    room = Room.objects.create(buyer=receiver, seller=sender, name=receiver.user.username+sender.user.username)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 669, in create
+    obj = self.model(**kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/base.py", line 541, in __init__
+    _setattr(self, field.name, rel_obj)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/fields/related_descriptors.py", line 237, in __set__
+    raise ValueError(
+ValueError: Cannot assign "<SellerProfile: SellerProfile object (1)>": "Room.buyer" must be a "BuyerProfile" instance.
+[35;1mHTTP GET /api/chat/2/ 500 [6.77, 127.0.0.1:36926][0m
+Internal Server Error: /api/chat/2
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/utils/deprecation.py", line 148, in __acall__
+    response = await sync_to_async(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/middleware/common.py", line 54, in process_request
+    path = self.get_full_path_with_slash(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/middleware/common.py", line 88, in get_full_path_with_slash
+    raise RuntimeError(
+RuntimeError: You called this URL via POST, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining POST data. Change your form to point to localhost:8000/api/chat/2/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.
+[35;1mHTTP POST /api/chat/2 500 [0.02, 127.0.0.1:42316][0m
+Internal Server Error: /api/chat/2/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 511, in dispatch
+    self.response = self.finalize_response(request, response, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 423, in finalize_response
+    assert isinstance(response, HttpResponseBase), (
+AssertionError: Expected a `Response`, `HttpResponse` or `HttpStreamingResponse` to be returned from the view, but received a `<class 'NoneType'>`
+[35;1mHTTP POST /api/chat/2/ 500 [2.78, 127.0.0.1:43066][0m
+Listen failure: Couldn't listen on 127.0.0.1:8000: [Errno 98] Address already in use.
+Not Found: /
+[33mHTTP GET / 404 [0.04, 127.0.0.1:35332][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.01, 127.0.0.1:35332][0m
+Not Found: /api
+[33mHTTP GET /api 404 [0.02, 127.0.0.1:35332][0m
+Not Found: /api/
+[33mHTTP GET /api/ 404 [0.04, 127.0.0.1:35332][0m
+Not Found: /cart/
+[33mHTTP GET /cart/ 404 [0.05, 127.0.0.1:46838][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.04, 127.0.0.1:46838][0m
+Internal Server Error: /api/cart/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2018, in get_prep_value
+    return int(value)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/contrib/auth/models.py", line 437, in __int__
+    raise TypeError(
+TypeError: Cannot cast AnonymousUser to int. Are you trying to use it in place of User?
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/store/views.py", line 61, in get
+    cart = Cart.objects.get(user=user)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 636, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1478, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1303, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/fields/related_lookups.py", line 166, in get_prep_lookup
+    self.rhs = target_field.get_prep_value(self.rhs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
+    raise e.__class__(
+TypeError: Field 'id' expected a number but got <django.contrib.auth.models.AnonymousUser object at 0x7f2bd8f38400>.
+[35;1mHTTP GET /api/cart/ 500 [3.39, 127.0.0.1:46838][0m
+Not Found: /
+[33mHTTP GET / 404 [0.02, 127.0.0.1:35040][0m
+Not Found: /api/
+[33mHTTP GET /api/ 404 [0.03, 127.0.0.1:35040][0m
+Internal Server Error: /api/cart/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.errors.UndefinedTable: relation "store_cart" does not exist
+LINE 1: ... "store_cart"."updated", "store_cart"."paid" FROM "store_car...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/store/views.py", line 61, in get
+    cart = Cart.objects.get(user=user)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 646, in get
+    num = len(clone)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 376, in __len__
+    self._fetch_all()
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 1867, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 87, in __iter__
+    results = compiler.execute_sql(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/compiler.py", line 1398, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: relation "store_cart" does not exist
+LINE 1: ... "store_cart"."updated", "store_cart"."paid" FROM "store_car...
+                                                             ^
+
+[35;1mHTTP GET /api/cart/ 500 [5.90, 127.0.0.1:35040][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [2.85, 127.0.0.1:40716][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [2.87, 127.0.0.1:38534][0m
+Not Found: /api/
+[33mHTTP GET /api/ 404 [0.05, 127.0.0.1:38534][0m
+Not Found: /api/products/
+[33mHTTP GET /api/products/ 404 [0.03, 127.0.0.1:38534][0m
+Not Found: /api/products-list/
+[33mHTTP GET /api/products-list/ 404 [0.02, 127.0.0.1:38534][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [2.69, 127.0.0.1:52024][0m
+Bad Request: /api/cart/
+[31;1mHTTP POST /api/cart/ 400 [3.56, 127.0.0.1:37734][0m
+Bad Request: /api/cart/
+[31;1mHTTP POST /api/cart/ 400 [2.91, 127.0.0.1:37748][0m
+Internal Server Error: /api/cart/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/store/views.py", line 142, in post
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+UnboundLocalError: local variable 'serializer' referenced before assignment
+[35;1mHTTP POST /api/cart/ 500 [5.09, 127.0.0.1:37874][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.03, 127.0.0.1:55468][0m
+Internal Server Error: /api/cart/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/store/views.py", line 142, in post
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+UnboundLocalError: local variable 'serializer' referenced before assignment
+[35;1mHTTP POST /api/cart/ 500 [4.68, 127.0.0.1:55468][0m
+Bad Request: /api/cart/
+[31;1mHTTP POST /api/cart/ 400 [2.99, 127.0.0.1:32896][0m
+Internal Server Error: /api/cart/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2018, in get_prep_value
+    return int(value)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'Product'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/store/views.py", line 139, in post
+    product = Product.objects.get(id=product)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 636, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1478, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1303, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2020, in get_prep_value
+    raise e.__class__(
+TypeError: Field 'id' expected a number but got <Product: NIke Airforce>.
+[35;1mHTTP POST /api/cart/ 500 [7.06, 127.0.0.1:49614][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.02, 127.0.0.1:55246][0m
+Internal Server Error: /api/checkout/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/store/views.py", line 183, in get
+    cart = Cart.objeccts.get(user=user, paid=False)
+AttributeError: type object 'Cart' has no attribute 'objeccts'
+[35;1mHTTP GET /api/checkout/ 500 [2.31, 127.0.0.1:40240][0m
+Internal Server Error: /api/checkout/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/store/views.py", line 186, in get
+    total_amount = sum(item.product.price * item.quantity for item in cart.items.all())
+  File "/home/michaellyon/python_projects/casamart/store/views.py", line 186, in <genexpr>
+    total_amount = sum(item.product.price * item.quantity for item in cart.items.all())
+AttributeError: 'Product' object has no attribute 'product'
+[35;1mHTTP GET /api/checkout/ 500 [5.24, 127.0.0.1:57804][0m
+Internal Server Error: /api/checkout/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/store/views.py", line 186, in get
+    print(cart.items.all())
+  File "/home/michaellyon/python_projects/casamart/store/views.py", line 186, in <genexpr>
+    print(cart.items.all())
+AttributeError: 'Product' object has no attribute 'quantity'
+Internal Server Error: /api/checkout/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/store/views.py", line 187, in get
+    total_amount = sum(item.price * item.quantity for item in cart.items.all())
+  File "/home/michaellyon/python_projects/casamart/store/views.py", line 187, in <genexpr>
+    total_amount = sum(item.price * item.quantity for item in cart.items.all())
+AttributeError: 'Product' object has no attribute 'quantity'
+[35;1mHTTP GET /api/checkout/ 500 [14.11, 127.0.0.1:38508][0m
+Application instance <Task pending name='Task-1' coro=<ASGIStaticFilesHandler.__call__() running at /home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/contrib/staticfiles/handlers.py:101> wait_for=<Future pending cb=[_chain_future.<locals>._call_check_cancel() at /usr/lib/python3.9/asyncio/futures.py:384, <TaskWakeupMethWrapper object at 0x7f213aceef10>()]>> for connection <WebRequest at 0x7f213e740c70 method=GET uri=/api/checkout/ clientproto=HTTP/1.1> took too long to shut down and was killed.
+Application instance <Task pending name='Task-2' coro=<ASGIStaticFilesHandler.__call__() running at /home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/contrib/staticfiles/handlers.py:101> wait_for=<Future pending cb=[_chain_future.<locals>._call_check_cancel() at /usr/lib/python3.9/asyncio/futures.py:384, <TaskWakeupMethWrapper object at 0x7f213ad5bc70>()]>> for connection <WebRequest at 0x7f213e584910 method=GET uri=/api/checkout/ clientproto=HTTP/1.1> took too long to shut down and was killed.
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.02, 127.0.0.1:35532][0m
+Not Found: /
+[33mHTTP GET / 404 [0.07, 127.0.0.1:48764][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.05, 127.0.0.1:48764][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [2.67, 127.0.0.1:48764][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.06, 127.0.0.1:40526][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [2.69, 127.0.0.1:33354][0m
+Bad Request: /api/cart/
+[31;1mHTTP POST /api/cart/ 400 [4.61, 127.0.0.1:33354][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [2.82, 127.0.0.1:55636][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [2.61, 127.0.0.1:55636][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [2.86, 127.0.0.1:55796][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [2.55, 127.0.0.1:58022][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [2.75, 127.0.0.1:46228][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [2.86, 127.0.0.1:46802][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [3.13, 127.0.0.1:59990][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.05, 127.0.0.1:59990][0m
+Not Found: /api/cart/
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [2.71, 127.0.0.1:50882][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.03, 127.0.0.1:42208][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [3.14, 127.0.0.1:49328][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [3.40, 127.0.0.1:38548][0m
+Internal Server Error: /api/cart/
+Traceback (most recent call last):
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/core/handlers/base.py", line 284, in _get_response_async
+    response = await sync_to_async(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+  File "/usr/lib/python3.9/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+  File "/usr/lib/python3.9/concurrent/futures/thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/response.py", line 70, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/renderers.py", line 723, in render
+    context = self.get_context(data, accepted_media_type, renderer_context)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/renderers.py", line 679, in get_context
+    'content': self.get_content(renderer, data, accepted_media_type, renderer_context),
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/renderers.py", line 412, in get_content
+    content = renderer.render(data, accepted_media_type, renderer_context)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/renderers.py", line 99, in render
+    ret = json.dumps(
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/utils/json.py", line 25, in dumps
+    return json.dumps(*args, **kwargs)
+  File "/usr/lib/python3.9/json/__init__.py", line 234, in dumps
+    return cls(
+  File "/usr/lib/python3.9/json/encoder.py", line 201, in encode
+    chunks = list(chunks)
+  File "/usr/lib/python3.9/json/encoder.py", line 429, in _iterencode
+    yield from _iterencode_list(o, _current_indent_level)
+  File "/usr/lib/python3.9/json/encoder.py", line 325, in _iterencode_list
+    yield from chunks
+  File "/usr/lib/python3.9/json/encoder.py", line 405, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.9/json/encoder.py", line 438, in _iterencode
+    o = _default(o)
+  File "/home/michaellyon/python_projects/casamart/myenv/lib/python3.9/site-packages/rest_framework/utils/encoders.py", line 67, in default
+    return super().default(obj)
+  File "/usr/lib/python3.9/json/encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type ListSerializer is not JSON serializable
+[35;1mHTTP GET /api/cart/ 500 [24.04, 127.0.0.1:47936][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.03, 127.0.0.1:47936][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [3.61, 127.0.0.1:40092][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [3.61, 127.0.0.1:58828][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.03, 127.0.0.1:51566][0m
+Not Found: /api/cart/
+[33mHTTP GET /api/cart/ 404 [3.41, 127.0.0.1:60300][0m

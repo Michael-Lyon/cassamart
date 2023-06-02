@@ -1,15 +1,16 @@
+from django.urls import reverse
 from rest_framework import serializers
-from .models import Store, Category, Product
+from .models import Store, Category, Product, Cart, CartItem, Ticket, Checkout
 
 class CategoryInlineSerializer(serializers.Serializer):
     owner = serializers.CharField(read_only=True )
     title = serializers.CharField(read_only=True)
     slug = serializers.SlugField(read_only=True)
-    products = serializers.SerializerMethodField(read_only=True)
     detail_edit_url = serializers.HyperlinkedIdentityField(
         view_name = "store:category_detail_update",
         lookup_field = 'pk'
     )
+    products = serializers.SerializerMethodField(read_only=True)
     
     def get_products(self, obj):
         my_category = obj
@@ -18,6 +19,7 @@ class CategoryInlineSerializer(serializers.Serializer):
 
 class ProductsInlineSerializer(serializers.Serializer):
     
+    id = serializers.PrimaryKeyRelatedField(read_only=True)
     title = serializers.CharField(read_only=True)
     image = serializers.ImageField(read_only=True)
     description = serializers.CharField(read_only=True)
@@ -27,6 +29,7 @@ class ProductsInlineSerializer(serializers.Serializer):
         view_name="store:product_detail_update",
         lookup_field='pk'
     )
+
 
 
 class AllStoreDetailSerializer(serializers.ModelSerializer): 
@@ -58,8 +61,7 @@ class CategorySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Category
-        read_only_fields = ['store']
-        fields = [ "title", "slug", "products", "detail_edit_url"]
+        fields = ["store", "title", "slug", "products", "detail_edit_url"]
         
     def get_products(self, obj):
         my_category = obj
@@ -69,12 +71,39 @@ class CategorySerializer(serializers.ModelSerializer):
 
     
 class ProductSerializer(serializers.ModelSerializer):
-    detail_edit_url = serializers.HyperlinkedIdentityField(
-        view_name="store:product_detail_update",
-        lookup_field='pk'
-    )
-    
+    # detail_edit_url = serializers.HyperlinkedIdentityField(
+    #     view_name="store:product_detail_update",
+    #     lookup_field='pk'
+    # )
+
     class Meta:
         model = Product
-        fields = ['category', 'title', "slug", "image", "description", "price", "stock", "available", "detail_edit_url"]
-    
+        fields = ["id",'category', 'title', "slug", "image", "description", "price", "stock", "available", ]
+        # "detail_edit_url"
+        
+
+
+class CartItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(source="product_set")
+    class Meta:
+        model = CartItem
+        fields = '__all__'
+
+
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = '__all__'
+        
+        
+class CheckoutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Checkout
+        fields = '__all__'
+
+class TicketSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ticket
+        fields = '__all__'
+
+

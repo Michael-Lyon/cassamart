@@ -1,7 +1,9 @@
 from django.contrib import admin
-from .models import Product, Category, Store
+from .models import Product, Category, Store, Cart, CartItem, Checkout
 
-
+admin.site.register(Cart)
+admin.site.register(CartItem)
+admin.site.register(Checkout)
 @admin.register(Store)
 class StoreAdmin(admin.ModelAdmin):
     list_display = ['title', 'owner', 'slug']
