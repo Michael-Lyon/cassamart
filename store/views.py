@@ -10,7 +10,9 @@ from rest_framework import generics, mixins
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
-
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework import generics
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Product, Store, Category, Checkout
 from .serializers import AllStoreDetailSerializer, StoreSerializer, CategorySerializer, ProductSerializer, CheckoutSerializer, TicketSerializer
 from . import utils
@@ -28,11 +30,15 @@ class CategoryListApiView(generics.ListAPIView):
 
 
 class CategoryCreateApiView(generics.CreateAPIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
 class CategoryDetailUpdateApiView(generics.RetrieveUpdateAPIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     lookup_field = "pk"
@@ -49,12 +55,15 @@ class ProductCreateApiView(generics.CreateAPIView):
 
 
 class ProductDetailUpdateApiView(generics.RetrieveUpdateAPIView):
+    
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = "pk"
 
 
 class StoreDetailUpdateView(generics.RetrieveUpdateAPIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
     lookup_field = "owner"
@@ -115,6 +124,8 @@ class CartView(APIView):
         Note: Make sure to include the necessary authentication token (JWT) in the request headers for all endpoints to authenticate the user.
 
     """
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
     
     def get(self, request):
         user = request.user
@@ -183,6 +194,8 @@ class CartView(APIView):
 
 
 class CheckoutView(APIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
     
     def get(self, request):
         user = request.user
@@ -224,6 +237,8 @@ class CheckoutView(APIView):
 
 
 class GoodsReceived(APIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def post(self, request):
         data = request.data
         user = request.user
@@ -248,6 +263,8 @@ class GoodsReceived(APIView):
         
 
 class MyOrders(APIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         store = request.user.my_store
         checkouts = Checkout.objects.filter(cart__items__category__store=store)

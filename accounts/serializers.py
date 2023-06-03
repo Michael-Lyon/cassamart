@@ -7,6 +7,7 @@ from .models import SellerProfile, BuyerProfile
 from django.core.mail import send_mail
 from django.contrib.auth.password_validation import validate_password
 from store.models import Store
+from django.db import transaction
 User = get_user_model()
 
 
@@ -34,15 +35,15 @@ class SellerSerializer(serializers.ModelSerializer):
         fields = ['id', 'first_name', 'username', 'last_name', 'password', 'email',  'sellerprofile']
 
     def create(self, validated_data):
-        # create user
-        # print(validated_data)
         try:
             profile_data = validated_data.pop('sellerprofile')
+            print(profile_data)
+            print(validated_data)
             user = User.objects.create_user(**validated_data)
             profile_data["user"] = user
             SellerProfile.objects.create(**profile_data)
             
-            store = Store.objects.create(
+            Store.objects.create(
                 owner=user,
                 title=f"{user.username}-store",
                 slug=f"{user.username}-store-slug"
@@ -62,16 +63,17 @@ class BuyerSerializer(serializers.ModelSerializer):
         fields = ['id', 'first_name', 'username', 'last_name', 'password', 'email',  'buyerprofile']
 
     def create(self, validated_data):
-        profile_data = validated_data.pop('buyerprofile')
-        try:
-            user = User.objects.create_user(**validated_data)
-            profile_data["user"] = user
-            BuyerProfile.objects.create(**profile_data)
-            return user
-        except Exception as e:
-            print(e)
-            user.delete()
-            raise serializers.ValidationError("Something went wrong please try again")
+        with transaction.atomic():
+            profile_data = validated_data.pop('buyerprofile')
+            try:
+                user = User.objects.create_user(**validated_data)
+                profile_data["user"] = user
+                BuyerProfile.objects.create(**profile_data)
+                return user
+            except Exception as e:
+                print(e)
+                user.delete()
+                raise serializers.ValidationError("Something went wrong please try again")
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
