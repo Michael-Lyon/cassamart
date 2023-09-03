@@ -1,7 +1,8 @@
-from dump import headers
-import requests
-from pprint import pprint
 import time
+from pprint import pprint
+
+import requests
+from dump import headers
 
 url = "http://localhost:8000/api/chat/2/"
 response = requests.get(url=url, headers=headers)

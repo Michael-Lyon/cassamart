@@ -1,9 +1,11 @@
-import string
-from django.db import models
 import random
-from django.utils.text import slugify
-from accounts.models import BuyerProfile, SellerProfile
+import string
+
 from django.contrib.auth.models import User
+from django.db import models
+from django.utils.text import slugify
+
+from accounts.models import BuyerProfile, SellerProfile
 
 
 def generate_ref_code():

@@ -1,6 +1,8 @@
 from django.urls import reverse
 from rest_framework import serializers
-from .models import Store, Category, Product, Cart, CartItem, Ticket, Checkout
+
+from .models import Cart, CartItem, Category, Checkout, Product, Store, Ticket
+
 
 class CategoryInlineSerializer(serializers.Serializer):
     owner = serializers.CharField(read_only=True )
@@ -32,25 +34,35 @@ class ProductsInlineSerializer(serializers.Serializer):
 
 
 
-class AllStoreDetailSerializer(serializers.ModelSerializer): 
+class AllStoreDetailSerializer(serializers.ModelSerializer):
     categories = serializers.SerializerMethodField(read_only=True)
+    chat_owner = serializers.SerializerMethodField()
     class Meta:
         model = Store
-        fields = ['owner', "title", "slug","categories" ]
-    
+        fields = ['owner',  "chat_owner", "title", "slug","categories" ]
+
+
     def get_categories(self, obj):
         store = obj
         my_categories = store.categories.all()
         return CategoryInlineSerializer(my_categories, many=True, context=self.context).data
-    
-    
+
+
+    def get_chat_owner(self, obj):
+        owner = obj.owner
+        request = self.context.get('request')
+        if owner and request:
+            receiver = owner.id
+            chat_url = reverse('chat:chat_api', args=[receiver])
+            return request.build_absolute_uri(chat_url)
+        return None
 
 
 class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Store
         fields = ['title', 'slug']
-        
+
 
 class CategorySerializer(serializers.ModelSerializer):
     products = serializers.SerializerMethodField(read_only=True)

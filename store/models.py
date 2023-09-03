@@ -1,6 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
-
+from django.db import models
 
 
 class Store(models.Model):
@@ -36,7 +35,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name="products", on_delete=models.CASCADE)
-    
+    store = models.ForeignKey(Store, related_name="products", on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, db_index=True)
     image = models.ImageField(upload_to='media/')
@@ -49,10 +48,21 @@ class Product(models.Model):
 
     class Meta:
         ordering = ('title',)
-        index_together = (('id', 'slug'))
+        unique_together = ('category', 'store', 'slug')
 
     def __str__(self):
         return self.title
+    
+
+class Discount(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    code = models.CharField(max_length=20, blank=True, null= True)
+    valid = models.BooleanField(default=True)
+    amount = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+
+    def __str__(self) -> str:
+        return f"{self.user} is to pay {self.amount} on {self.product} from {self.product.store}"
 
 
 class Cart(models.Model):

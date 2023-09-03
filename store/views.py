@@ -1,32 +1,54 @@
 import json
-from django.db import transaction
 
-from python_paystack.managers import TransactionsManager
-from .serializers import CartSerializer, CartItemSerializer
-from .models import Cart, CartItem
-from rest_framework import status as stat
-from rest_framework.views import APIView
-from rest_framework import generics, mixins
-from rest_framework.decorators import api_view
+from django.db import transaction
 from django.shortcuts import get_object_or_404
-from rest_framework.response import Response
+from django.contrib.auth import get_user_model
+from rest_framework import generics, mixins
+from rest_framework import status
+from rest_framework import status as stat
+from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from .models import Product, Store, Category, Checkout
-from .serializers import AllStoreDetailSerializer, StoreSerializer, CategorySerializer, ProductSerializer, CheckoutSerializer, TicketSerializer
-from . import utils
 
 from accounts.models import Wallet
+from python_paystack.managers import TransactionsManager
+
+from . import utils
+from .models import (Cart, CartItem, Category, Checkout, Discount, Product, Store)
+from .serializers import (AllStoreDetailSerializer, CartItemSerializer,
+                          CartSerializer, CategorySerializer,
+                          CheckoutSerializer, ProductSerializer,
+                          StoreSerializer, TicketSerializer)
+from drf_yasg.utils import swagger_auto_schema
+
+User = get_user_model()
+
+
 
 class AllStoreListApiView(generics.ListAPIView):
     queryset = Store.objects.all()
     serializer_class = AllStoreDetailSerializer
+    
+    @swagger_auto_schema(
+        operation_description="Retrieve a list of all stores.",
+        responses={200: AllStoreDetailSerializer(many=True)},
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
 
 class CategoryListApiView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    
+    @swagger_auto_schema(
+        operation_description="Retrieve a list of all categories.",
+        responses={200: CategorySerializer(many=True)},
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
 
 class CategoryCreateApiView(generics.CreateAPIView):
@@ -34,6 +56,14 @@ class CategoryCreateApiView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    
+    # @swagger_auto_schema(
+    #     operation_description="Create a new category.",
+    #     request_body=CategorySerializer,  # Specify the request body serializer
+    #     responses={201: CategorySerializer},  # Specify the expected response
+    # )
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
 
 
 class CategoryDetailUpdateApiView(generics.RetrieveUpdateAPIView):
@@ -42,6 +72,22 @@ class CategoryDetailUpdateApiView(generics.RetrieveUpdateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     lookup_field = "pk"
+
+    @swagger_auto_schema(
+        operation_description="Retrieve or update a category by ID.",
+        responses={200: CategorySerializer()},  # Specify the expected response for retrieval
+        # request_body=CategorySerializer(),  # Specify the request body serializer for updating
+    )
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_description="Update a category by ID.",
+        responses={200: CategorySerializer()},  # Specify the expected response
+        request_body=CategorySerializer(),  # Specify the request body serializer
+    )
+    def put(self, request, *args, **kwargs):
+        return super().put(request, *args, **kwargs)
 
 
 class ProductListApiView(generics.ListAPIView):
@@ -55,7 +101,7 @@ class ProductCreateApiView(generics.CreateAPIView):
 
 
 class ProductDetailUpdateApiView(generics.RetrieveUpdateAPIView):
-    
+
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = "pk"
@@ -70,8 +116,7 @@ class StoreDetailUpdateView(generics.RetrieveUpdateAPIView):
 
 
 class CartView(APIView):
-    """
-    Endpoint: `/api/cart/`
+    """Endpoint: `/api/cart/`
 
         HTTP Methods:
         - GET: Retrieve the user's cart.
@@ -138,6 +183,8 @@ class CartView(APIView):
             print(e)
             return Response(status=stat.HTTP_404_NOT_FOUND)
 
+
+    # @swagger_auto_schema(method='POST', request_body=CartSerializer)
     def post(self, request):
         user = request.user
         data = request.data
@@ -196,30 +243,52 @@ class CartView(APIView):
 class CheckoutView(APIView):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
-    
+    """
+        A get request to get all cart items and the code
+        the code would be a comma(,) string containing the codes given to the customer by each store owner for a discounted price.
+
+        As sooon as the code is typed in and the discount is applied and the user
+        doesn't use it at the time it'll have been expired.
+        """
+
+
     def get(self, request):
+        """
+        A get request to get all cart items and the code
+        the code would be a comma(,) string containing the codes given to the customer by each store owner for a discounted price.
+
+        As sooon as the code is typed in and the discount is applied and the user
+        doesn't use it at the time it'll have been expired.
+        """
+
         user = request.user
+        data = request
         cart = Cart.objects.get(user=user, paid=False)
+        code = request.query_params.get('code', None)
 
         # Calculate the total amount based on cart items
-        products = CartItem.objects.filter(cart=cart)
+        products = CartItem.objects.filter(cart=cart, paid=False)
+        # Calculate the total sum the user ought to pay and also try to find the discount if there's any for the user
+        # TODO: CHECK IF THE CODE IS A LIST THEN FILTER BY IT
+        # AND FILTER THE PRODUCTS AND GIVE THE DISCOUNT
         total_amount = sum(item.product.price * item.quantity for item in products)
+
+        # Return the cart items and the total price to be paid by the user
         serializer = CartSerializer(cart, context={'request': request})
         data = serializer.data
         data["total_amount"] = total_amount
         return Response(data, status=stat.HTTP_200_OK)
-        
-    
+
     def post(self, request):
         user = request.user
         cart = Cart.objects.get(user=user, paid=False)
         data = request.data
-        
+
         # Calculate the total amount based on cart items
         total_amount = data["total_amount"]
         reference = data["reference"]
         delivery_address = data["delivery_address"]
-        
+
         status = utils.check_payment(reference)
         if status == 'success':
             checkout = Checkout.objects.get_or_create(user=user, cart=cart, total_amount=total_amount, status='paid', delivery_address=delivery_address, payment_status=True)
@@ -227,14 +296,11 @@ class CheckoutView(APIView):
             cart.save()
             # send mails to the oowners of the goods that they have a new order
             utils.send_order_mail(cart)
-            
+
             serializer = CheckoutSerializer(checkout)
             return Response(serializer.data, status=stat.HTTP_201_CREATED)
         else:
             return Response({"message": "Failed Transaction try again"}, status=stat.HTTP_402_PAYMENT_REQUIRED)
-
-
-
 
 class GoodsReceived(APIView):
     authentication_classes = (JWTAuthentication,)
@@ -260,7 +326,7 @@ class GoodsReceived(APIView):
             utils.send_wallet_mail(owners)
             return Response({"message":"Updated."} , status=stat.HTTP_200_OK)
         return Response({"message":"Updated."} , status=stat.HTTP_409_CONFLICT)
-        
+
 
 class MyOrders(APIView):
     authentication_classes = (JWTAuthentication,)
@@ -270,3 +336,54 @@ class MyOrders(APIView):
         checkouts = Checkout.objects.filter(cart__items__category__store=store)
         serializer = CheckoutSerializer(checkouts, many=True)
         return Response(serializer.data, status=stat.HTTP_200_OK)
+
+# GIVE DISCOUNT
+@api_view(['POST'])
+def give_discount(request):
+    # Get the product based on the provided product ID
+    """This endpoint is to e used by the seller to create a one time discoint for the buyer.
+
+    Keyword arguments:
+    product_id -- the id of the product that the buyer clicked on to initiate the chat with the seller
+    user_id -- the id of the buyer
+    percent -- the what is the percentage of the discount for the buyer (10, 20 , 20 ect)
+    Return: {"code": "" } return a code that the buyer can make use of when making payment
+    """
+
+    data = request.data
+    product_id = int(data['product_id'])
+    user_id = int(data['user_id'])
+    percent = float(data['percent'])/100
+
+    # Find the product
+    try:
+        product = Product.objects.get(id=product_id)
+    except Product.DoesNotExist:
+        return Response({"message": "Product not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    # Check if the current user is a vendor/seller
+    if not request.user.is_authenticated or not request.user.is_seller:
+        return Response({"message": "Unauthorized. Only vendors can give discounts."}, status=status.HTTP_401_UNAUTHORIZED)
+
+    # Check if the discount has already been applied for the user and product
+    user = User.objects.get(id=user_id)
+    if Discount.objects.filter(user=user, product=product).exists():
+        return Response({"message": "Discount already applied for this user and product."}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Apply the discount to the product
+    discount = percent
+    if not discount:
+        return Response({"message": "Discount value is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        # get the product and apply the percent discount
+        product = Product.objects.get(id=product_id)
+        amount = round(product.amount * percent, 2)
+        code = utils.generate_discount_id()
+
+        # Create a discount entry for the user and product
+        Discount.objects.create(user=user, product=product, amount=amount, code=code)
+
+        return Response({"message": "Discount applied successfully."}, status=status.HTTP_200_OK)
+    except ValueError:
+        return Response({"message": "Invalid discount value. Must be a number."}, status=status.HTTP_400_BAD_REQUEST)

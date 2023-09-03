@@ -3,7 +3,9 @@ Paystack settings file.
 Contains PaystackConfig class
 '''
 import os
+
 from dotenv import load_dotenv
+
 
 class PaystackConfig():
     '''

@@ -1,9 +1,12 @@
-from django.core.mail import send_mail
-from python_paystack.managers import TransactionsManager
+import base64
 import json
-from casamart.settings import EMAIL_HOST_USER as SENDER
-from store.models import Cart
+import uuid
 
+from django.core.mail import send_mail
+
+from casamart.settings import EMAIL_HOST_USER as SENDER
+from python_paystack.managers import TransactionsManager
+from store.models import Cart
 
 
 def check_payment(reference: str) -> str:
@@ -33,3 +36,19 @@ def send_order_mail(cart: Cart):
         send_mail(subject="Cassamart New Order",message=message,
                     from_email=SENDER, recipient_list=[user.email], fail_silently=False)
     
+
+
+def generate_discount_id():
+    # Generate a UUID
+    unique_id = uuid.uuid4()
+
+    # Convert UUID to bytes
+    uuid_bytes = unique_id.bytes
+
+    # Encode the UUID bytes using base64
+    base64_encoded = base64.b64encode(uuid_bytes)
+
+    # Take the first 6 characters
+    discount_id = base64_encoded[:10].decode()
+
+    return str(discount_id)

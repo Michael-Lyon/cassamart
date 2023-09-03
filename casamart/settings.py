@@ -1,9 +1,11 @@
 
 import datetime
-from pathlib import Path
 import os
-from dotenv import load_dotenv
+from pathlib import Path
+
 import dj_database_url
+from dotenv import load_dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,19 +30,22 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "daphne", 
+    "daphne",
     "django.contrib.staticfiles",
     'store',
     'accounts',
     "chat",
-    
+
+
     # packages
     'channels',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'corsheaders',
-    "python_paystack"
+    "python_paystack",
+    'rest_framework_swagger',
+    'drf_yasg',
     ]
 
 
@@ -54,6 +59,13 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+
+AUTHENTICATION_BACKENDS = [
+'django.contrib.auth.backends.ModelBackend',
+'accounts.authentication.EmailAuthBackend',
+]
+
 
 ROOT_URLCONF = "casamart.urls"
 
@@ -200,11 +212,14 @@ LOGGING = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework.authentication.SessionAuthentication",
     ],
     'DEFAULT_PERMISSION_CLASSES ': [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 50,
 }
 
 

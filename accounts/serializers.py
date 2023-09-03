@@ -1,13 +1,16 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.password_validation import validate_password
+from django.core.mail import send_mail
+from django.db import transaction
 from django.utils.timezone import now
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
-from .models import SellerProfile, BuyerProfile
-from django.core.mail import send_mail
-from django.contrib.auth.password_validation import validate_password
+from django.db.models import Q 
 from store.models import Store
-from django.db import transaction
+
+from .models import BuyerProfile, SellerProfile
+
 User = get_user_model()
 
 
@@ -21,7 +24,7 @@ class SellerProfileSerializer(serializers.ModelSerializer):
 
 class BuyerProfileSerializer(serializers.ModelSerializer):
     user = serializers.CharField(read_only=True)
-    
+
     class Meta:
         model = SellerProfile
         fields = ['user', "phone_number", "address"]
@@ -32,17 +35,22 @@ class SellerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'username', 'last_name', 'password', 'email',  'sellerprofile']
+        fields = ['id', 'first_name', 'username', 'last_name', 'email',  'sellerprofile']
 
     def create(self, validated_data):
         try:
+            # Check if a user with the same username or email already exists
+            existing_user = User.objects.filter(Q(username=validated_data['username']) | Q(email=validated_data['email'])).first()
+            if existing_user:
+                raise serializers.ValidationError("A user with this username or email already exists.")
+
             profile_data = validated_data.pop('sellerprofile')
             print(profile_data)
             print(validated_data)
             user = User.objects.create_user(**validated_data)
             profile_data["user"] = user
             SellerProfile.objects.create(**profile_data)
-            
+
             Store.objects.create(
                 owner=user,
                 title=f"{user.username}-store",
@@ -66,6 +74,10 @@ class BuyerSerializer(serializers.ModelSerializer):
         with transaction.atomic():
             profile_data = validated_data.pop('buyerprofile')
             try:
+                # Check if a user with the same username or email already exists
+                existing_user = User.objects.filter(Q(username=validated_data['username']) | Q(email=validated_data['email'])).first()
+                if existing_user:
+                    raise serializers.ValidationError("A user with this username or email already exists.")
                 user = User.objects.create_user(**validated_data)
                 profile_data["user"] = user
                 BuyerProfile.objects.create(**profile_data)
