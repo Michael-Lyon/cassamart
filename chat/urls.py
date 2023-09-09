@@ -5,5 +5,5 @@ from .views import ChatAPI
 app_name = "chat"
 
 urlpatterns = [
-    path('<int:receiver>/', ChatAPI.as_view(), name='chat_api'),
+    path('<int:receiver_id>/', ChatAPI.as_view(), name='chat_api'),
 ]

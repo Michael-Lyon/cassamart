@@ -11,11 +11,12 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
+from rest_framework.pagination import PageNumberPagination
 from accounts.models import Wallet
 from python_paystack.managers import TransactionsManager
 
 from . import utils
+from .my_permission  import IsSeller
 from .models import (Cart, CartItem, Category, Checkout, Discount, Product, Store)
 from .serializers import (AllStoreDetailSerializer, CartItemSerializer,
                           CartSerializer, CategorySerializer,
@@ -27,85 +28,225 @@ User = get_user_model()
 
 
 
-class AllStoreListApiView(generics.ListAPIView):
-    queryset = Store.objects.all()
-    serializer_class = AllStoreDetailSerializer
-    
-    @swagger_auto_schema(
-        operation_description="Retrieve a list of all stores.",
-        responses={200: AllStoreDetailSerializer(many=True)},
-    )
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
+class StoreListApiView(APIView):
+    def get(self, request):
+        # Paginate the queryset
+        paginator = PageNumberPagination()
+        paginator.page_size = 1  # You can adjust the page size as needed
+        stores = Store.objects.all()
+        result_page = paginator.paginate_queryset(stores, request)
+
+        # Serialize the paginated queryset
+        serializer = AllStoreDetailSerializer(result_page, many=True, context={"request": request})
+
+        response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "Check successful",
+            "pagination": {
+                "count": paginator.page.paginator.count,
+                "next": paginator.get_next_link(),
+                "previous": paginator.get_previous_link(),
+            }
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
 
 
-class CategoryListApiView(generics.ListAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    
-    @swagger_auto_schema(
-        operation_description="Retrieve a list of all categories.",
-        responses={200: CategorySerializer(many=True)},
-    )
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
+
+class StoreDetailApiView(APIView):
+    def get(self, request, store_id):
+        try:
+            paginator = PageNumberPagination()
+            paginator.page_size = 1  # You can adjust the page size as needed
+            store = Store.objects.get(id=store_id)
+            products = Product.objects.filter(store=store)
+            result_page = paginator.paginate_queryset(products, request)
+            serializer = ProductSerializer(result_page, many=True, context={"request": request})
+            response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "Check successful",
+            "pagination": {
+                "count": paginator.page.paginator.count,
+                "next": paginator.get_next_link(),
+                "previous": paginator.get_previous_link(),
+                }
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
+        except Store.DoesNotExist:
+            response_data = {
+            "data": None,
+            "errors": None,
+            "status": "failed",
+            "message": "Store does not exist",
+            "pagination": {
+                "count": None,
+                "next": None,
+                "previous": None,
+                }
+            }
+            return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
 
-class CategoryCreateApiView(generics.CreateAPIView):
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAuthenticated,)
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    
-    # @swagger_auto_schema(
-    #     operation_description="Create a new category.",
-    #     request_body=CategorySerializer,  # Specify the request body serializer
-    #     responses={201: CategorySerializer},  # Specify the expected response
-    # )
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
+
+class CategoryList(APIView):
+    def get(self, request):
+        # Paginate the queryset
+        paginator = PageNumberPagination()
+        paginator.page_size = 1  # You can adjust the page size as needed
+        categories = Category.objects.all()
+        result_page = paginator.paginate_queryset(categories, request)
+
+        # Serialize the paginated queryset
+        serializer = CategorySerializer(result_page, many=True, context={"request":request})
+
+        response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "Check successful",
+            "pagination": {
+                "count": paginator.page.paginator.count,
+                "next": paginator.get_next_link(),
+                "previous": paginator.get_previous_link(),
+            }
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+
+class CategoryDetail(APIView):
+    def get(self, request, category_id):
+        try:
+            paginator = PageNumberPagination()
+            paginator.page_size = 1  # You can adjust the page size as needed
+            category = Category.objects.get(id=category_id)
+            products = Product.objects.filter(category=category)
+            result_page = paginator.paginate_queryset(products, request)
+            serializer = ProductSerializer(result_page, many=True)
+            response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "Check successful",
+            "pagination": {
+                "count": paginator.page.paginator.count,
+                "next": paginator.get_next_link(),
+                "previous": paginator.get_previous_link(),
+                }
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
+        except Category.DoesNotExist:
+            response_data = {
+            "data": None,
+            "errors": None,
+            "status": "failed",
+            "message": "Category does not exist",
+            "pagination": {
+                "count": None,
+                "next": None,
+                "previous": None,
+                }
+            }
+            return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
 
-class CategoryDetailUpdateApiView(generics.RetrieveUpdateAPIView):
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAuthenticated,)
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    lookup_field = "pk"
+class ProductListApiView(APIView):
+    def get(self, request):
+        # Paginate the queryset
+        paginator = PageNumberPagination()
+        paginator.page_size = 1  # You can adjust the page size as needed
+        products = Product.objects.all()
+        result_page = paginator.paginate_queryset(products, request)
 
-    @swagger_auto_schema(
-        operation_description="Retrieve or update a category by ID.",
-        responses={200: CategorySerializer()},  # Specify the expected response for retrieval
-        # request_body=CategorySerializer(),  # Specify the request body serializer for updating
-    )
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+        # Serialize the paginated queryset
+        serializer = ProductSerializer(result_page, many=True, context={"request": request})
 
-    @swagger_auto_schema(
-        operation_description="Update a category by ID.",
-        responses={200: CategorySerializer()},  # Specify the expected response
-        request_body=CategorySerializer(),  # Specify the request body serializer
-    )
-    def put(self, request, *args, **kwargs):
-        return super().put(request, *args, **kwargs)
-
-
-class ProductListApiView(generics.ListAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+        response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "Check successful",
+            "pagination": {
+                "count": paginator.page.paginator.count,
+                "next": paginator.get_next_link(),
+                "previous": paginator.get_previous_link(),
+            }
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
 
 
 class ProductCreateApiView(generics.CreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsSeller]  # Use the custom permission class
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+    # Override the create method to customize the response format
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
 
-class ProductDetailUpdateApiView(generics.RetrieveUpdateAPIView):
+        # Format the response data as specified
+        response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "Check successful",
+            "pagination": None  # You can customize this if needed
+        }
 
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    lookup_field = "pk"
+        return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
 
+class ProductDetailUpdateApiView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsSeller]  # Use the custom permission class
+
+    def get_object(self, pk):
+        try:
+            return Product.objects.get(pk=pk)
+        except Product.DoesNotExist:
+            return None
+
+    def get(self, request, pk):
+        product = self.get_object(pk)
+        if not product:
+            return Response({"error": "Product not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ProductSerializer(product)
+        response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "Check successful",
+            "pagination": None  # You can customize this if needed
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
+    def put(self, request, pk):
+        product = self.get_object(pk)
+        if not product:
+            return Response({"error": "Product not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ProductSerializer(product, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+
+            # Format the response data as specified
+            response_data = {
+                "data": serializer.data,
+                "errors": None,
+                "status": "success",
+                "message": "Check successful",
+                "pagination": None  # You can customize this if needed
+            }
+
+            return Response(response_data, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class StoreDetailUpdateView(generics.RetrieveUpdateAPIView):
     authentication_classes = (JWTAuthentication,)
@@ -171,7 +312,8 @@ class CartView(APIView):
     """
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
-    
+
+
     def get(self, request):
         user = request.user
         print(user)
