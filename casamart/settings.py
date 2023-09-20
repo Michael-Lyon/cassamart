@@ -166,8 +166,8 @@ CSRF_TRUSTED_ORIGINS = ['https://cassamart.up.railway.app', "http://localhost:80
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ["Bearer"],
-    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=10000),
-    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(hours=10000)
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=6),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(hours=6)
 }
 
 

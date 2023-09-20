@@ -7,7 +7,7 @@ class Store(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
     created = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='stores/', default="/media/jordan.png")
+    image = models.ImageField(upload_to='stores/', default="/media/default.png")
     class Meta:
         ordering = ['title']
         verbose_name = "store"
@@ -21,6 +21,7 @@ class Category(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     created = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='categories/', default="/media/default.png")
     class Meta:
         ordering = ['title']
         verbose_name = "category"
@@ -34,7 +35,7 @@ class Product(models.Model):
     store = models.ForeignKey(Store, related_name="products", on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, db_index=True)
-    image = models.ImageField(upload_to='media/')
+    image = models.ImageField(upload_to='store/products/')
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField(default=1)

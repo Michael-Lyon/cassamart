@@ -2399,3 +2399,116 @@ Method Not Allowed: /api/seller/product/create/
 [31;1mHTTP GET /api/seller/product/create/ 405 [1.88, 127.0.0.1:56772][0m
 Unauthorized: /api/seller/product/create/
 [31;1mHTTP GET /api/seller/product/create/ 401 [0.04, 127.0.0.1:56912][0m
+Internal Server Error: /api/stores/7/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 284, in _get_response_async
+    response = await sync_to_async(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/response.py", line 70, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/renderers.py", line 99, in render
+    ret = json.dumps(
+          ^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/utils/json.py", line 25, in dumps
+    return json.dumps(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/utils/encoders.py", line 67, in default
+    return super().default(obj)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type AllStoreDetailSerializer is not JSON serializable
+[35;1mHTTP GET /api/stores/7/ 500 [2.90, 127.0.0.1:52572][0m
+Not Found: /api/category-list/
+[33mHTTP GET /api/category-list/?page=2 404 [0.03, 127.0.0.1:53189][0m
+Not Found: /media/media/default.png
+[33mHTTP GET /media/media/default.png 404 [0.02, 127.0.0.1:53189][0m
+Not Found: /media/media/default.png
+[33mHTTP GET /media/media/default.png 404 [0.01, 127.0.0.1:53189][0m
+Not Found: /media/media/default.png
+[33mHTTP GET /media/media/default.png 404 [0.02, 127.0.0.1:53212][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.01, 127.0.0.1:53212][0m
+[33mHTTP GET /static/media/media/default.png 404 [0.01, 127.0.0.1:53212][0m
+Not Found: /media/media/default.png
+[33mHTTP GET /media/media/default.png 404 [0.01, 127.0.0.1:53212][0m
+Not Found: /media/media/default.png
+[33mHTTP GET /media/media/default.png 404 [0.01, 127.0.0.1:53189][0m
+Not Found: /
+[33mHTTP GET / 404 [0.04, 127.0.0.1:53689][0m
+Not Found: /api
+[33mHTTP GET /api 404 [0.01, 127.0.0.1:53700][0m
+Not Found: /apiseller/product/create/
+[33mHTTP GET /apiseller/product/create/ 404 [0.01, 127.0.0.1:53753][0m
+Unauthorized: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 401 [0.02, 127.0.0.1:53808][0m
+Unauthorized: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 401 [0.01, 127.0.0.1:53825][0m
+Unauthorized: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 401 [0.01, 127.0.0.1:53838][0m
+Unauthorized: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 401 [0.01, 127.0.0.1:53838][0m
+Unauthorized: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 401 [0.01, 127.0.0.1:53845][0m
+Unauthorized: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 401 [0.01, 127.0.0.1:53845][0m
+Forbidden: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 403 [0.04, 127.0.0.1:53892][0m
+Forbidden: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 403 [0.01, 127.0.0.1:53892][0m
+Forbidden: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 403 [0.01, 127.0.0.1:53896][0m
+Forbidden: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 403 [0.01, 127.0.0.1:53896][0m
+Forbidden: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 403 [0.04, 127.0.0.1:53917][0m
+Forbidden: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 403 [0.01, 127.0.0.1:53921][0m
+Forbidden: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 403 [0.02, 127.0.0.1:53921][0m
+Forbidden: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 403 [0.01, 127.0.0.1:53921][0m
+Not Found: /
+[33mHTTP GET / 404 [0.02, 127.0.0.1:53973][0m
+Unauthorized: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 401 [0.02, 127.0.0.1:53980][0m
+Unauthorized: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 401 [0.01, 127.0.0.1:53986][0m
+Unauthorized: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 401 [0.01, 127.0.0.1:54073][0m
+Method Not Allowed: /api/seller/product/create/
+[31;1mHTTP GET /api/seller/product/create/ 405 [2.25, 127.0.0.1:54073][0m
+Bad Request: /api/seller/product/create/
+[31;1mHTTP POST /api/seller/product/create/ 400 [5.07, 127.0.0.1:54073][0m

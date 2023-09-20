@@ -38,7 +38,7 @@ class AllStoreDetailSerializer(serializers.ModelSerializer):
     chat_owner = serializers.SerializerMethodField()
     class Meta:
         model = Store
-        fields = ["id",'owner', "image" ,"chat_owner", "title", "slug", ]
+        fields = ["id",'owner', "image" ,"chat_owner", "title" ]
 
 
     def get_chat_owner(self, obj):
@@ -56,7 +56,7 @@ class AllStoreDetailSerializer(serializers.ModelSerializer):
 class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Store
-        fields = ["id",'title', 'slug']
+        fields = ["id",'title']
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -84,8 +84,7 @@ class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart
         fields = '__all__'
-        
-        
+
 class CheckoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checkout

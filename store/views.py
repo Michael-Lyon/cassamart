@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.pagination import PageNumberPagination
 from accounts.models import Wallet
@@ -60,11 +61,15 @@ class StoreDetailApiView(APIView):
             paginator = PageNumberPagination()
             paginator.page_size = 1  # You can adjust the page size as needed
             store = Store.objects.get(id=store_id)
+            store_data = AllStoreDetailSerializer(store, context={"request": request})
             products = Product.objects.filter(store=store)
             result_page = paginator.paginate_queryset(products, request)
             serializer = ProductSerializer(result_page, many=True, context={"request": request})
             response_data = {
-            "data": serializer.data,
+            "data": {
+                'store_details': store_data.data,
+                'products': serializer.data
+                },
             "errors": None,
             "status": "success",
             "message": "Check successful",
@@ -178,27 +183,39 @@ class ProductListApiView(APIView):
 
 class ProductCreateApiView(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsSeller]  # Use the custom permission class
+    permission_classes = [IsSeller()]  # Use the custom permission class
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    parser_classes = (MultiPartParser,)
 
-    # Override the create method to customize the response format
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
+        # Ensure that the user is the owner of the store associated with the product
+        store_id = request.data.get('store')  # Assuming 'store' is the store field in the request data
+        if store_id and request.user.store_set.filter(id=store_id).exists() and request.user.is_seller:
+            # User is the owner of the store and is a seller, proceed with product creation
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
 
-        # Format the response data as specified
-        response_data = {
-            "data": serializer.data,
-            "errors": None,
-            "status": "success",
-            "message": "Check successful",
-            "pagination": None  # You can customize this if needed
-        }
+            response_data = {
+                "data": serializer.data,
+                "errors": None,
+                "status": "success",
+                "message": "Product created successfully",
+                "pagination": None
+            }
 
-        return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
+            return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            return Response({"message": "You are not the owner of the store or you do not have seller privileges."}, status=status.HTTP_403_FORBIDDEN)
+
+
+
+
+
+
+
 
 class ProductDetailUpdateApiView(APIView):
     authentication_classes = [JWTAuthentication]
