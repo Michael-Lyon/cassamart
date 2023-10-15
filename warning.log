@@ -2512,3 +2512,11 @@ Method Not Allowed: /api/seller/product/create/
 [31;1mHTTP GET /api/seller/product/create/ 405 [2.25, 127.0.0.1:54073][0m
 Bad Request: /api/seller/product/create/
 [31;1mHTTP POST /api/seller/product/create/ 400 [5.07, 127.0.0.1:54073][0m
+Not Found: /api/category-detail/3/
+[33mHTTP GET /api/category-detail/3/ 404 [0.03, 127.0.0.1:51148][0m
+Not Found: /api/category-detail/13
+[33mHTTP GET /api/category-detail/13 404 [0.01, 127.0.0.1:51148][0m
+Not Found: /api/category/13
+[33mHTTP GET /api/category/13 404 [0.01, 127.0.0.1:51148][0m
+Method Not Allowed: /api/accounts/register/buyer/
+[31;1mHTTP GET /api/accounts/register/buyer/ 405 [0.02, 127.0.0.1:57527][0m

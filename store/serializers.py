@@ -13,14 +13,14 @@ class CategoryInlineSerializer(serializers.Serializer):
         lookup_field = 'pk'
     )
     products = serializers.SerializerMethodField(read_only=True)
-    
+
     def get_products(self, obj):
         my_category = obj
         my_products = my_category.products.all()
         return ProductsInlineSerializer(my_products, many=True, context=self.context).data
 
 class ProductsInlineSerializer(serializers.Serializer):
-    
+
     id = serializers.PrimaryKeyRelatedField(read_only=True)
     title = serializers.CharField(read_only=True)
     image = serializers.ImageField(read_only=True)
@@ -85,10 +85,12 @@ class CartSerializer(serializers.ModelSerializer):
         model = Cart
         fields = '__all__'
 
+
 class CheckoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checkout
         fields = '__all__'
+
 
 class TicketSerializer(serializers.ModelSerializer):
     class Meta:

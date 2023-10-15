@@ -24,6 +24,7 @@ from .serializers import (AllStoreDetailSerializer, CartItemSerializer,
                           CheckoutSerializer, ProductSerializer,
                           StoreSerializer, TicketSerializer)
 from drf_yasg.utils import swagger_auto_schema
+PAGINATION_NUM = 15
 
 User = get_user_model()
 
@@ -33,7 +34,7 @@ class StoreListApiView(APIView):
     def get(self, request):
         # Paginate the queryset
         paginator = PageNumberPagination()
-        paginator.page_size = 1  # You can adjust the page size as needed
+        paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
         stores = Store.objects.all()
         result_page = paginator.paginate_queryset(stores, request)
 
@@ -59,7 +60,7 @@ class StoreDetailApiView(APIView):
     def get(self, request, store_id):
         try:
             paginator = PageNumberPagination()
-            paginator.page_size = 1  # You can adjust the page size as needed
+            paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
             store = Store.objects.get(id=store_id)
             store_data = AllStoreDetailSerializer(store, context={"request": request})
             products = Product.objects.filter(store=store)
@@ -100,7 +101,7 @@ class CategoryList(APIView):
     def get(self, request):
         # Paginate the queryset
         paginator = PageNumberPagination()
-        paginator.page_size = 1  # You can adjust the page size as needed
+        paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
         categories = Category.objects.all()
         result_page = paginator.paginate_queryset(categories, request)
 
@@ -124,7 +125,7 @@ class CategoryDetail(APIView):
     def get(self, request, category_id):
         try:
             paginator = PageNumberPagination()
-            paginator.page_size = 1  # You can adjust the page size as needed
+            paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
             category = Category.objects.get(id=category_id)
             products = Product.objects.filter(category=category)
             result_page = paginator.paginate_queryset(products, request)
@@ -160,7 +161,7 @@ class ProductListApiView(APIView):
     def get(self, request):
         # Paginate the queryset
         paginator = PageNumberPagination()
-        paginator.page_size = 1  # You can adjust the page size as needed
+        paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
         products = Product.objects.all()
         result_page = paginator.paginate_queryset(products, request)
 
@@ -209,10 +210,6 @@ class ProductCreateApiView(generics.CreateAPIView):
             return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
         else:
             return Response({"message": "You are not the owner of the store or you do not have seller privileges."}, status=status.HTTP_403_FORBIDDEN)
-
-
-
-
 
 
 
@@ -495,6 +492,7 @@ class MyOrders(APIView):
         checkouts = Checkout.objects.filter(cart__items__category__store=store)
         serializer = CheckoutSerializer(checkouts, many=True)
         return Response(serializer.data, status=stat.HTTP_200_OK)
+
 
 # GIVE DISCOUNT
 @api_view(['POST'])
