@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
 
-from accounts.models import BuyerProfile, SellerProfile
+from accounts.models import Profile
 
 
 def generate_ref_code():
@@ -16,8 +16,8 @@ def generate_ref_code():
 
 class Room(models.Model):
     name = models.CharField(max_length=1000, null=True, blank=True)
-    buyer = models.ForeignKey(BuyerProfile, on_delete=models.CASCADE, blank=True, null=True)
-    seller = models.ForeignKey(SellerProfile, on_delete=models.CASCADE, blank=True, null=True)
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="buyer_rooms")
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="seller_rooms")
     slug = models.SlugField(max_length=250, unique=True)
 
     def save(self, *args, **kwargs):
@@ -27,7 +27,6 @@ class Room(models.Model):
 
     def __str__(self):
         return f"{self.name}"
-    
     class Meta:
         verbose_name_plural = 'Rooms'
         ordering = ['-id']

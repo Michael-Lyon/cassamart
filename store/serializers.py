@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework import serializers
 
-from .models import Cart, CartItem, Category, Checkout, Product, Store, Ticket
+from .models import Cart, CartItem, Category, Checkout, Product, Store, Ticket, WishlistItem
 
 
 class CategoryInlineSerializer(serializers.Serializer):
@@ -56,7 +56,7 @@ class AllStoreDetailSerializer(serializers.ModelSerializer):
 class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Store
-        fields = ["id",'title']
+        fields = ["id",'title', "slug", "image"]
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -98,3 +98,9 @@ class TicketSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
+
+class WishlistItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WishlistItem
+        fields = ('user', 'product', 'added_at')

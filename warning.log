@@ -2520,3 +2520,274 @@ Not Found: /api/category/13
 [33mHTTP GET /api/category/13 404 [0.01, 127.0.0.1:51148][0m
 Method Not Allowed: /api/accounts/register/buyer/
 [31;1mHTTP GET /api/accounts/register/buyer/ 405 [0.02, 127.0.0.1:57527][0m
+Bad Request: /api/accounts/register/seller/
+[31;1mHTTP POST /api/accounts/register/seller/ 400 [2.81, 127.0.0.1:49817][0m
+Internal Server Error: /api/accounts/register/seller/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/accounts/serializers.py", line 33, in create
+    raise serializers.ValidationError("A user with this username or email already exists.")
+rest_framework.exceptions.ValidationError: [ErrorDetail(string='A user with this username or email already exists.', code='invalid')]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/mixins.py", line 24, in perform_create
+    serializer.save()
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/accounts/serializers.py", line 54, in create
+    user.delete()
+    ^^^^
+UnboundLocalError: cannot access local variable 'user' where it is not associated with a value
+[35;1mHTTP POST /api/accounts/register/seller/ 500 [3.30, 127.0.0.1:49817][0m
+Internal Server Error: /api/accounts/register/seller/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/accounts/serializers.py", line 34, in create
+    raise serializers.ValidationError("A user with this username or email already exists.")
+rest_framework.exceptions.ValidationError: [ErrorDetail(string='A user with this username or email already exists.', code='invalid')]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/mixins.py", line 24, in perform_create
+    serializer.save()
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/accounts/serializers.py", line 55, in create
+    user.delete()
+    ^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'delete'
+[35;1mHTTP POST /api/accounts/register/seller/ 500 [3.19, 127.0.0.1:49856][0m
+Internal Server Error: /api/accounts/register/seller/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/accounts/serializers.py", line 35, in create
+    raise serializers.ValidationError("A user with this username or email already exists.")
+rest_framework.exceptions.ValidationError: [ErrorDetail(string='A user with this username or email already exists.', code='invalid')]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/mixins.py", line 24, in perform_create
+    serializer.save()
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/accounts/serializers.py", line 56, in create
+    tra
+NameError: name 'tra' is not defined
+[35;1mHTTP POST /api/accounts/register/seller/ 500 [2.53, 127.0.0.1:49905][0m
+Bad Request: /api/accounts/register/seller/
+[31;1mHTTP POST /api/accounts/register/seller/ 400 [2.54, 127.0.0.1:49939][0m
+Internal Server Error: /api/accounts/register/seller/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/fields.py", line 446, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/fields.py", line 96, in get_attribute
+    instance = getattr(instance, attr)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'User' object has no attribute 'sellerprofile'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 442, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/mixins.py", line 20, in create
+    headers = self.get_success_headers(serializer.data)
+                                       ^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 555, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 253, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 509, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/fields.py", line 479, in get_attribute
+    raise type(exc)(msg)
+AttributeError: Got AttributeError when attempting to get a value for field `sellerprofile` on serializer `SellerSerializer`.
+The serializer field might be named incorrectly and not match any attribute or key on the `User` instance.
+Original exception text was: 'User' object has no attribute 'sellerprofile'.
+[35;1mHTTP POST /api/accounts/register/seller/ 500 [4.22, 127.0.0.1:49982][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.01, 127.0.0.1:50144][0m
+Bad Request: /api/accounts/register/seller/
+[31;1mHTTP POST /api/accounts/register/seller/ 400 [2.08, 127.0.0.1:50308][0m
+Unauthorized: /api/accounts/become-buyer/
+[31;1mHTTP POST /api/accounts/become-buyer/ 401 [0.01, 127.0.0.1:52433][0m
+Not Found: /docs
+[33mHTTP GET /docs 404 [0.02, 127.0.0.1:49901][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.01, 127.0.0.1:49901][0m

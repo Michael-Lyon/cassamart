@@ -30,6 +30,13 @@ urlpatterns = [
 
      path("goods-received/", views.GoodsReceived.as_view(), name="goods_recieved"),
 
+     path('wishlist/', views.WishlistItemCreateView.as_view(), name='wishlist-create'),
+     path('wishlist/list/', views.WishlistItemListView.as_view(), name='wishlist-list'),
+     path('wishlist/delete/<int:pk>/', views.WishlistItemDeleteView.as_view(), name='wishlist-delete'),
+
+     # CHART DATA
+     path('sales/<int:store_id>/', views.SalesDataView.as_view(), name='sales-data'),
 ]
+
 
 

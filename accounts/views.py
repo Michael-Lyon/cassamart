@@ -15,10 +15,10 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from store.models import Store
-from store.serializers import AllStoreDetailSerializer
+from store.serializers import AllStoreDetailSerializer, StoreSerializer
 
-from .models import BuyerProfile, SellerProfile
-from .serializers import (BuyerProfileSerializer, BuyerSerializer, ChangePasswordSerializer, LoginSerializer, SellerProfileSerializer, SellerSerializer)
+from .models import Profile
+from .serializers import (ProfileSerializer, BuyerSerializer, ChangePasswordSerializer, LoginSerializer, SellerSerializer)
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from .utils import get_code
@@ -60,7 +60,7 @@ class LoginView(APIView):
 
 class SellerCreateView(generics.CreateAPIView):
     # Disable CSRF protection for POST requests
-    http_method_names = ['post']
+    # http_method_names = ['post']
 
     serializer_class = SellerSerializer
     queryset = User.objects.all()
@@ -99,22 +99,57 @@ class ChangePasswordView(generics.UpdateAPIView):
 
 
 class SellerProfileUpdateView(generics.UpdateAPIView):
-    serializer_class = SellerProfileSerializer
+    serializer_class = SellerSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
-        return SellerProfile.objects.get(user=self.request.user)
+        return Profile.objects.get(user=self.request.user)
 
 
 class BuyerProfileUpdateView(generics.UpdateAPIView):
-    serializer_class = BuyerProfileSerializer
+    serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
-        return BuyerProfile.objects.get(user=self.request.user)
+        return Profile.objects.get(user=self.request.user)
 
+class BecomeBuyer(APIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        profile = Profile.objects.get(user=user)
+        if profile.is_buyer:
+            return Response({"message": "User is already a buyer"}, status=status.HTTP_200_OK)
+        else:
+            profile.is_buyer = True
+            profile.save()
+            return Response({"message": "User is now a buyer"}, status=status.HTTP_200_OK)
+
+class BecomeSeller(APIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        profile = Profile.objects.get(user=user)
+        if profile.is_seller:
+            return Response({"message": "User is already a seller"}, status=status.HTTP_200_OK)
+        else:
+            profile.is_seller = True
+            profile.save()
+            # Create user store
+            Store.objects.create(
+                owner=user,
+                title=f"{user.username}-store",
+                slug=f"{user.username}-store-slug"
+            )
+            return Response({"message": "User is now a seller"}, status=status.HTTP_200_OK)
 
 class ProfileView(APIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
     @swagger_auto_schema(
         operation_description="Endpoint to get profile information",
         manual_parameters=[
@@ -197,31 +232,22 @@ class ProfileView(APIView):
                                 }
                             )
     def get(self, request):
-        id = request.query_params.get('id')
-
-        # Validate inputs
-        if not id:
-            return Response({"message": "Both 'id' must be provided"}, status=status.HTTP_400_BAD_REQUEST)
-
-        try:
-            id = int(id)
-        except ValueError:
-            return Response({"message": "'id' must be a valid integer"}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Get the user or return 404 if not found
-        user = get_object_or_404(User, id=id)
-
+        user = request.user
+        profile = Profile.objects.get(user=user)
         # Check if the user is a seller
-        if hasattr(user, 'sellerprofile'):
-            profile = SellerSerializer(instance=user).data
-            store = AllStoreDetailSerializer(instance=Store.objects.get(owner=user)).data
+        profile_data = ProfileSerializer(data=profile)
+        if profile.is_seller:
+            store = StoreSerializer(instance=Store.objects.get(owner=user)).data
             result = {
-                'profile': profile,
+                'profile': profile_data,
                 'store': store,
             }
             return Response(result, status=status.HTTP_200_OK)
         else:
-            return Response({"message": "User is not a seller"}, status=status.HTTP_400_BAD_REQUEST)
+            result = {
+                'profile': profile_data,
+            }
+            return Response(result, status=status.HTTP_200_OK)
 
 
 

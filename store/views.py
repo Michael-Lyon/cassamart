@@ -1,3 +1,4 @@
+from datetime import timedelta, timezone
 import json
 
 from django.db import transaction
@@ -17,12 +18,13 @@ from accounts.models import Wallet
 from python_paystack.managers import TransactionsManager
 
 from . import utils
-from .my_permission  import IsSeller
-from .models import (Cart, CartItem, Category, Checkout, Discount, Product, Store)
+from .my_permission  import IsSellerIsOwner, isSeller
+from .models import (Cart, CartItem, Category, Checkout, Discount, Product, Store, WishlistItem)
 from .serializers import (AllStoreDetailSerializer, CartItemSerializer,
-                          CartSerializer, CategorySerializer,
-                          CheckoutSerializer, ProductSerializer,
-                          StoreSerializer, TicketSerializer)
+                            CartSerializer, CategorySerializer,
+                            CheckoutSerializer, ProductSerializer,
+                            StoreSerializer, TicketSerializer, WishlistItemSerializer
+                        )
 from drf_yasg.utils import swagger_auto_schema
 PAGINATION_NUM = 15
 
@@ -53,8 +55,6 @@ class StoreListApiView(APIView):
             }
         }
         return Response(response_data, status=status.HTTP_200_OK)
-
-
 
 class StoreDetailApiView(APIView):
     def get(self, request, store_id):
@@ -96,6 +96,69 @@ class StoreDetailApiView(APIView):
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
 
+class StoreDetailUpdateView(generics.RetrieveUpdateAPIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated, isSeller)
+    queryset = Store.objects.all()
+    serializer_class = StoreSerializer
+    lookup_field = "owner"
+
+    def perform_update(self, serializer):
+        # Ensure that only the store owner can update the store details
+        user = self.request.user
+        store = self.get_object()
+
+        if user == store.owner:
+            serializer.save()
+        else:
+            response_data = {
+                "status": "error",
+                "message": "You are not authorized to update this store.",
+            }
+            return Response(response_data, status=status.HTTP_403_FORBIDDEN)
+
+
+
+class SalesDataView(APIView):
+    authentication_classes = [JWTAuthentication]  # Adjust this based on your authentication method
+    permission_classes = [IsAuthenticated]  # Adjust permissions as needed
+
+    def get(self, request, store_id):
+        try:
+            # Get the store and user from the request
+            user = request.user
+            store = Store.objects.get(id=store_id, owner=user)
+
+            # Get the interval parameter from the query string
+            interval = request.query_params.get('interval', None)
+
+            # Determine the date range based on the interval
+            today = timezone.now()
+            if interval == 'weekly':
+                start_date = today - timedelta(days=7)
+            elif interval == 'monthly':
+                start_date = today - timedelta(days=30)
+            elif interval == 'yearly':
+                start_date = today - timedelta(days=365)
+            else:
+                return Response({"message": "Invalid or missing interval parameter"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Calculate sales data within the specified date range
+            checkout_data = Checkout.objects.filter(user=user, cart__items__product__store=store, created__gte=start_date)
+
+            # Create a dictionary for the bar chart data
+            chart_data = {}
+            for checkout in checkout_data:
+                date_key = checkout.created.strftime('%Y-%m-%d')
+                chart_data[date_key] = chart_data.get(date_key, 0) + 1
+
+            return Response({"sales_data": chart_data}, status=status.HTTP_200_OK)
+
+        except Store.DoesNotExist:
+            return Response({"message": "Store not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+
 
 class CategoryList(APIView):
     def get(self, request):
@@ -125,7 +188,7 @@ class CategoryDetail(APIView):
     def get(self, request, category_id):
         try:
             paginator = PageNumberPagination()
-            paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
+            paginator.page_size = 20  # You can adjust the page size as needed
             category = Category.objects.get(id=category_id)
             products = Product.objects.filter(category=category)
             result_page = paginator.paginate_queryset(products, request)
@@ -156,7 +219,6 @@ class CategoryDetail(APIView):
             }
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
-
 class ProductListApiView(APIView):
     def get(self, request):
         # Paginate the queryset
@@ -184,7 +246,7 @@ class ProductListApiView(APIView):
 
 class ProductCreateApiView(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsSeller()]  # Use the custom permission class
+    permission_classes = [IsSellerIsOwner]  # Use the custom permission class
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     parser_classes = (MultiPartParser,)
@@ -212,11 +274,9 @@ class ProductCreateApiView(generics.CreateAPIView):
             return Response({"message": "You are not the owner of the store or you do not have seller privileges."}, status=status.HTTP_403_FORBIDDEN)
 
 
-
-
 class ProductDetailUpdateApiView(APIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsSeller]  # Use the custom permission class
+    permission_classes = [IsSellerIsOwner]  # Use the custom permission class
 
     def get_object(self, pk):
         try:
@@ -262,12 +322,6 @@ class ProductDetailUpdateApiView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class StoreDetailUpdateView(generics.RetrieveUpdateAPIView):
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAuthenticated,)
-    queryset = Store.objects.all()
-    serializer_class = StoreSerializer
-    lookup_field = "owner"
 
 
 class CartView(APIView):
@@ -395,7 +449,6 @@ class CartView(APIView):
 
         return Response(status=stat.HTTP_204_NO_CONTENT)
 
-
 class CheckoutView(APIView):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
@@ -492,6 +545,22 @@ class MyOrders(APIView):
         checkouts = Checkout.objects.filter(cart__items__category__store=store)
         serializer = CheckoutSerializer(checkouts, many=True)
         return Response(serializer.data, status=stat.HTTP_200_OK)
+
+
+class WishlistItemCreateView(generics.CreateAPIView):
+    queryset = WishlistItem.objects.all()
+    serializer_class = WishlistItemSerializer
+    permission_classes = [IsAuthenticated]
+
+class WishlistItemListView(generics.ListAPIView):
+    queryset = WishlistItem.objects.all()
+    serializer_class = WishlistItemSerializer
+    permission_classes = [IsAuthenticated]
+
+class WishlistItemDeleteView(generics.DestroyAPIView):
+    queryset = WishlistItem.objects.all()
+    serializer_class = WishlistItemSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # GIVE DISCOUNT

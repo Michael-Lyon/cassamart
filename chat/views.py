@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from accounts.models import BuyerProfile, SellerProfile
+from accounts.models import Profile
 
 from .models import Messages, Room
 from .serializers import MessageSerializer, RoomSerializer
@@ -62,9 +62,9 @@ class ChatAPI(APIView):
         if receiver_id:
             receiver = get_object_or_404(User, id=receiver_id)
             if hasattr(receiver, "seller"):
-                return SellerProfile.objects.get(user=receiver)
+                return Profile.objects.get(user=receiver)
             elif hasattr(receiver, "buyer"):
-                return BuyerProfile.objects.get(user=receiver)
+                return Profile.objects.get(user=receiver)
         else:
             return None
 
