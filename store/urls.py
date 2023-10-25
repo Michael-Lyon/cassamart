@@ -6,10 +6,10 @@ app_name = "store"
 
 urlpatterns = [
      path("stores/", views.StoreListApiView.as_view(), name="store_list"),
-     path("stores/<int:store_id>/", views.StoreDetailApiView.as_view(), name="store_detail"),
+     path("stores/<int:id>/", views.StoreDetailApiView.as_view(), name="store_detail"),
 
      # Sellers Links
-     # path("seller/store-edit/<int:owner>/", views.StoreDetailUpdateView.as_view(), name="store_detail_update"),
+     path("stores/<int:id>/update/", views.StoreDetailUpdateView.as_view(), name="store_detail_update"),
 
      path("seller/product-detail-update/<int:pk>/", views.ProductDetailUpdateApiView.as_view(), name="product_detail_update"),
 
@@ -35,7 +35,7 @@ urlpatterns = [
      path('wishlist/delete/<int:pk>/', views.WishlistItemDeleteView.as_view(), name='wishlist-delete'),
 
      # CHART DATA
-     path('sales/<int:store_id>/', views.SalesDataView.as_view(), name='sales-data'),
+     path('chart/<int:store_id>/', views.SalesDataView.as_view(), name='sales-data'),
 ]
 
 

@@ -36,16 +36,15 @@ class ProductsInlineSerializer(serializers.Serializer):
 
 class AllStoreDetailSerializer(serializers.ModelSerializer):
     chat_owner = serializers.SerializerMethodField()
+    created = serializers.DateTimeField()
     class Meta:
         model = Store
-        fields = ["id",'owner', "image" ,"chat_owner", "title" ]
+        fields = ["id",'owner', "image" ,"chat_owner", "title", "created" ]
 
 
     def get_chat_owner(self, obj):
         owner = obj.owner
         request = self.context.get('request')
-        print(request)
-        print(owner)
         if owner and request:
             receiver_id = owner.id
             chat_url = reverse('chat:chat_api', args=[receiver_id])
@@ -54,6 +53,8 @@ class AllStoreDetailSerializer(serializers.ModelSerializer):
 
 
 class StoreSerializer(serializers.ModelSerializer):
+    title = serializers.ReadOnlyField()
+    slug = serializers.ReadOnlyField()
     class Meta:
         model = Store
         fields = ["id",'title', "slug", "image"]

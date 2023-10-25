@@ -57,11 +57,11 @@ class StoreListApiView(APIView):
         return Response(response_data, status=status.HTTP_200_OK)
 
 class StoreDetailApiView(APIView):
-    def get(self, request, store_id):
+    def get(self, request, id):
         try:
             paginator = PageNumberPagination()
             paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
-            store = Store.objects.get(id=store_id)
+            store = Store.objects.get(id=id)
             store_data = AllStoreDetailSerializer(store, context={"request": request})
             products = Product.objects.filter(store=store)
             result_page = paginator.paginate_queryset(products, request)
@@ -101,7 +101,7 @@ class StoreDetailUpdateView(generics.RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated, isSeller)
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
-    lookup_field = "owner"
+    lookup_field = "id"
 
     def perform_update(self, serializer):
         # Ensure that only the store owner can update the store details
@@ -116,7 +116,6 @@ class StoreDetailUpdateView(generics.RetrieveUpdateAPIView):
                 "message": "You are not authorized to update this store.",
             }
             return Response(response_data, status=status.HTTP_403_FORBIDDEN)
-
 
 
 class SalesDataView(APIView):
@@ -156,8 +155,6 @@ class SalesDataView(APIView):
 
         except Store.DoesNotExist:
             return Response({"message": "Store not found"}, status=status.HTTP_404_NOT_FOUND)
-
-
 
 
 class CategoryList(APIView):
@@ -243,7 +240,6 @@ class ProductListApiView(APIView):
         }
         return Response(response_data, status=status.HTTP_200_OK)
 
-
 class ProductCreateApiView(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsSellerIsOwner]  # Use the custom permission class
@@ -321,7 +317,6 @@ class ProductDetailUpdateApiView(APIView):
             return Response(response_data, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class CartView(APIView):

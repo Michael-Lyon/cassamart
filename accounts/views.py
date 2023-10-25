@@ -44,7 +44,7 @@ class LoginView(APIView):
         serializer = LoginSerializer(data=data)
         if serializer.is_valid():
             user = serializer.validated_data
-            login(request, user)
+            login(request, user, backend='accounts.authentication.EmailAuthBackend')
             auth_token = get_tokens_for_user(user=user)
             return Response({"message": "User Logged in", "data": {
                 'id': user.id,
@@ -150,6 +150,7 @@ class BecomeSeller(APIView):
 class ProfileView(APIView):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
+
     @swagger_auto_schema(
         operation_description="Endpoint to get profile information",
         manual_parameters=[
@@ -235,9 +236,9 @@ class ProfileView(APIView):
         user = request.user
         profile = Profile.objects.get(user=user)
         # Check if the user is a seller
-        profile_data = ProfileSerializer(data=profile)
+        profile_data = ProfileSerializer(instance=profile,).data
         if profile.is_seller:
-            store = StoreSerializer(instance=Store.objects.get(owner=user)).data
+            store = StoreSerializer(instance=Store.objects.get(owner=user), context={"request": request}).data
             result = {
                 'profile': profile_data,
                 'store': store,

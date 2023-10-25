@@ -20,12 +20,14 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class SellerSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
+    password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'username', 'last_name', 'email', 'profile']
+        fields = ['id', 'first_name', 'username', 'last_name', 'email', 'profile', 'password']
 
     def create(self, validated_data):
+        print(validated_data)
         user = None
         with transaction.atomic():
             try:
@@ -49,6 +51,7 @@ class SellerSerializer(serializers.ModelSerializer):
                     title=f"{user.username}-store",
                     slug=f"{user.username}-store-slug"
                 )
+                user.save()
                 return user
 
             except Exception as e:
@@ -56,7 +59,7 @@ class SellerSerializer(serializers.ModelSerializer):
                 traceback.print_exc()
                 if user:
                     user.delete()
-                raise serializers.ValidationError("Something went wrong, please try again")
+                raise serializers.ValidationError("A user has already been created with this username and or email address.")
 
 class BuyerSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
@@ -123,11 +126,13 @@ class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
 
-
     def validate(self, data):
         print(data)
         user = authenticate(**data)
+        print(user)
         if user and user.is_active:
             return user
-        raise serializers.ValidationError("Unable to log in with provided credentials.")
-        # return data
+        raise serializers.ValidationError(detail={
+                'username': 'Check your username.',
+                'password': 'Check your password.'
+            }, code="authentication_failed")
