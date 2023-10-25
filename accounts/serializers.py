@@ -24,10 +24,9 @@ class SellerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'username', 'last_name', 'email', 'profile', 'password']
+        fields = ['id', 'first_name', 'username', 'last_name', 'email', 'password', 'profile']
 
     def create(self, validated_data):
-        print(validated_data)
         user = None
         with transaction.atomic():
             try:
@@ -127,7 +126,6 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField()
 
     def validate(self, data):
-        print(data)
         user = authenticate(**data)
         print(user)
         if user and user.is_active:
