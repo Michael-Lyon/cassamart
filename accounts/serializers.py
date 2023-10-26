@@ -65,7 +65,7 @@ class BuyerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'username', 'last_name', 'email', 'profile']
+        fields = ['id', 'first_name', 'username', 'last_name', "password", 'email', 'profile']
 
     def create(self, validated_data):
         with transaction.atomic():
