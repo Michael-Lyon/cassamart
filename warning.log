@@ -3478,3 +3478,13 @@ Bad Request: /api/stores/16/update/
 [31;1mHTTP PUT /api/stores/16/update/ 400 [2.99, 127.0.0.1:54826][0m
 Bad Request: /api/stores/16/update/
 [31;1mHTTP PUT /api/stores/16/update/ 400 [2.75, 127.0.0.1:54885][0m
+Bad Request: /api/accounts/login/
+[31;1mHTTP POST /api/accounts/login/ 400 [6.21, 127.0.0.1:54569][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.01, 127.0.0.1:54735][0m
+Bad Request: /api/accounts/login/
+[31;1mHTTP POST /api/accounts/login/ 400 [2.26, 127.0.0.1:54785][0m
+Not Found: /token/refresh/
+[33mHTTP POST /token/refresh/ 404 [0.01, 127.0.0.1:54969][0m
+Not Found: /token/refresh
+[33mHTTP POST /token/refresh 404 [0.01, 127.0.0.1:54969][0m
