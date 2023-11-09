@@ -3488,3 +3488,2476 @@ Not Found: /token/refresh/
 [33mHTTP POST /token/refresh/ 404 [0.01, 127.0.0.1:54969][0m
 Not Found: /token/refresh
 [33mHTTP POST /token/refresh 404 [0.01, 127.0.0.1:54969][0m
+Not Found: /chart/16/
+[33mHTTP GET /chart/16/?interval=weekly 404 [0.02, 127.0.0.1:53632][0m
+Not Found: /accounts/login/
+[33mHTTP POST /accounts/login/ 404 [0.01, 127.0.0.1:53632][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 146, in get
+    checkout_data = Checkout.objects.filter(user=user, cart__items__product__store=store, created__gte=start_date)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Product" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [4.94, 127.0.0.1:53632][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 147, in get
+    checkout_data = Checkout.objects.filter(user=user, cart__items__product__store=store, created__gte=start_date)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Product" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [4.93, 127.0.0.1:53732][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 146, in get
+    checkout_data = Checkout.objects.filter(user=user, cart__items__product__store=store, created__gte=start_date)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Product" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [4.98, 127.0.0.1:53978][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 146, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Product" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [4.78, 127.0.0.1:54115][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 146, in get
+    checkout_data = Checkout.objects.filter(user=user,
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Product" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [5.02, 127.0.0.1:54403][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 147, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Product" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [4.86, 127.0.0.1:54518][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 148, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Product" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [4.81, 127.0.0.1:54558][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 147, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1466, in build_filter
+    raise FieldError(
+django.core.exceptions.FieldError: Related Field got invalid lookup: product
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [4.85, 127.0.0.1:54706][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 147, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1466, in build_filter
+    raise FieldError(
+django.core.exceptions.FieldError: Related Field got invalid lookup: product
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [4.91, 127.0.0.1:54799][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 147, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1466, in build_filter
+    raise FieldError(
+django.core.exceptions.FieldError: Related Field got invalid lookup: product
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [4.82, 127.0.0.1:54838][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 147, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Product" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [4.89, 127.0.0.1:54868][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 147, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Product" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [4.70, 127.0.0.1:55999][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 149, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1466, in build_filter
+    raise FieldError(
+django.core.exceptions.FieldError: Related Field got invalid lookup: product
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [8.12, 127.0.0.1:56104][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 149, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1466, in build_filter
+    raise FieldError(
+django.core.exceptions.FieldError: Related Field got invalid lookup: product
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [8.24, 127.0.0.1:56581][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 149, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Cart" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [4.99, 127.0.0.1:56633][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 149, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Product" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [5.12, 127.0.0.1:56665][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 149, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Product" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [5.17, 127.0.0.1:56686][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 149, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1445, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1256, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1233, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "sapa-seller005-store": Must be "Product" instance.
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [5.14, 127.0.0.1:56707][0m
+Internal Server Error: /api/chart/16/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 149, in get
+    checkout_data = Checkout.objects.filter(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1466, in build_filter
+    raise FieldError(
+django.core.exceptions.FieldError: Related Field got invalid lookup: product
+[35;1mHTTP GET /api/chart/16/?interval=weekly 500 [8.30, 127.0.0.1:56734][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.01, 127.0.0.1:57122][0m
+Unsupported Media Type: /api/seller/product/create/
+[31;1mHTTP POST /api/seller/product/create/ 415 [2.68, 127.0.0.1:59640][0m
+Forbidden: /api/seller/product/create/
+[31;1mHTTP POST /api/seller/product/create/ 403 [2.41, 127.0.0.1:59983][0m
+Internal Server Error: /api/seller/product/create/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 264, in create
+    store_id = request.user.store.id  # Assuming 'store' is the store field in the request data
+               ^^^^^^^^^^^^^^^^^^
+AttributeError: 'User' object has no attribute 'store'
+[35;1mHTTP POST /api/seller/product/create/ 500 [2.11, 127.0.0.1:60044][0m
+Internal Server Error: /api/seller/product/create/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 265, in create
+    store_id = request.user.my_store.id
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RelatedManager' object has no attribute 'id'
+[35;1mHTTP POST /api/seller/product/create/ 500 [2.01, 127.0.0.1:60077][0m
+Internal Server Error: /api/seller/product/create/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 267, in create
+    if store_id and request.user.store_set.filter(id=store_id).exists() and request.user.is_seller:
+                    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'User' object has no attribute 'store_set'
+[35;1mHTTP POST /api/seller/product/create/ 500 [2.02, 127.0.0.1:60112][0m
+Internal Server Error: /api/seller/product/create/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 265, in create
+    store_id = Store.objects.get(user=request.user.store).id
+                                      ^^^^^^^^^^^^^^^^^^
+AttributeError: 'User' object has no attribute 'store'
+[35;1mHTTP POST /api/seller/product/create/ 500 [2.19, 127.0.0.1:60191][0m
+Internal Server Error: /api/seller/product/create/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 265, in create
+    store_id = Store.objects.get(user=request.user.store).id
+                                      ^^^^^^^^^^^^^^^^^^
+AttributeError: 'User' object has no attribute 'store'
+[35;1mHTTP POST /api/seller/product/create/ 500 [2.05, 127.0.0.1:60221][0m
+Internal Server Error: /api/seller/product/create/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 265, in create
+    store_id = Store.objects.get(user=request.user).id
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 636, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1407, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1217, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1709, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'user' into field. Choices are: created, id, image, owner, owner_id, products, slug, title
+[35;1mHTTP POST /api/seller/product/create/ 500 [5.07, 127.0.0.1:60244][0m
+Internal Server Error: /api/seller/product/create/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 265, in create
+    store_id = Store.objects.get(user=request.user).id
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 636, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1421, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1439, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1446, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1532, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1562, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1407, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1217, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/query.py", line 1709, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'user' into field. Choices are: created, id, image, owner, owner_id, products, slug, title
+[35;1mHTTP POST /api/seller/product/create/ 500 [4.90, 127.0.0.1:60365][0m
+Bad Request: /api/seller/product/create/
+[31;1mHTTP POST /api/seller/product/create/ 400 [2.83, 127.0.0.1:60391][0m
+Internal Server Error: /api/seller/product/create/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.ForeignKeyViolation: insert or update on table "store_product" violates foreign key constraint "store_product_store_id_9bf44fe8_fk_store_store_id"
+DETAIL:  Key (store_id)=(1) is not present in table "store_store".
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 270, in create
+    self.perform_create(serializer)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/mixins.py", line 24, in perform_create
+    serializer.save()
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 962, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 671, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 812, in save
+    self.save_base(
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 863, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 1006, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 1047, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1791, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1660, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: insert or update on table "store_product" violates foreign key constraint "store_product_store_id_9bf44fe8_fk_store_store_id"
+DETAIL:  Key (store_id)=(1) is not present in table "store_store".
+
+[35;1mHTTP POST /api/seller/product/create/ 500 [4.95, 127.0.0.1:60391][0m
+Internal Server Error: /admin/store/product/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/options.py", line 669, in get_field
+    return self.fields_map[field_name]
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'get_store'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/contrib/admin/utils.py", line 271, in lookup_field
+    f = _get_non_gfk_field(opts, name)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/contrib/admin/utils.py", line 302, in _get_non_gfk_field
+    field = opts.get_field(name)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/options.py", line 671, in get_field
+    raise FieldDoesNotExist(
+django.core.exceptions.FieldDoesNotExist: Product has no field named 'get_store'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 284, in _get_response_async
+    response = await sync_to_async(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/contrib/admin/templatetags/base.py", line 45, in render
+    return super().render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/template/library.py", line 258, in render
+    _dict = self.func(*resolved_args, **resolved_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/contrib/admin/templatetags/admin_list.py", line 336, in result_list
+    "results": list(results(cl)),
+               ^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/contrib/admin/templatetags/admin_list.py", line 309, in results
+    yield ResultList(form, items_for_result(cl, res, form))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/contrib/admin/templatetags/admin_list.py", line 303, in __init__
+    super().__init__(*items)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/contrib/admin/templatetags/admin_list.py", line 213, in items_for_result
+    f, attr, value = lookup_field(field_name, result, cl.model_admin)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/contrib/admin/utils.py", line 280, in lookup_field
+    value = attr(obj)
+            ^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/admin.py", line 28, in get_store
+    return obj.category.store
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'Category' object has no attribute 'store'
+[35;1mHTTP GET /admin/store/product/ 500 [3.32, 127.0.0.1:60575][0m
+Internal Server Error: /api/seller/product/create/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.ForeignKeyViolation: insert or update on table "store_product" violates foreign key constraint "store_product_store_id_9bf44fe8_fk_store_store_id"
+DETAIL:  Key (store_id)=(1) is not present in table "store_store".
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 270, in create
+    self.perform_create(serializer)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/mixins.py", line 24, in perform_create
+    serializer.save()
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 962, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 671, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 812, in save
+    self.save_base(
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 863, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 1006, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 1047, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1791, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1660, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: insert or update on table "store_product" violates foreign key constraint "store_product_store_id_9bf44fe8_fk_store_store_id"
+DETAIL:  Key (store_id)=(1) is not present in table "store_store".
+
+[35;1mHTTP POST /api/seller/product/create/ 500 [6.99, 127.0.0.1:60648][0m
+Internal Server Error: /api/seller/product/create/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.ForeignKeyViolation: insert or update on table "store_product" violates foreign key constraint "store_product_store_id_9bf44fe8_fk_store_store_id"
+DETAIL:  Key (store_id)=(1) is not present in table "store_store".
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 269, in create
+    self.perform_create(serializer)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/mixins.py", line 24, in perform_create
+    serializer.save()
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 962, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 671, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 812, in save
+    self.save_base(
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 863, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 1006, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 1047, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1791, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1660, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: insert or update on table "store_product" violates foreign key constraint "store_product_store_id_9bf44fe8_fk_store_store_id"
+DETAIL:  Key (store_id)=(1) is not present in table "store_store".
+
+[35;1mHTTP POST /api/seller/product/create/ 500 [5.01, 127.0.0.1:60694][0m
+Unauthorized: /api/cart/
+[31;1mHTTP POST /api/cart/ 401 [0.02, 127.0.0.1:61269][0m
+Bad Request: /api/cart/
+[31;1mHTTP POST /api/cart/ 400 [2.73, 127.0.0.1:61269][0m
+Internal Server Error: /api/cart/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 437, in post
+    cart_item = CartItem.objects.get(cart=cart, product=product)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 653, in get
+    raise self.model.MultipleObjectsReturned(
+store.models.CartItem.MultipleObjectsReturned: get() returned more than one CartItem -- it returned 2!
+[35;1mHTTP POST /api/cart/ 500 [8.35, 127.0.0.1:61339][0m
+Internal Server Error: /api/cart/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 451, in put
+    product_id = item_data['product']
+                 ~~~~~~~~~^^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+[35;1mHTTP PUT /api/cart/ 500 [2.45, 127.0.0.1:61339][0m
+Internal Server Error: /api/cart/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 450, in put
+    product_id = item_data['product']
+                 ~~~~~~~~~^^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+[35;1mHTTP PUT /api/cart/ 500 [4.05, 127.0.0.1:61474][0m
+Internal Server Error: /api/seller/product/create/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "store_product_category_id_store_id_slug_469414ca_uniq"
+DETAIL:  Key (category_id, store_id, slug)=(13, 16, ) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/generics.py", line 190, in post
+    return self.create(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 288, in create
+    self.perform_create(serializer)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/mixins.py", line 24, in perform_create
+    serializer.save()
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/serializers.py", line 962, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 671, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 812, in save
+    self.save_base(
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 863, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 1006, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/base.py", line 1047, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 1791, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1660, in execute_sql
+    cursor.execute(sql, params)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "store_product_category_id_store_id_slug_469414ca_uniq"
+DETAIL:  Key (category_id, store_id, slug)=(13, 16, ) already exists.
+
+[35;1mHTTP POST /api/seller/product/create/ 500 [3.67, 127.0.0.1:61533][0m
+Bad Request: /api/cart/
+[31;1mHTTP POST /api/cart/ 400 [2.80, 127.0.0.1:61648][0m
+Internal Server Error: /api/cart/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 455, in put
+    cart_item = CartItem.objects.get(cart=cart, product__id=product_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 653, in get
+    raise self.model.MultipleObjectsReturned(
+store.models.CartItem.MultipleObjectsReturned: get() returned more than one CartItem -- it returned 2!
+[35;1mHTTP PUT /api/cart/ 500 [8.74, 127.0.0.1:61823][0m
+Internal Server Error: /api/cart/
+Traceback (most recent call last):
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/exception.py", line 43, in inner
+    response = await get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 486, in thread_handler
+    raise exc_info[1]
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/core/handlers/base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 448, in __call__
+    ret = await asyncio.wait_for(future, timeout=None)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/asgiref/sync.py", line 490, in thread_handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/decorators/csrf.py", line 55, in wrapped_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/store/views.py", line 455, in put
+    cart_item = CartItem.objects.get(cart=cart, product__id=product_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pygod/python_projects/casamart/env/lib/python3.11/site-packages/django/db/models/query.py", line 653, in get
+    raise self.model.MultipleObjectsReturned(
+store.models.CartItem.MultipleObjectsReturned: get() returned more than one CartItem -- it returned 2!
+[35;1mHTTP PUT /api/cart/ 500 [8.80, 127.0.0.1:61951][0m

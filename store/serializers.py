@@ -71,11 +71,30 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ["id",'category', "store" ,'title', "image", "description", "price", "stock", "available", ]
+        extra_kwargs = {
+            'store': {'required': False, },
+            # 'store': {'required': False, },
+        }
+
+    # def to_representation(self, instance):
+    #     if isinstance(instance, Store):
+    #         return {
+    #             "id": instance.id,
+    #             "store": instance.title,
+    #             "title": instance.title,
+    #             "image": instance.image,
+    #             "description": instance.description,
+    #             "price": instance.price,
+    #             "stock": instance.stock,
+    #             "available": instance.available
+    #         }
+    #     else:
+    #         return super().to_representation(instance)
 
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(source="product_set")
+    # product = ProductSerializer(source="product_set")
     class Meta:
         model = CartItem
         fields = '__all__'

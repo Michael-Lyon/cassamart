@@ -119,8 +119,8 @@ class StoreDetailUpdateView(generics.RetrieveUpdateAPIView):
 
 
 class SalesDataView(APIView):
-    authentication_classes = [JWTAuthentication]  # Adjust this based on your authentication method
-    permission_classes = [IsAuthenticated]  # Adjust permissions as needed
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, store_id):
         try:
@@ -128,8 +128,9 @@ class SalesDataView(APIView):
             user = request.user
             store = Store.objects.get(id=store_id, owner=user)
 
-            # Get the interval parameter from the query string
+            # Get the interval and category parameters from the query string
             interval = request.query_params.get('interval', None)
+            category = request.query_params.get('category', None)
 
             # Determine the date range based on the interval
             today = datetime.now()
@@ -142,19 +143,30 @@ class SalesDataView(APIView):
             else:
                 return Response({"message": "Invalid or missing interval parameter"}, status=status.HTTP_400_BAD_REQUEST)
 
-            # Calculate sales data within the specified date range
-            checkout_data = Checkout.objects.filter(user=user, cart__items__product__store=store, created__gte=start_date)
+            # Filter checkouts based on category if provided
+            checkout_data = Checkout.objects.filter(
+                cart__items__store=store,
+                updated__gte=start_date
+            )
+
+            print(checkout_data)
+
+            # Sort checkouts by created date
+            checkout_data = checkout_data.order_by('created')
 
             # Create a dictionary for the bar chart data
             chart_data = {}
             for checkout in checkout_data:
                 date_key = checkout.created.strftime('%Y-%m-%d')
-                chart_data[date_key] = chart_data.get(date_key, 0) + 1
+                chart_data[date_key] = chart_data.get(
+                    date_key, 0) + checkout.total_amount
 
             return Response({"sales_data": chart_data}, status=status.HTTP_200_OK)
 
         except Store.DoesNotExist:
             return Response({"message": "Store not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
 
 
 class CategoryList(APIView):
@@ -240,34 +252,51 @@ class ProductListApiView(APIView):
         }
         return Response(response_data, status=status.HTTP_200_OK)
 
+
 class ProductCreateApiView(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsSellerIsOwner]  # Use the custom permission class
+    permission_classes = [isSeller]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     parser_classes = (MultiPartParser,)
 
     def create(self, request, *args, **kwargs):
         # Ensure that the user is the owner of the store associated with the product
-        store_id = request.data.get('store')  # Assuming 'store' is the store field in the request data
-        if store_id and request.user.store_set.filter(id=store_id).exists() and request.user.is_seller:
-            # User is the owner of the store and is a seller, proceed with product creation
-            serializer = self.get_serializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
+        # Assuming 'store' is a valid field in the request data
 
-            response_data = {
-                "data": serializer.data,
-                "errors": None,
-                "status": "success",
-                "message": "Product created successfully",
-                "pagination": None
-            }
+        store = Store.objects.filter(owner=request.user).first()
 
-            return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
-        else:
-            return Response({"message": "You are not the owner of the store or you do not have seller privileges."}, status=status.HTTP_403_FORBIDDEN)
+        if not store:
+            return Response(
+                {
+                    "data": None,
+                    "errors": "User does not own a store",
+                    "status": "error",
+                    "message": "You need to be the owner of a store to create a product",
+                    "pagination": None,
+                },
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        # User is the owner of the store and is a seller, proceed with product creation
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # Assign the store to the product before saving
+        serializer.validated_data['store'] = store
+
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+
+        response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "Product created successfully",
+            "pagination": None,
+        }
+
+        return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class ProductDetailUpdateApiView(APIView):
@@ -398,7 +427,6 @@ class CartView(APIView):
             cart = Cart.objects.get(user=user, paid=False)
         except Cart.DoesNotExist:
             cart = Cart.objects.create(user=user)
-        
         data["cart"] = cart.id
         serializer = CartItemSerializer(data=data)
         if serializer.is_valid():
@@ -418,17 +446,16 @@ class CartView(APIView):
         user = request.user
         data = request.data
         cart = Cart.objects.get(user=user, paid=False)
-        for item_data in data:
-            product_id = item_data['product']
-            quantity = item_data['quantity']
-            try:
-                cart_item = CartItem.objects.get(cart=cart, product__id=product_id)
-                cart_item.quantity = quantity
-                cart_item.save()
-            except Cart.DoesNotExist:
-                return Response(status=stat.HTTP_404_NOT_FOUND)
+        product_id = data.get('product')
+        quantity = data.get('quantity')
+        try:
+            cart_item = CartItem.objects.get(cart=cart, product__id=product_id)
+            cart_item.quantity = quantity
+            cart_item.save()
+        except Cart.DoesNotExist:
+            return Response(status=stat.HTTP_404_NOT_FOUND)
 
-        return Response(status=stat.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)
 
     def delete(self, request):
         user = request.user
@@ -436,9 +463,8 @@ class CartView(APIView):
 
         try:
             cart = Cart.objects.get(user=user, paid=False)
-            for item_data in data:
-                cart_item = CartItem.objects.get(cart=cart, product__id=item_data['product'])
-                cart_item.delete()
+            cart_item = CartItem.objects.get(cart=cart, product__id=data['product'])
+            cart_item.delete()
         except (Cart.DoesNotExist, CartItem.DoesNotExist):
             return Response(status=stat.HTTP_404_NOT_FOUND)
 
