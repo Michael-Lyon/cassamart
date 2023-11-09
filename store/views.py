@@ -1,4 +1,4 @@
-from datetime import timedelta, timezone
+from datetime import timedelta, datetime
 import json
 
 from django.db import transaction
@@ -132,7 +132,7 @@ class SalesDataView(APIView):
             interval = request.query_params.get('interval', None)
 
             # Determine the date range based on the interval
-            today = timezone.now()
+            today = datetime.now()
             if interval == 'weekly':
                 start_date = today - timedelta(days=7)
             elif interval == 'monthly':
