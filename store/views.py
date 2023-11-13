@@ -123,6 +123,8 @@ class SalesDataView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, store_id):
+        paginator = PageNumberPagination()
+        paginator.page_size = PAGINATION_NUM
         try:
             # Get the store and user from the request
             user = request.user
@@ -141,7 +143,13 @@ class SalesDataView(APIView):
             elif interval == 'yearly':
                 start_date = today - timedelta(days=365)
             else:
-                return Response({"message": "Invalid or missing interval parameter"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({
+                    "data": None,
+                    "errors": {"message": "Invalid or missing interval parameter"},
+                    "status": "error",
+                    "message": "Check failed",
+                    "pagination": None
+                }, status=status.HTTP_400_BAD_REQUEST)
 
             # Filter checkouts based on category if provided
             checkout_data = Checkout.objects.filter(
@@ -149,22 +157,37 @@ class SalesDataView(APIView):
                 updated__gte=start_date
             )
 
-            print(checkout_data)
-
             # Sort checkouts by created date
             checkout_data = checkout_data.order_by('created')
+            result_page = paginator.paginate_queryset(checkout_data, request)
 
             # Create a dictionary for the bar chart data
             chart_data = {}
-            for checkout in checkout_data:
+            for checkout in result_page:
                 date_key = checkout.created.strftime('%Y-%m-%d')
                 chart_data[date_key] = chart_data.get(
                     date_key, 0) + checkout.total_amount
 
-            return Response({"sales_data": chart_data}, status=status.HTTP_200_OK)
+            return Response({
+                "data": {"sales_data": chart_data},
+                "errors": None,
+                "status": "success",
+                "message": "Check successful",
+                "pagination": {
+                    "count": paginator.page.paginator.count,
+                    "next": paginator.get_next_link(),
+                    "previous": paginator.get_previous_link(),
+                }
+            }, status=status.HTTP_200_OK)
 
         except Store.DoesNotExist:
-            return Response({"message": "Store not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({
+                "data": chart_data,
+                "errors": {"message": "Store not found"},
+                "status": "error",
+                "message": "Check failed",
+                "pagination": None
+            }, status=status.HTTP_404_NOT_FOUND)
 
 
 
