@@ -190,8 +190,6 @@ class SalesDataView(APIView):
             }, status=status.HTTP_404_NOT_FOUND)
 
 
-
-
 class CategoryList(APIView):
     def get(self, request):
         # Paginate the queryset
@@ -224,7 +222,8 @@ class CategoryDetail(APIView):
             category = Category.objects.get(id=category_id)
             products = Product.objects.filter(category=category)
             result_page = paginator.paginate_queryset(products, request)
-            serializer = ProductSerializer(result_page, many=True)
+            serializer = ProductSerializer(
+                result_page, many=True, context={"request": request})
             response_data = {
             "data": serializer.data,
             "errors": None,
@@ -276,6 +275,22 @@ class ProductListApiView(APIView):
         return Response(response_data, status=status.HTTP_200_OK)
 
 
+class ProductDetailApiView(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = "pk"
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "Product details retrieved successfully",
+            "pagination": None
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+
 class ProductCreateApiView(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [isSeller]
@@ -322,53 +337,59 @@ class ProductCreateApiView(generics.CreateAPIView):
         return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-class ProductDetailUpdateApiView(APIView):
+class ProductDetailUpdateApiView(generics.RetrieveUpdateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsSellerIsOwner]  # Use the custom permission class
+    permission_classes = [isSeller]
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    parser_classes = (MultiPartParser,)
+    lookup_field = "pk"
 
-    def get_object(self, pk):
-        try:
-            return Product.objects.get(pk=pk)
-        except Product.DoesNotExist:
-            return None
-
-    def get(self, request, pk):
-        product = self.get_object(pk)
-        if not product:
-            return Response({"error": "Product not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = ProductSerializer(product)
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
         response_data = {
             "data": serializer.data,
             "errors": None,
             "status": "success",
-            "message": "Check successful",
-            "pagination": None  # You can customize this if needed
+            "message": "Product details retrieved successfully",
+            "pagination": None,
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+
+        # Ensure that the user is the owner of the store associated with the product
+        if request.user != instance.store.owner:
+            return Response(
+                {
+                    "data": None,
+                    "errors": "User is not the owner of the store",
+                    "status": "error",
+                    "message": "You can only update products for your own store",
+                    "pagination": None,
+                },
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_update(serializer)
+
+        response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "Product updated successfully",
+            "pagination": None,
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
 
-    def put(self, request, pk):
-        product = self.get_object(pk)
-        if not product:
-            return Response({"error": "Product not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = ProductSerializer(product, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-
-            # Format the response data as specified
-            response_data = {
-                "data": serializer.data,
-                "errors": None,
-                "status": "success",
-                "message": "Check successful",
-                "pagination": None  # You can customize this if needed
-            }
-
-            return Response(response_data, status=status.HTTP_200_OK)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CartView(APIView):
@@ -579,7 +600,6 @@ class GoodsReceived(APIView):
             utils.send_wallet_mail(owners)
             return Response({"message":"Updated."} , status=stat.HTTP_200_OK)
         return Response({"message":"Updated."} , status=stat.HTTP_409_CONFLICT)
-
 
 class MyOrders(APIView):
     authentication_classes = (JWTAuthentication,)

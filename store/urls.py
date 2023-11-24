@@ -24,6 +24,8 @@ urlpatterns = [
      path("categories/<int:category_id>/", views.CategoryDetail.as_view(), name="category_detail"),
 
      path("products/", views.ProductListApiView.as_view(), name="product_list"),
+     path("products/<int:pk>/",
+          views.ProductDetailApiView.as_view(), name="product_detail"),
 
      path("cart/", views.CartView.as_view(), name="cart"),
      path("checkout/", views.CheckoutView.as_view(), name="checkout"),

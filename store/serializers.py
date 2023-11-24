@@ -66,31 +66,31 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class ProductsInlineSerializer(serializers.Serializer):
+    id = serializers.PrimaryKeyRelatedField(read_only=True)
+    title = serializers.CharField(read_only=True)
+    images = serializers.ListSerializer(child=serializers.ImageField(read_only=True))
+    description = serializers.CharField(read_only=True)
+    price = serializers.DecimalField(read_only=True, max_digits=10, decimal_places=2)
+    slug = serializers.SlugField(read_only=True)
+    detail_edit_url = serializers.HyperlinkedIdentityField(
+        view_name="store:product_detail_update",
+        lookup_field='pk'
+    )
+
+
 class ProductSerializer(serializers.ModelSerializer):
     store = serializers.CharField(read_only=True)
+    images = serializers.ListSerializer(
+        child=serializers.ImageField(read_only=True), source='images.all')
+
     class Meta:
         model = Product
-        fields = ["id",'category', "store" ,'title', "image", "description", "price", "stock", "available", ]
+        fields = ["id", 'category', "store", 'title', "images",
+                "description", "price", "stock", "available", ]
         extra_kwargs = {
             'store': {'required': False, },
-            # 'store': {'required': False, },
         }
-
-    # def to_representation(self, instance):
-    #     if isinstance(instance, Store):
-    #         return {
-    #             "id": instance.id,
-    #             "store": instance.title,
-    #             "title": instance.title,
-    #             "image": instance.image,
-    #             "description": instance.description,
-    #             "price": instance.price,
-    #             "stock": instance.stock,
-    #             "available": instance.available
-    #         }
-    #     else:
-    #         return super().to_representation(instance)
-
 
 
 class CartItemSerializer(serializers.ModelSerializer):

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Cart, CartItem, Category, Checkout, Product, Store
+from .models import Cart, CartItem, Category, Checkout, Product, ProductImage, Store
 
 admin.site.register(Cart)
 admin.site.register(CartItem)
@@ -9,12 +9,16 @@ admin.site.register(Checkout)
 class StoreAdmin(admin.ModelAdmin):
     list_display = ['title', 'owner', 'slug']
     prepopulated_fields = {'slug': ('title', )}
-    
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug']
     prepopulated_fields = {'slug': ('title',)}
+
+
+class ProductImageInline(admin.StackedInline):
+    model = ProductImage
 
 
 @admin.register(Product)
@@ -23,12 +27,13 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['available', 'created', 'updated']
     list_editable = ['price', 'stock', 'available']
     prepopulated_fields = {'slug': ('title',)}
-    
+    inlines = [ProductImageInline]
+
     def get_store(self, obj):
-        return obj.category.store
-    
+        return obj.store
+
     def get_owner(self, obj):
-        return obj.category.store.owner
-    
+        return obj.store.owner
+
     get_owner.short_description = 'Owner'
     get_store.short_description = 'Store'
