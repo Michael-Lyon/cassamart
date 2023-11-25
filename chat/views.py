@@ -6,7 +6,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.models import Profile
 
 from .models import Messages, Room
@@ -17,42 +19,42 @@ User = get_user_model()
 
 class ChatAPI(APIView):
     """
-    API endpoint for managing chat functionality between buyers and sellers.
+        API endpoint for managing chat functionality between buyers and sellers.
 
-    Authentication:
-    - The request should include a valid JWT token in the Authorization header.
+        Authentication:
+        - The request should include a valid JWT token in the Authorization header.
 
-    GET Request:
-    - Retrieves chat data between the authenticated user and the specified receiver.
-    - The receiver ID should be provided as a URL parameter. If receiver ID is None, returns a list of rooms
-      that the current user is a part of.
-    - Returns the list of rooms and messages associated with the chat.
+        GET Request:
+        - Retrieves chat data between the authenticated user and the specified receiver.
+        - The receiver ID should be provided as a URL parameter. If receiver ID is None, returns a list of rooms that the current user is a part of.
+        - Returns the list of rooms and messages associated with the chat.
 
-    POST Request:
-    - Sends a message from the authenticated user to the specified receiver.
-    - The receiver ID should be provided as a URL parameter.
-    - The request body should include the current_room slug and the message content.
-    - Returns the serialized message if successful.
+        POST Request:
+        - Sends a message from the authenticated user to the specified receiver.
+        - The receiver ID should be provided as a URL parameter.
+        - The request body should include the current_room slug and the message content.
+        - Returns the serialized message if successful.
 
-    Note:
-    - The sender's role (buyer or seller) is determined based on the authenticated user.
-    - The receiver can be either a buyer or a seller depending on the sender's role.
+        Note:
+        - The sender's role (buyer or seller) is determined based on the authenticated user.
+        - The receiver can be either a buyer or a seller depending on the sender's role.
 
-    Example Usage:
-    GET Request:
-    GET /chat/123/
-    
-    POST Request:
-    POST /chat/123/
-    {
-        "current_room": {
-            "slug": "room-slug"
-        },
-        "message": "Hello, this is a test message."
-    }
+        Example Usage:
+        GET Request:
+        GET /chat/123/
+
+        POST Request:
+        POST /chat/123/
+        {
+            "current_room": {
+                "slug": "room-slug"
+            },
+            "message": "Hello, this is a test message."
+        }
     """
 
     authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get_receiver_profile(self, receiver_id):
         """
@@ -61,54 +63,55 @@ class ChatAPI(APIView):
         """
         if receiver_id:
             receiver = get_object_or_404(User, id=receiver_id)
-            if hasattr(receiver, "seller"):
-                return Profile.objects.get(user=receiver)
-            elif hasattr(receiver, "buyer"):
-                return Profile.objects.get(user=receiver)
+            try:
+                profile = Profile.objects.get(user=receiver)
+                return profile
+            except ObjectDoesNotExist:
+                return None
         else:
             return None
 
-    def get_rooms_and_messages(self, seller, buyer, sender):
+    def get_rooms_and_messages(self, sender_profile, receiver_profile, sender_role):
         """
         Retrieve the rooms and messages between the sender and receiver.
         Return the rooms and messages.
         """
-        room = None
+        rooms = None
         messages = None
+        room = None
 
-        if sender == "buyer":
-            rooms = Room.objects.filter(buyer=buyer)
-            if seller is not None:
-                room = Room.objects.filter(buyer=buyer, seller=seller).first()
-        elif sender == "seller":
-            rooms = Room.objects.filter(seller=seller)
-            if buyer is not None:
-                room = Room.objects.filter(buyer=buyer, seller=seller).first()
+        if sender_role == "buyer":
+            rooms = Room.objects.filter(buyer=sender_profile)
+            if receiver_profile:
+                room = Room.objects.filter(
+                    buyer=sender_profile, seller=receiver_profile.user).first()
+        elif sender_role == "seller":
+            rooms = Room.objects.filter(seller=sender_profile)
+            if receiver_profile:
+                room = Room.objects.filter(
+                    buyer=receiver_profile.user, seller=sender_profile).first()
 
         if room:
             messages = Messages.objects.filter(room=room).order_by('date')[:50]
         else:
-            room = Room.objects.create(
-                buyer=buyer,
-                seller=seller,
-                name=buyer.user.username + seller.user.username
-            )
-            
+            if receiver_profile:
+                room = Room.objects.create(
+                    buyer=sender_profile if sender_role == "buyer" else receiver_profile.user,
+                    seller=sender_profile if sender_role == "seller" else receiver_profile.user,
+                    name=f"{sender_profile.user.username}-{receiver_profile.user.username}"
+                )
 
         return rooms, messages, room
-    
-    def get(self, request, receiver_id):
-        sender = request.user
-        receiver_profile = self.get_receiver_profile(receiver_id) if receiver_id else None
-        # Check if the sender is the seller or the buyer
-        if hasattr(sender, "seller"):
-            seller = SellerProfile.objects.get(user=sender)
-            rooms, messages, room = self.get_rooms_and_messages(seller, receiver_profile, "seller")
-            
-        elif hasattr(sender, "buyer"):
-            buyer = SellerProfile.objects.get(user=sender)
-            rooms, messages, room = self.get_rooms_and_messages(receiver_profile, buyer , "buyer")
 
+    def get(self, request, receiver_id):
+        sender_profile = request.user.profile
+        receiver_profile = self.get_receiver_profile(
+            receiver_id) if receiver_id else None
+
+        sender_role = "seller" if sender_profile.is_seller else "buyer"
+
+        rooms, messages, current_room = self.get_rooms_and_messages(
+            sender_profile, receiver_profile, sender_role)
 
         room_serializer = RoomSerializer(rooms, many=True)
         if messages:
@@ -119,7 +122,7 @@ class ChatAPI(APIView):
         data = {
             "rooms": room_serializer.data,
             "messages": message_serializer.data,
-            "current_room": {"slug": room.slug, "name": room.name} if room else None
+            "current_room": {"slug": current_room.slug, "name": current_room.name} if current_room else None
         }
         return Response(data)
 
@@ -130,7 +133,8 @@ class ChatAPI(APIView):
 
         try:
             room = Room.objects.get(slug=current_room_slug)
-            message = Messages.objects.create(message=message_content, room=room, sender=request.user)
+            message = Messages.objects.create(
+                message=message_content, room=room, sender=request.user)
             message_serializer = MessageSerializer(message)
 
             channel_layer = get_channel_layer()
@@ -146,6 +150,6 @@ class ChatAPI(APIView):
 
             return Response(message_serializer.data, status=status.HTTP_201_CREATED)
         except Room.DoesNotExist:
-            return Response({"message": "Room does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"errors": "Room does not exist.", "status": "error"}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"errors": str(e), "status": "error"}, status=status.HTTP_400_BAD_REQUEST)

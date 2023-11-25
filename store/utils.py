@@ -20,9 +20,9 @@ def send_wallet_mail(owners: dict):
     for user, amount in owners.items():
         message = f"Hello {user}\nYour wallet has been topped with NGN{amount}"
         send_mail(subject="Cassamart Wallet Top-Up",message=message,
-                  from_email=SENDER, recipient_list=[user.email], fail_silently=False)
-        
-        
+                from_email=SENDER, recipient_list=[user.email], fail_silently=False)
+
+
 def send_order_mail(cart: Cart):
     owners = {}
     for cart_item in cart.cartitem_set.all():
