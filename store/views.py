@@ -1,4 +1,5 @@
 from datetime import timedelta, datetime
+from decimal import Decimal
 import json
 
 from django.db import transaction
@@ -22,11 +23,11 @@ from .my_permission  import IsSellerIsOwner, isSeller
 from .models import (Cart, CartItem, Category, Checkout, Discount, Product, Store, WishlistItem)
 from .serializers import (AllStoreDetailSerializer, CartItemSerializer,
                             CartSerializer, CategorySerializer,
-                            CheckoutSerializer, ProductSerializer,
-                            StoreSerializer, TicketSerializer, WishlistItemSerializer
+                            CheckoutSerializer, ImageSerializer, ProductSerializer,
+                            StoreSerializer, TicketSerializer, WishlistItemGetSerializer, WishlistItemSerializer
                         )
 from drf_yasg.utils import swagger_auto_schema
-PAGINATION_NUM = 15
+PAGINATION_NUM = 30
 
 User = get_user_model()
 
@@ -57,11 +58,11 @@ class StoreListApiView(APIView):
         return Response(response_data, status=status.HTTP_200_OK)
 
 class StoreDetailApiView(APIView):
-    def get(self, request, id):
+    def get(self, request, pk):
         try:
             paginator = PageNumberPagination()
             paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
-            store = Store.objects.get(id=id)
+            store = Store.objects.get(id=pk)
             store_data = AllStoreDetailSerializer(store, context={"request": request})
             products = Product.objects.filter(store=store)
             result_page = paginator.paginate_queryset(products, request)
@@ -215,12 +216,12 @@ class CategoryList(APIView):
         return Response(response_data, status=status.HTTP_200_OK)
 
 class CategoryDetail(APIView):
-    def get(self, request, category_id):
+    def get(self, request, pk):
         try:
             paginator = PageNumberPagination()
-            paginator.page_size = 20  # You can adjust the page size as needed
-            category = Category.objects.get(id=category_id)
-            products = Product.objects.filter(category=category)
+            paginator.page_size = 30  # You can adjust the page size as needed
+            category = Category.objects.get(id=pk)
+            products = Product.objects.filter(category=category).order_by("-created")
             result_page = paginator.paginate_queryset(products, request)
             serializer = ProductSerializer(
                 result_page, many=True, context={"request": request})
@@ -255,7 +256,7 @@ class ProductListApiView(APIView):
         # Paginate the queryset
         paginator = PageNumberPagination()
         paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
-        products = Product.objects.all()
+        products = Product.objects.all().order_by("-created")
         result_page = paginator.paginate_queryset(products, request)
 
         # Serialize the paginated queryset
@@ -300,11 +301,9 @@ class ProductCreateApiView(generics.CreateAPIView):
     parser_classes = (MultiPartParser,)
 
     def create(self, request, *args, **kwargs):
-        # Ensure that the user is the owner of the store associated with the product
-        # Assuming 'store' is a valid field in the request data
-
-        store = Store.objects.filter(owner=request.user).first()
-
+        store = Store.objects.get(owner=request.user)
+        print(store)
+        print(store.id)
         if not store:
             return Response(
                 {
@@ -316,16 +315,40 @@ class ProductCreateApiView(generics.CreateAPIView):
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
+        # Create a list to store Image instances
+        images_list = []
 
-        # User is the owner of the store and is a seller, proceed with product creation
+        # Handle images separately
+        for image_data in request.FILES.getlist('images', []):
+            image_serializer = ImageSerializer(data={'image': image_data})
+            if image_serializer.is_valid():
+                image_serializer.save()
+                images_list.append(image_serializer.instance)
+            else:
+                # Handle the case where an image is not valid
+                return Response(
+                    {
+                        "data": None,
+                        "errors": image_serializer.errors,
+                        "status": "error",
+                        "message": "Image validation failed",
+                        "pagination": None,
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+
+        # Modify the request data to include the store and images
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         # Assign the store to the product before saving
         serializer.validated_data['store'] = store
+        serializer.validated_data['images'] = images_list
 
         self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
+        # headers = self.get_success_headers(serializer.data)
 
         response_data = {
             "data": serializer.data,
@@ -335,7 +358,7 @@ class ProductCreateApiView(generics.CreateAPIView):
             "pagination": None,
         }
 
-        return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(response_data, status=status.HTTP_201_CREATED)
 
 
 class ProductDetailUpdateApiView(generics.RetrieveUpdateAPIView):
@@ -449,14 +472,24 @@ class CartView(APIView):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
 
+    def get_cart_total(self, cart):
+        total_cost = Decimal(0)
+
+        for cart_item in CartItem.objects.filter(cart=cart):
+            total_cost += cart_item.product.price * cart_item.quantity
+
+        return total_cost
+
     def get(self, request):
         user = request.user
         try:
             cart = Cart.objects.get(user=user)
             serializer = CartSerializer(
-                cart, many=True, context={'request': request})
+                cart,  context={'request': request})
+            data = serializer.data
+            data["total_cost"] = self.get_cart_total(cart)
             response_data = {
-                "data": serializer.data,
+                "data": data,
                 "errors": None,
                 "status": "success",
                 "message": "User's cart retrieved successfully",
@@ -481,35 +514,39 @@ class CartView(APIView):
             cart = Cart.objects.get(user=user, paid=False)
         except Cart.DoesNotExist:
             cart = Cart.objects.create(user=user)
+
         data["cart"] = cart.id
         serializer = CartItemSerializer(data=data)
+
         if serializer.is_valid():
             product = serializer.validated_data['product']
             quantity = serializer.validated_data['quantity']
+
             try:
                 cart_item = CartItem.objects.get(cart=cart, product=product)
                 cart_item.quantity += quantity
                 cart_item.save()
             except CartItem.DoesNotExist:
-                cart_item = CartItem.objects.create(cart=cart, product=product, quantity=quantity)
-                response_data = {
-                    "data": None,
-                    "errors": "Error creating cart item.",
-                    "status": "error",
-                    "message": "An error occurred while creating cart item.",
-                    "pagination": None
-                }
-                return Response(response_data, status=stat.HTTP_500_INTERNAL_SERVER_ERROR)
+                cart_item = CartItem.objects.create(
+                    cart=cart, product=product, quantity=quantity)
 
-            serializer.save()
+            # Refresh the cart instance to include updated items
+            cart.refresh_from_db()
+
+            # Serialize the entire Cart object
+            cart_serializer = CartSerializer(
+                cart, context={'request': request})
+
             response_data = {
-                "data": serializer.data,
+                "data": cart_serializer.data,  # Serialize the entire Cart object
                 "errors": None,
                 "status": "success",
                 "message": "Item added to cart",
                 "pagination": None
             }
-            return Response(response_data, status=stat.HTTP_201_CREATED)
+
+            return Response(response_data, status=status.HTTP_201_CREATED)
+
         response_data = {
             "data": None,
             "errors": "Invalid data",
@@ -517,7 +554,9 @@ class CartView(APIView):
             "message": "Invalid data for cart item",
             "pagination": None
         }
-        return Response(response_data, status=stat.HTTP_400_BAD_REQUEST)
+
+        return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
     def put(self, request):
         user = request.user
@@ -574,7 +613,7 @@ class CheckoutView(APIView):
         code = request.query_params.get('code', None)
 
         # Calculate the total amount based on cart items
-        products = CartItem.objects.filter(cart=cart, paid=False)
+        products = CartItem.objects.filter(cart=cart)
         # Calculate the total sum the user ought to pay and also try to find the discount if there's any for the user
         # TODO: CHECK IF THE CODE IS A LIST THEN FILTER BY IT
         # AND FILTER THE PRODUCTS AND GIVE THE DISCOUNT
@@ -686,6 +725,7 @@ class WishlistItemCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -703,7 +743,7 @@ class WishlistItemCreateView(generics.CreateAPIView):
 
 
 class WishlistItemListView(generics.ListAPIView):
-    serializer_class = WishlistItemSerializer
+    serializer_class = WishlistItemGetSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = (JWTAuthentication,)
 

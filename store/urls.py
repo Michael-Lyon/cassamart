@@ -6,7 +6,7 @@ app_name = "store"
 
 urlpatterns = [
      path("stores/", views.StoreListApiView.as_view(), name="store_list"),
-     path("stores/<int:id>/", views.StoreDetailApiView.as_view(), name="store_detail"),
+     path("stores/<int:pk>/", views.StoreDetailApiView.as_view(), name="store_detail"),
 
      # Sellers Links
      path("stores/<int:id>/update/", views.StoreDetailUpdateView.as_view(), name="store_detail_update"),
@@ -21,7 +21,7 @@ urlpatterns = [
      #  Regular Links
      path("categories/", views.CategoryList.as_view(), name="category_list"),
 
-     path("categories/<int:category_id>/", views.CategoryDetail.as_view(), name="category_detail"),
+     path("categories/<int:pk>/", views.CategoryDetail.as_view(), name="category_detail"),
 
      path("products/", views.ProductListApiView.as_view(), name="product_list"),
      path("products/<int:pk>/",

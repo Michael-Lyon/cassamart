@@ -30,8 +30,7 @@ def send_order_mail(cart: Cart):
         product = cart_item.product
         owners.setdefault(user, [])
         owners[user].append(product)
-        
-    for user, product in owners:    
+    for user, product in owners:
         message = f"Hello {user}\nYou have recieved a new order for {' '.join(product)}."
         send_mail(subject="Cassamart New Order",message=message,
                     from_email=SENDER, recipient_list=[user.email], fail_silently=False)

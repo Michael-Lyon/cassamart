@@ -16,7 +16,6 @@ from .serializers import MessageSerializer, RoomSerializer
 
 User = get_user_model()
 
-
 class ChatAPI(APIView):
     """
         API endpoint for managing chat functionality between buyers and sellers.

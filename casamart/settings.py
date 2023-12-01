@@ -167,7 +167,7 @@ CSRF_TRUSTED_ORIGINS = ['https://cassamart.up.railway.app', "http://localhost:80
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ["Bearer"],
     "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=6),
-    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(hours=6)
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(weeks=12)
 }
 
 
@@ -222,6 +222,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 50,
 }
 
+PAYSTACK_SECRET = os.getenv("PAYSTACK_SECRET")
+PAYSTACK_PUBLIC = os.getenv("PAYSTACK_PUBLIC")
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = True
