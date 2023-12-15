@@ -361,6 +361,46 @@ class ProductCreateApiView(generics.CreateAPIView):
         return Response(response_data, status=status.HTTP_201_CREATED)
 
 
+class ProductDeleteApiView(generics.DestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsSellerIsOwner]
+    permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if not user_has_permission_to_delete_product(request.user, instance):
+            return Response(
+                {
+                    "data": None,
+                    "errors": "Permission denied",
+                    "status": "error",
+                    "message": "You do not have permission to delete this product",
+                    "pagination": None,
+                },
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        self.perform_destroy(instance)
+        return Response(
+            {
+                "data": None,
+                "errors": None,
+                "status": "success",
+                "message": "Product deleted successfully",
+                "pagination": None,
+            },
+            status=status.HTTP_204_NO_CONTENT,
+        )
+
+
+def user_has_permission_to_delete_product(user, product):
+    # Add your custom logic to check if the user has permission to delete the product
+    # For example, you might want to check if the user is the owner of the store associated with the product.
+    store_owner = product.store.owner
+    return user == store_owner
+
+
 class ProductDetailUpdateApiView(generics.RetrieveUpdateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [isSeller]
@@ -509,6 +549,7 @@ class CartView(APIView):
     def post(self, request):
         user = request.user
         data = request.data
+        print(data)
 
         try:
             cart = Cart.objects.get(user=user, paid=False)
@@ -516,9 +557,10 @@ class CartView(APIView):
             cart = Cart.objects.create(user=user)
 
         data["cart"] = cart.id
-        serializer = CartItemSerializer(data=data)
-
+        serializer = CartItemSerializer(
+            data=data, context={'request': request})
         if serializer.is_valid():
+            print(serializer.validated_data)
             product = serializer.validated_data['product']
             quantity = serializer.validated_data['quantity']
 
@@ -546,7 +588,7 @@ class CartView(APIView):
             }
 
             return Response(response_data, status=status.HTTP_201_CREATED)
-
+        print(serializer.errors)
         response_data = {
             "data": None,
             "errors": "Invalid data",

@@ -88,7 +88,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     chat_owner = serializers.SerializerMethodField()
-    # category = serializers.SerializerMethodField()
+    category = serializers.SerializerMethodField()
     store = serializers.SerializerMethodField()
     images = serializers.SerializerMethodField()
     class Meta:
@@ -125,11 +125,17 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(read_only=True)
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
     class Meta:
         model = CartItem
         fields = '__all__'
 
+    def to_representation(self, instance):
+        # Use the original representation for read operations, including detailed product info
+        representation = super().to_representation(instance)
+        representation['product'] = ProductSerializer(
+            instance.product, context={'request': self.context.get('request')}).data
+        return representation
 
 class CartSerializer(serializers.ModelSerializer):
     items = CartItemSerializer(source='cartitem_set', many=True, read_only=True)
