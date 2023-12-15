@@ -293,6 +293,7 @@ class ProductDetailApiView(generics.RetrieveAPIView):
         }
         return Response(response_data, status=status.HTTP_200_OK)
 
+
 class ProductCreateApiView(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [isSeller]
@@ -300,11 +301,11 @@ class ProductCreateApiView(generics.CreateAPIView):
     serializer_class = ProductSerializer
     parser_classes = (MultiPartParser,)
 
-    def create(self, request, *args, **kwargs):
-        store = Store.objects.get(owner=request.user)
-        print(store)
-        print(store.id)
+    def perform_create(self, serializer):
+        store = Store.objects.get(owner=self.request.user)
+
         if not store:
+            # Handle the case where the user does not own a store
             return Response(
                 {
                     "data": None,
@@ -315,11 +316,12 @@ class ProductCreateApiView(generics.CreateAPIView):
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
+
         # Create a list to store Image instances
         images_list = []
 
         # Handle images separately
-        for image_data in request.FILES.getlist('images', []):
+        for image_data in self.request.FILES.getlist('images', []):
             image_serializer = ImageSerializer(data={'image': image_data})
             if image_serializer.is_valid():
                 image_serializer.save()
@@ -336,19 +338,13 @@ class ProductCreateApiView(generics.CreateAPIView):
                     },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-
-
-        # Modify the request data to include the store and images
-
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        # Assign the store to the product before saving
+        category = Category.objects.get(id=self.request.data.get('category'))
+        # Assign the store and images to the product before saving
         serializer.validated_data['store'] = store
         serializer.validated_data['images'] = images_list
+        serializer.validated_data['category'] = category
 
-        self.perform_create(serializer)
-        # headers = self.get_success_headers(serializer.data)
+        super().perform_create(serializer)
 
         response_data = {
             "data": serializer.data,
