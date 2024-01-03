@@ -21,5 +21,9 @@ urlpatterns = [
 
     path("change-password/", views.ChangePasswordView.as_view(), name="change_password"),
 
+    path('addresses/', views.AddressListCreateView.as_view(),
+         name='address-list-create'),
+    path('addresses/<int:pk>/', views.AddressDetailView.as_view(), name='address-detail'),
+
 ]
 

@@ -1,6 +1,7 @@
 from datetime import timedelta, datetime
 from decimal import Decimal
 import json
+import os
 
 from django.db import transaction
 from django.shortcuts import get_object_or_404
@@ -15,8 +16,10 @@ from rest_framework.views import APIView
 from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.pagination import PageNumberPagination
-from accounts.models import Wallet
+from accounts.models import Address, Wallet
 from python_paystack.managers import TransactionsManager
+from python_paystack.objects.transactions import Transaction
+from python_paystack.paystack_config import PaystackConfig
 
 from . import utils
 from .my_permission  import IsSellerIsOwner, isSeller
@@ -27,10 +30,11 @@ from .serializers import (AllStoreDetailSerializer, CartItemSerializer,
                             StoreSerializer, TicketSerializer, WishlistItemGetSerializer, WishlistItemSerializer
                         )
 from drf_yasg.utils import swagger_auto_schema
+from dotenv import load_dotenv
+
 PAGINATION_NUM = 30
 
 User = get_user_model()
-
 
 
 class StoreListApiView(APIView):
@@ -450,7 +454,7 @@ class ProductDetailUpdateApiView(generics.RetrieveUpdateAPIView):
 
         return Response(response_data, status=status.HTTP_200_OK)
 
-
+#TODO: CHECK AND MAKE SURE THE CARD IS ONL
 class CartView(APIView):
     """Endpoint: `/api/cart/`
 
@@ -519,19 +523,29 @@ class CartView(APIView):
     def get(self, request):
         user = request.user
         try:
-            cart = Cart.objects.get(user=user)
-            serializer = CartSerializer(
-                cart,  context={'request': request})
-            data = serializer.data
-            data["total_cost"] = self.get_cart_total(cart)
-            response_data = {
-                "data": data,
-                "errors": None,
-                "status": "success",
-                "message": "User's cart retrieved successfully",
-                "pagination": None
-            }
-            return Response(response_data, status=status.HTTP_200_OK)
+            cart = Cart.objects.filter(user=user, paid=False).first()
+            if cart:
+                serializer = CartSerializer(
+                    cart,  context={'request': request})
+                data = serializer.data
+                data["total_cost"] = self.get_cart_total(cart)
+                response_data = {
+                    "data": data,
+                    "errors": None,
+                    "status": "success",
+                    "message": "User's cart retrieved successfully",
+                    "pagination": None
+                }
+                return Response(response_data, status=status.HTTP_200_OK)
+            else:
+                response_data = {
+                    "data": None,
+                    "errors": None,
+                    "status": "success",
+                    "message": "Cart is empty",
+                    "pagination": None
+                }
+                return Response(response_data, status=status.HTTP_200_OK)
         except Cart.DoesNotExist:
             response_data = {
                 "data": None,
@@ -646,57 +660,84 @@ class CheckoutView(APIView):
         """
 
         user = request.user
-        data = request
-        cart = Cart.objects.get(user=user, paid=False)
-        code = request.query_params.get('code', None)
+        data = None
+        cart = Cart.objects.filter(user=user, paid=False).first()
+        if cart:
+            # Calculate the total amount based on cart items
+            products = CartItem.objects.filter(cart=cart)
+            # Calculate the total sum the user ought to pay and also try to find the discount if there's any for the user
+            # TODO: CHECK IF THE CODE IS A LIST THEN FILTER BY IT
+            # AND FILTER THE PRODUCTS AND GIVE THE DISCOUNT
+            total_amount = sum(item.product.price * item.quantity for item in products)
 
-        # Calculate the total amount based on cart items
-        products = CartItem.objects.filter(cart=cart)
-        # Calculate the total sum the user ought to pay and also try to find the discount if there's any for the user
-        # TODO: CHECK IF THE CODE IS A LIST THEN FILTER BY IT
-        # AND FILTER THE PRODUCTS AND GIVE THE DISCOUNT
-        total_amount = sum(item.product.price * item.quantity for item in products)
+            # Return the cart items and the total price to be paid by the user
+            serializer = CartSerializer(cart, context={'request': request})
+            data = serializer.data
+            data["total_amount"] = total_amount
 
-        # Return the cart items and the total price to be paid by the user
-        serializer = CartSerializer(cart, context={'request': request})
-        data = serializer.data
-        data["total_amount"] = total_amount
-        response_data = {
-            "data": data,
-            "errors": None,
-            "status": "success",
-            "message": "Cart items and total amount retrieved successfully",
-            "pagination": None
-        }
-        return Response(response_data, status=status.HTTP_200_OK)
+            # INITAILIZE Paystack Transaction
+            transaction = Transaction(email=user.email, amount=int(total_amount * 100))
+
+            transaction_data = TransactionsManager().initialize_transaction(method="STANDARD", transaction=transaction)
+
+            response = json.loads(transaction_data.to_json())
+            data["paystack_details"] = response
+            response_data = {
+                "data": data,
+                "errors": None,
+                "status": "success",
+                "message": "Cart items and total amount retrieved successfully",
+                "pagination": None
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
+        else:
+            response_data = {
+                "data": data,
+                "errors": None,
+                "status": "success",
+                "message": "Cart is empty",
+                "pagination": None
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
+
 
     def post(self, request):
         user = request.user
-        cart = Cart.objects.get(user=user, paid=False)
+        cart = Cart.objects.filter(user=user, paid=False).first()
         data = request.data
-
+        address_id = int(data["delivery_address"])
         # Calculate the total amount based on cart items
         total_amount = data["total_amount"]
         reference = data["reference"]
-        delivery_address = data["delivery_address"]
+        delivery_address = Address.objects.get(id=address_id)
+        if cart:
+            _status = utils.check_payment(reference)
+            if _status == 'success':
+                checkout = Checkout.objects.get_or_create(user=user, cart=cart, total_amount=total_amount, status='paid', delivery_address=delivery_address, payment_status=True)
+                cart.paid = True
+                cart.save()
+                # send mails to the oowners of the goods that they have a new order
+                utils.send_order_mail(cart)
 
-        status = utils.check_payment(reference)
-        if status == 'success':
-            checkout = Checkout.objects.get_or_create(user=user, cart=cart, total_amount=total_amount, status='paid', delivery_address=delivery_address, payment_status=True)
-            cart.paid = True
-            cart.save()
-            # send mails to the oowners of the goods that they have a new order
-            utils.send_order_mail(cart)
-
-            serializer = CheckoutSerializer(checkout)
-            response_data = {
-                "data": serializer.data,
-                "errors": None,
-                "status": "success",
-                "message": "Transaction successful",
-                "pagination": None
-            }
-            return Response(response_data, status=status.HTTP_201_CREATED)
+                # serializer = CheckoutSerializer(checkout)
+                response_data = {
+                    "data": None,
+                    "errors": None,
+                    "status": "success",
+                    "message": "Transaction successful",
+                    "pagination": None
+                }
+                return Response(response_data, status=status.HTTP_202_ACCEPTED)
+            else:
+            # serializer = CheckoutSerializer(checkout)
+                response_data = {
+                    "data": None,
+                    "errors": None,
+                    "status": "success",
+                    "message": "No data avaiable",
+                    "pagination": None
+                }
+                return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
         else:
             response_data = {
@@ -743,9 +784,11 @@ class MyOrders(APIView):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self, request):
-        store = request.user.my_store
-        checkouts = Checkout.objects.filter(cart__items__store=store)
-        serializer = CheckoutSerializer(checkouts, many=True)
+        store = request.user.my_store.get()
+        print(store)
+        checkouts = checkouts = Checkout.objects.filter(
+            cart__items__store=store).distinct()
+        serializer = CheckoutSerializer(checkouts, many=True, context={'request': request})
         response_data = {
             "data": serializer.data,
             "errors": None,

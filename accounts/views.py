@@ -17,8 +17,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from store.models import Store
 from store.serializers import AllStoreDetailSerializer, StoreSerializer
 
-from .models import Profile
-from .serializers import (ProfileSerializer, BuyerSerializer, ChangePasswordSerializer, LoginSerializer, SellerSerializer)
+from .models import Address, Profile
+from .serializers import (AddressSerializer, ProfileSerializer, BuyerSerializer, ChangePasswordSerializer, LoginSerializer, SellerSerializer)
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from .utils import get_code
@@ -97,6 +97,86 @@ class ChangePasswordView(generics.UpdateAPIView):
             return Response({'status': True, 'message': 'Password changed successfully'})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class AddressListCreateView(generics.ListCreateAPIView):
+    serializer_class = AddressSerializer
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        # Filter addresses based on the authenticated user
+        return Address.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        # Set the user field in the serializer to the authenticated user
+        serializer.save(user=self.request.user)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "Addresses retrieved successfully",
+            "pagination": None
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        response_data = {
+            "data": response.data,
+            "errors": None,
+            "status": "success",
+            "message": "Address created successfully",
+            "pagination": None
+        }
+        return Response(response_data, status=response.status_code)
+
+
+class AddressDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = AddressSerializer
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        # Filter addresses based on the authenticated user
+        return Address.objects.filter(user=self.request.user)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "Address retrieved successfully",
+            "pagination": None
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+
+    def update(self, request, *args, **kwargs):
+        response = super().update(request, *args, **kwargs)
+        response_data = {
+            "data": response.data,
+            "errors": None,
+            "status": "success",
+            "message": "Address updated successfully",
+            "pagination": None
+        }
+        return Response(response_data, status=response.status_code)
+
+    def destroy(self, request, *args, **kwargs):
+        response = super().destroy(request, *args, **kwargs)
+        response_data = {
+            "data": None,
+            "errors": None,
+            "status": "success",
+            "message": "Address deleted successfully",
+            "pagination": None
+        }
+        return Response(response_data, status=response.status_code)
 
 class SellerProfileUpdateView(generics.UpdateAPIView):
     serializer_class = SellerSerializer

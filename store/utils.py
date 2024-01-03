@@ -10,6 +10,8 @@ from store.models import Cart
 
 
 def check_payment(reference: str) -> str:
+    #  print((TransactionsManager().verify_transaction(
+            # transaction_reference=response["reference"])).to_json())
     transaction_manager = TransactionsManager()
     transaction = transaction_manager.verify_transaction(transaction_reference=reference)
     transaction = json.loads(transaction.to_json())
@@ -26,15 +28,16 @@ def send_wallet_mail(owners: dict):
 def send_order_mail(cart: Cart):
     owners = {}
     for cart_item in cart.cartitem_set.all():
-        user = cart_item.product.category.store.owner
+        user = cart_item.product.store.owner
         product = cart_item.product
         owners.setdefault(user, [])
         owners[user].append(product)
-    for user, product in owners:
-        message = f"Hello {user}\nYou have recieved a new order for {' '.join(product)}."
-        send_mail(subject="Cassamart New Order",message=message,
-                    from_email=SENDER, recipient_list=[user.email], fail_silently=False)
-    
+    for user, products in owners.items():  # Use items() to iterate over key-value pairs
+        message = f"Hello {user.username}\nYou have received a new order for {', '.join(product.title for product in products)}."
+        send_mail(subject="Cassamart New Order", message=message,
+                  from_email=SENDER, recipient_list=[user.email], fail_silently=False)
+
+
 
 
 def generate_discount_id():

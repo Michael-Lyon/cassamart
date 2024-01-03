@@ -13,9 +13,9 @@ class PaystackConfig():
     '''
     PAYSTACK_URL = "https://api.paystack.co"
 
-    SECRET_KEY = ""
+    SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY")
 
-    PUBLIC_KEY = ""
+    PUBLIC_KEY = os.getenv("PAYSTACK_PUBLIC_KEY")
 
 
     PASS_ON_TRANSACTION_COST = True

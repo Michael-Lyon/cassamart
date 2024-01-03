@@ -6,6 +6,8 @@ from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
 
+from python_paystack.paystack_config import PaystackConfig
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -222,8 +224,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 50,
 }
 
-PAYSTACK_SECRET = os.getenv("PAYSTACK_SECRET")
-PAYSTACK_PUBLIC = os.getenv("PAYSTACK_PUBLIC")
+PAYSTACK_SECRET = os.getenv("PAYSTACK_SECRET_KEY")
+PAYSTACK_PUBLIC = os.getenv("PAYSTACK_PUBLIC_KEY")
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_USE_TLS = True
@@ -231,3 +233,6 @@ EMAIL_PORT = 587
 EMAIL_HOST = 'casamart.com.ng'
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+PaystackConfig.SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY")
+PaystackConfig.PUBLIC_KEY = os.getenv("PAYSTACK_PUBLIC_KEY")

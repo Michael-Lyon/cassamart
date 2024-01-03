@@ -1,6 +1,8 @@
 from django.urls import reverse
 from rest_framework import serializers
 
+from accounts.serializers import AddressSerializer
+
 from .models import Cart, CartItem, Category, Checkout, Product, Store, Ticket, WishlistItem, Image
 
 
@@ -145,6 +147,8 @@ class CartSerializer(serializers.ModelSerializer):
 
 
 class CheckoutSerializer(serializers.ModelSerializer):
+    cart = CartSerializer()
+    delivery_address = AddressSerializer()
     class Meta:
         model = Checkout
         fields = '__all__'

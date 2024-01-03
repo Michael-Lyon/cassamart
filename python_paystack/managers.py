@@ -181,7 +181,9 @@ class TransactionsManager(RetrieveableMixin, Manager):
             data = json.dumps(content['data'])
             transaction = Transaction.from_json(data)
             transaction.email = data_dict['customer']['email']
-            transaction.authorization_code = data_dict['authorization']['authorization_code']
+            transaction.authorization_code = transaction.authorization_code = data_dict['authorization'].get(
+                'authorization_code', None)
+
             return transaction
         else:
             raise APIConnectionFailedError(message)

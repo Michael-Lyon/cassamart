@@ -8,10 +8,15 @@ import traceback
 
 from store.models import Store
 
-from .models import Profile
+from .models import Address, Profile
 
 User = get_user_model()
 
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ['id', 'address', 'latitude', 'longitude']
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:

@@ -2,6 +2,7 @@
 base.py
 '''
 import json
+import os
 
 import jsonpickle
 
@@ -9,11 +10,15 @@ from ..paystack_config import PaystackConfig
 from .errors import InvalidInstance
 
 
+
+
 class Base():
     '''
     Abstract Base Class
     '''
     def __init__(self):
+        PaystackConfig.SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY")
+        PaystackConfig.PUBLIC_KEY = os.getenv("PAYSTACK_PUBLIC_KEY")
         if type(self) is Base:
             raise TypeError("Can not make instance of abstract base class")
 
