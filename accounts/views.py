@@ -333,6 +333,7 @@ class ProfileView(APIView):
         else:
             result = {
                 'profile': profile_data,
+                "address": address_data
             }
             return Response(result, status=status.HTTP_200_OK)
 
