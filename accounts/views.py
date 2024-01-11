@@ -315,6 +315,8 @@ class ProfileView(APIView):
     def get(self, request):
         user = request.user
         profile = Profile.objects.get(user=user)
+        addresses = Address.objects.filter(user=user)
+        address_data = AddressSerializer(addresses, many=True).data
         # Check if the user is a seller
         profile_data = ProfileSerializer(instance=profile,).data
         profile_data["first_name"] = user.first_name
@@ -325,6 +327,7 @@ class ProfileView(APIView):
             result = {
                 'profile': profile_data,
                 'store': store,
+                "address":address_data
             }
             return Response(result, status=status.HTTP_200_OK)
         else:
