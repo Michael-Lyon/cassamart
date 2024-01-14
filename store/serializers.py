@@ -164,7 +164,7 @@ class WishlistItemSerializer(serializers.ModelSerializer):
     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
     class Meta:
         model = WishlistItem
-        fields = ('product', 'added_at')
+        fields = ("id", 'product', 'added_at')
 
     def validate_product(self, value):
         try:
@@ -190,5 +190,5 @@ class WishlistItemGetSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
     class Meta:
         model = WishlistItem
-        fields = ('product', 'added_at')
+        fields = ("id", 'added_at', 'product')
 

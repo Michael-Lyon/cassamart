@@ -806,6 +806,23 @@ class WishlistItemCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
+        # Assuming your serializer has a 'product' field
+        product_id = request.data.get('product')
+
+        # Check if the product already exists in the Wishlist for the authenticated user
+        existing_wishlist_item = WishlistItem.objects.filter(
+            user=request.user, product=product_id).first()
+
+        if existing_wishlist_item:
+            # Product already exists, you can choose to return an error or update the existing item
+            response_data = {
+                "data": None,
+                "errors": {"product": ["Product already exists in the Wishlist."]},
+                "status": "error",
+                "message": "Product already exists in the Wishlist.",
+                "pagination": None
+            }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -821,6 +838,15 @@ class WishlistItemCreateView(generics.CreateAPIView):
         }
 
         return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+    
+    
+
+    
+
+
+
 
 
 class WishlistItemListView(generics.ListAPIView):
