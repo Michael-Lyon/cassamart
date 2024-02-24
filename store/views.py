@@ -840,14 +840,6 @@ class WishlistItemCreateView(generics.CreateAPIView):
         return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-    
-    
-
-    
-
-
-
-
 
 class WishlistItemListView(generics.ListAPIView):
     serializer_class = WishlistItemGetSerializer

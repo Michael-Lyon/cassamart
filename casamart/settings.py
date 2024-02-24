@@ -173,7 +173,9 @@ SIMPLE_JWT = {
 }
 
 
-DATABASE_URL = "postgresql://postgres:LHktxD2bmPBBouMW70XE@containers-us-west-106.railway.app:6947/railway"
+DATABASE_URL = "postgresql://postgres:a6bGeg5EFcFef12Bced5baBB122D51D5@monorail.proxy.rlwy.net:15058/railway"
+
+
 
 DATABASES = {
     "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
