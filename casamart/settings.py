@@ -173,7 +173,7 @@ SIMPLE_JWT = {
 }
 
 
-DATABASE_URL = "postgresql://postgres:a6bGeg5EFcFef12Bced5baBB122D51D5@monorail.proxy.rlwy.net:15058/railway"
+DATABASE_URL = "postgresql://postgres:5b6c5DADcfe6bcbac15EB25bbcc3egfg@viaduct.proxy.rlwy.net:55046/railway"
 
 
 
