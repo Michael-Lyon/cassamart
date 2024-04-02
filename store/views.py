@@ -980,11 +980,11 @@ class SendMessageNotificationView(APIView):
         responses={200: openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
-                'data': openapi.Schema(type=openapi.TYPE_NULL),
-                'errors': openapi.Schema(type=openapi.TYPE_NULL),
+                'data': openapi.Schema(type=openapi.TYPE_STRING),
+                'errors': openapi.Schema(type=openapi.TYPE_STRING),
                 'status': openapi.Schema(type=openapi.TYPE_STRING),
                 'message': openapi.Schema(type=openapi.TYPE_STRING),
-                'pagination': openapi.Schema(type=openapi.TYPE_NULL),
+                'pagination': openapi.Schema(type=openapi.TYPE_STRING),
             }
         )}
     )
