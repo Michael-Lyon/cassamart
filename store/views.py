@@ -16,7 +16,8 @@ from rest_framework.views import APIView
 from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.pagination import PageNumberPagination
-from accounts.models import Address, Wallet
+from accounts.models import Address, Profile, Wallet
+from casamart.notification_sender import send_push_notification
 from python_paystack.managers import TransactionsManager
 from python_paystack.objects.transactions import Transaction
 from python_paystack.paystack_config import PaystackConfig
@@ -31,6 +32,8 @@ from .serializers import (AllStoreDetailSerializer, CartItemSerializer,
                         )
 from drf_yasg.utils import swagger_auto_schema
 from dotenv import load_dotenv
+from django.core.exceptions import ObjectDoesNotExist
+from drf_yasg import openapi
 
 PAGINATION_NUM = 30
 
@@ -799,6 +802,26 @@ class MyOrders(APIView):
         return Response(response_data, status=status.HTTP_200_OK)
 
 
+
+class BuyerOrders(APIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        checkouts = checkouts = Checkout.objects.filter(user=request.user)
+        serializer = CheckoutSerializer(
+            checkouts, many=True, context={'request': request})
+        response_data = {
+            "data": serializer.data,
+            "errors": None,
+            "status": "success",
+            "message": "User's orders retrieved successfully",
+            "pagination": None
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+
+
+
 class WishlistItemCreateView(generics.CreateAPIView):
     queryset = WishlistItem.objects.all()
     authentication_classes = (JWTAuthentication,)
@@ -938,3 +961,55 @@ class GiveDiscountAPIView(APIView):
 def give_discount(request):
     give_discount_view = GiveDiscountAPIView.as_view()
     return give_discount_view(request)
+
+
+class SendMessageNotificationView(APIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    @swagger_auto_schema(
+        operation_description="Send a notification message",
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'message': openapi.Schema(type=openapi.TYPE_STRING),
+                'receiver_id': openapi.Schema(type=openapi.TYPE_INTEGER),
+            },
+            required=['message', 'receiver_id']
+        ),
+        responses={200: openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'data': openapi.Schema(type=openapi.TYPE_NULL),
+                'errors': openapi.Schema(type=openapi.TYPE_NULL),
+                'status': openapi.Schema(type=openapi.TYPE_STRING),
+                'message': openapi.Schema(type=openapi.TYPE_STRING),
+                'pagination': openapi.Schema(type=openapi.TYPE_NULL),
+            }
+        )}
+    )
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        user = request.user
+        message = data.get("message")
+        receiver_id = data.get("receiver_id")
+        response_data = {}
+
+        if not message or not receiver_id:
+            response_data['errors'] = 'Message or receiver_id is missing'
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            profile = Profile.objects.get(user__id=receiver_id)
+            send_push_notification(profile.fcm_token, "New Message", message)
+            response_data.update({
+                "status": "success",
+                "message": "Message sent successfully"
+            })
+            return Response(data=response_data, status=status.HTTP_200_OK)
+        except ObjectDoesNotExist:
+            response_data['errors'] = 'Profile not found for the given receiver_id'
+            return Response(data=response_data, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            response_data['errors'] = str(e)
+            return Response(data=response_data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

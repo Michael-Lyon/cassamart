@@ -16,12 +16,12 @@ User = get_user_model()
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = ['id', 'address', 'latitude', 'longitude']
+        fields = ['id', 'address', 'latitude', 'longitude', "is_default"]
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['nin', 'phone_number', 'address', "is_buyer", "is_seller"]
+        fields = ['phone_number', 'address', "is_buyer", "is_seller"]
 
 class SellerSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()

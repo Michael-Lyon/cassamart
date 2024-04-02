@@ -19,7 +19,12 @@ urlpatterns = [
      path("seller/my-order/", views.MyOrders.as_view(), name="my_orders"),
 
      #  Regular Links
+     path("my-orders/", views.BuyerOrders.as_view(), name="buyer_orders"),
+
      path("categories/", views.CategoryList.as_view(), name="category_list"),
+
+     path("send-message-notification/",
+          views.SendMessageNotificationView.as_view(), name="send_message_notification"),
 
      path("categories/<int:pk>/", views.CategoryDetail.as_view(), name="category_detail"),
 

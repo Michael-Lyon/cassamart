@@ -58,6 +58,42 @@ class LoginView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class FCMUpdateView(APIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'fcm_token': openapi.Schema(type=openapi.TYPE_STRING),
+            }
+        ),
+        operation_description="Update FCM token for user's profile",
+        responses={
+            200: "FCM token updated successfully",
+            400: "Bad request",
+            401: "Unauthorized",
+        },
+    )
+    def post(self, request):
+        user = request.user
+        profile = Profile.objects.get(user=user)
+        profile.fcm_token = request.data.get('fcm_token', None)
+        profile.save()
+        response_data = {
+            "data": None,
+            "errors": None,
+            "status": "failed",
+            "message": "FCM token updated",
+            "pagination": {
+                "count": None,
+                "next": None,
+                "previous": None,
+            }
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+
 class SellerCreateView(generics.CreateAPIView):
     # Disable CSRF protection for POST requests
     # http_method_names = ['post']
@@ -108,8 +144,13 @@ class AddressListCreateView(generics.ListCreateAPIView):
         return Address.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        # Set the user field in the serializer to the authenticated user
-        serializer.save(user=self.request.user)
+        # Check if the user has an existing address
+        user_addresses = Address.objects.filter(user=self.request.user)
+        if not user_addresses.exists():
+            # If the user doesn't have an existing address, set is_default to True
+            serializer.save(user=self.request.user, is_default=True)
+        else:
+            serializer.save(user=self.request.user)
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -157,15 +198,20 @@ class AddressDetailView(generics.RetrieveUpdateDestroyAPIView):
         return Response(response_data, status=status.HTTP_200_OK)
 
     def update(self, request, *args, **kwargs):
-        response = super().update(request, *args, **kwargs)
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
         response_data = {
-            "data": response.data,
+            "data": serializer.data,
             "errors": None,
             "status": "success",
             "message": "Address updated successfully",
             "pagination": None
         }
-        return Response(response_data, status=response.status_code)
+        return Response(response_data, status=status.HTTP_200_OK)
 
     def destroy(self, request, *args, **kwargs):
         response = super().destroy(request, *args, **kwargs)

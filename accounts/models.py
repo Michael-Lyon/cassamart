@@ -7,11 +7,11 @@ User = get_user_model()
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    nin = models.CharField(max_length=20, blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=200, blank=True, null=True)
     is_buyer = models.BooleanField(default=False)
     is_seller = models.BooleanField(default=False)
+    fcm_token = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return self.user.username
@@ -22,6 +22,7 @@ class Address(models.Model):
     address = models.CharField(max_length=255)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
+    is_default = models.BooleanField(default=False)
 
     def __str__(self):
         return self.address
