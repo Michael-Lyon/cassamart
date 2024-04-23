@@ -365,6 +365,7 @@ class ProfileView(APIView):
         address_data = AddressSerializer(addresses, many=True).data
         # Check if the user is a seller
         profile_data = ProfileSerializer(instance=profile,).data
+        profile_data["user_id"] = user.id
         profile_data["first_name"] = user.first_name
         profile_data["last_name"] = user.last_name
         profile_data["email"] = user.email

@@ -40,7 +40,6 @@ class ProductsInlineSerializer(serializers.Serializer):
     )
 
 
-
 class AllStoreDetailSerializer(serializers.ModelSerializer):
     chat_owner = serializers.SerializerMethodField()
     created = serializers.DateTimeField()

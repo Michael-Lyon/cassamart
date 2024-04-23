@@ -1000,7 +1000,7 @@ class SendMessageNotificationView(APIView):
             return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            profile = Profile.objects.get(user__id=receiver_id)
+            profile = Profile.ovebjects.get(user__id=receiver_id)
             send_push_notification(profile.fcm_token, "New Message", message)
             response_data.update({
                 "status": "success",
