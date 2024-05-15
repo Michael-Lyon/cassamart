@@ -33,3 +33,5 @@ class Wallet(models.Model):
     amount = models.DecimalField(max_digits=200, decimal_places=2, default=0.0)
 
 
+
+

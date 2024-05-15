@@ -27,5 +27,6 @@ urlpatterns = [
         name='address-list-create'),
     path('addresses/<int:pk>/', views.AddressDetailView.as_view(), name='address-detail'),
 
+
 ]
 

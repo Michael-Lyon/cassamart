@@ -30,6 +30,10 @@ class Store(models.Model):
         ordering = ['title']
         verbose_name = "store"
         verbose_name_plural = "stores"
+
+    def total_products(self):
+        return self.products.count()
+
     def __str__(self):
         return self.title
 
@@ -61,8 +65,6 @@ class Product(models.Model):
         return self.title
 
 
-
-
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     items = models.ManyToManyField(Product, through='CartItem')
@@ -78,12 +80,13 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+    received = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.cart} - {self.product}"
 
 
-class Checkout(models.Model):
+class Checkout(models.Model): # ORDER
     STATUS_CHOICES = (
         ('pending', 'Pending'),
         ('paid', "Paid"),
@@ -105,6 +108,9 @@ class Checkout(models.Model):
     def __str__(self):
         return f"Checkout {self.pk}"
 
+    class Meta:
+        ordering = ['-created']
+
 
 class Discount(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -115,7 +121,6 @@ class Discount(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user} is to pay {self.amount} on {self.product} from {self.product.store}"
-
 
 
 
@@ -136,7 +141,15 @@ class WishlistItem(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        ordering = ['-added_at']
+
+    class Meta:
         unique_together = ('user', 'product')
 
     def __str__(self):
         return f'{self.user.username}\'s wishlist item: {self.product.title}'
+
+
+class Wallet(models.Model):
+    amount = models.DecimalField(max_digits=20, decimal_places=2, default=0.0)
+    # bank_name

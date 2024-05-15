@@ -16,12 +16,12 @@ from rest_framework.views import APIView
 from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.pagination import PageNumberPagination
-from accounts.models import Address, Profile, Wallet
+from accounts.models import Address, Profile
 from casamart.notification_sender import send_push_notification
 from python_paystack.managers import TransactionsManager
 from python_paystack.objects.transactions import Transaction
 from python_paystack.paystack_config import PaystackConfig
-
+from django.db.models import Sum
 from . import utils
 from .my_permission  import IsSellerIsOwner, isSeller
 from .models import (Cart, CartItem, Category, Checkout, Discount, Product, Store, WishlistItem)
@@ -102,7 +102,6 @@ class StoreDetailApiView(APIView):
                 }
             }
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
-
 
 class StoreDetailUpdateView(generics.RetrieveUpdateAPIView):
     authentication_classes = (JWTAuthentication,)
@@ -281,7 +280,6 @@ class ProductListApiView(APIView):
             }
         }
         return Response(response_data, status=status.HTTP_200_OK)
-
 
 class ProductDetailApiView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
@@ -752,43 +750,12 @@ class CheckoutView(APIView):
             }
             return Response(response_data, status=stat.HTTP_402_PAYMENT_REQUIRED)
 
-class GoodsReceived(APIView):
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAuthenticated,)
-    def post(self, request):
-        data = request.data
-        user = request.user
-        owners = {}
-        id = data["id"]
-        cart = Cart.objects.get(id=id, user=user)
-        status = data['status']
-        if status:
-            for cart_item in cart.cartitem_set.all():
-                product_owner = cart_item.product.category.store.owner
-                payment_amount = cart_item.product.price * cart_item.quantity
-                owners.setdefault(product_owner, 0)
-                owners[product_owner]+= payment_amount
-                # Add each product owner money to thier wallet
-                created, wallet = Wallet.objects.get_or_create(user=product_owner)
-                wallet.amount += payment_amount
-            # send mails to the onwers of the products that their accounts have been topped
-            utils.send_wallet_mail(owners)
-            response_data = {
-                "data": {"message": "Updated."},
-                "errors": None,
-                "status": "success",
-                "message": "Goods received updated successfully",
-                "pagination": None
-            }
-            return Response(response_data, status=status.HTTP_200_OK)
-        return Response({"message":"Updated."} , status=stat.HTTP_409_CONFLICT)
 
 class MyOrders(APIView):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self, request):
         store = request.user.my_store.get()
-        print(store)
         checkouts = checkouts = Checkout.objects.filter(
             cart__items__store=store).distinct()
         serializer = CheckoutSerializer(checkouts, many=True, context={'request': request})
@@ -802,13 +769,44 @@ class MyOrders(APIView):
         return Response(response_data, status=status.HTTP_200_OK)
 
 
+class MyStore(APIView):
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        store = request.user.my_store.get()
+
+        # Filter for check out and find total revenue and total cost of products
+        checkouts = Checkout.objects.filter(
+            cart__items__store=store).distinct()
+        orders = CheckoutSerializer(
+            checkouts, many=True, context={'request': request})
+        paid_checkouts = checkouts.filter(payment_status=True)
+
+        total_paid_amount = paid_checkouts.aggregate(
+            total_amount=Sum('total_amount'))['total_amount']
+
+        response_data = {
+            "data": {
+                "recent_orders": orders.data,
+                "total_revenue": total_paid_amount,
+                "total_orders": checkouts.count(),
+                "my_products": store.total_products()
+                },
+            "errors": None,
+            "status": "success",
+            "message": "User's orders retrieved successfully",
+            "pagination": None
+        }
+        return Response(response_data, status=status.HTTP_200_OK)
+
 
 class BuyerOrders(APIView):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        checkouts = checkouts = Checkout.objects.filter(user=request.user)
+        checkouts = Checkout.objects.filter(user=request.user)
         serializer = CheckoutSerializer(
             checkouts, many=True, context={'request': request})
         response_data = {
@@ -819,7 +817,6 @@ class BuyerOrders(APIView):
             "pagination": None
         }
         return Response(response_data, status=status.HTTP_200_OK)
-
 
 
 class WishlistItemCreateView(generics.CreateAPIView):
@@ -861,7 +858,6 @@ class WishlistItemCreateView(generics.CreateAPIView):
         }
 
         return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
-
 
 
 class WishlistItemListView(generics.ListAPIView):

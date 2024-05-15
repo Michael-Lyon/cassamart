@@ -17,6 +17,7 @@ urlpatterns = [
      path("seller/product/create/", views.ProductCreateApiView.as_view(), name="product_create"),
 
      path("seller/my-order/", views.MyOrders.as_view(), name="my_orders"),
+     path("seller/my-store/", views.MyStore.as_view(), name="my_store"),
 
      #  Regular Links
      path("my-orders/", views.BuyerOrders.as_view(), name="buyer_orders"),
@@ -37,8 +38,6 @@ urlpatterns = [
 
      path("cart/", views.CartView.as_view(), name="cart"),
      path("checkout/", views.CheckoutView.as_view(), name="checkout"),
-
-     path("goods-received/", views.GoodsReceived.as_view(), name="goods_recieved"),
 
      path('wishlist/', views.WishlistItemCreateView.as_view(), name='wishlist-create'),
      path('wishlist/list/', views.WishlistItemListView.as_view(), name='wishlist-list'),

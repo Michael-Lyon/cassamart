@@ -1,3 +1,4 @@
+
 from django.contrib import admin
 
 from .models import Address, Profile
@@ -35,3 +36,7 @@ class AddressAdmin(admin.ModelAdmin):
 # admin.site.site_header = 'Your Site Admin'
 # admin.site.site_title = 'Your Site Admin'
 # admin.site.index_title = 'Site Administration'
+
+
+# Register your models here.
+

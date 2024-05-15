@@ -27,6 +27,7 @@ ALLOWED_HOSTS = ["cassamart.up.railway.app", "localhost"]
 # Application definition
 
 INSTALLED_APPS = [
+    # LOCAL APPS
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -37,9 +38,10 @@ INSTALLED_APPS = [
     'store',
     'accounts',
     "chat",
+    "payment",
 
 
-    # packages
+    # 3RD PARTY packages
     'channels',
     'rest_framework',
     'rest_framework.authtoken',
@@ -93,12 +95,6 @@ ASGI_APPLICATION = 'casamart.routing.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "NAME": BASE_DIR / "db.sqlite3",
-        "ENGINE": "django.db.backends.sqlite3",
-    }
-}
 
 
 # Password validation
@@ -176,10 +172,18 @@ SIMPLE_JWT = {
 DATABASE_URL = "postgresql://postgres:5b6c5DADcfe6bcbac15EB25bbcc3egfg@viaduct.proxy.rlwy.net:55046/railway"
 
 
-
 DATABASES = {
     "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
 }
+
+# DATABASES = {
+#     "default": {
+#         "NAME": BASE_DIR / "db.sqlite3",
+#         "ENGINE": "django.db.backends.sqlite3",
+#     }
+# }
+
+
 
 CHANNEL_LAYERS = {
     "default": {

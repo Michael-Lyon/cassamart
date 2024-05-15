@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework import serializers
 
-from accounts.serializers import AddressSerializer
+from accounts.serializers import AddressSerializer, ProfileSerializer
 
 from .models import Cart, CartItem, Category, Checkout, Product, Store, Ticket, WishlistItem, Image
 
@@ -18,14 +18,20 @@ class CategoryInlineSerializer(serializers.Serializer):
 
 class StoreInlineSerializer(serializers.Serializer):
     id = serializers.CharField(read_only=True)
-    owner = serializers.CharField(read_only=True)
+    # owner = serializers.CharField(read_only=True)
     title = serializers.CharField(read_only=True)
     slug = serializers.SlugField(read_only=True)
     image = serializers.ImageField(read_only=True)
+    owner_profile = ProfileSerializer(source='owner', read_only=True)
     detail_url = serializers.HyperlinkedIdentityField(
         view_name="store:store_detail",
         lookup_field='pk'
     )
+    class Meta:
+        model = Store
+        fields = ['id', 'owner_profile', 'title',
+                'slug', 'image', 'detail_url']
+
 
 class ProductsInlineSerializer(serializers.Serializer):
     id = serializers.PrimaryKeyRelatedField(read_only=True)
@@ -43,9 +49,11 @@ class ProductsInlineSerializer(serializers.Serializer):
 class AllStoreDetailSerializer(serializers.ModelSerializer):
     chat_owner = serializers.SerializerMethodField()
     created = serializers.DateTimeField()
+    owner_profile = ProfileSerializer(source='owner', read_only=True)
     class Meta:
         model = Store
-        fields = ["id",'owner', "image" ,"chat_owner", "title", "created" ]
+        fields = ["id", "image", "chat_owner",
+                "title", "created", "owner_profile"]
 
 
     def get_chat_owner(self, obj):
@@ -57,13 +65,17 @@ class AllStoreDetailSerializer(serializers.ModelSerializer):
             return request.build_absolute_uri(chat_url)
         return None
 
+    # def get_owner(self, obj):
+    #     owner = obj.owner
+
 
 class StoreSerializer(serializers.ModelSerializer):
     title = serializers.ReadOnlyField()
     slug = serializers.ReadOnlyField()
+    owner_profile = ProfileSerializer(source='owner', read_only=True)
     class Meta:
         model = Store
-        fields = ["id", 'title', "slug", "image",]
+        fields = ["id", 'title', "slug", "image", "owner_profile"]
 
     def get_chat_owner(self, obj):
         owner = obj.owner
