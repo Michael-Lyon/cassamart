@@ -13,7 +13,7 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.parsers import FileUploadParser, MultiPartParser
+from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.pagination import PageNumberPagination
 from accounts.models import Address, Profile
@@ -451,7 +451,7 @@ class ProductDetailUpdateApiView(generics.RetrieveUpdateAPIView):
     permission_classes = [isSeller]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    parser_classes = (MultiPartParser,)
+    parser_classes = (JSONParser, MultiPartParser,)
     lookup_field = "pk"
 
     def retrieve(self, request, *args, **kwargs):
