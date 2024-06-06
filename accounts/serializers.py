@@ -21,10 +21,20 @@ class AddressSerializer(serializers.ModelSerializer):
         fields = ['id', 'address', 'latitude', 'longitude', "is_default"]
 
 class ProfileSerializer(serializers.ModelSerializer):
+    user_detail = serializers.SerializerMethodField()
     class Meta:
         model = Profile
-        fields = ['phone_number',
-                'address', "is_buyer", "is_seller", ]
+        fields = ['phone_number', 'address',
+                    "is_buyer", "is_seller", "user_detail"]
+
+    def get_user_detail(self, obj):
+        user = obj
+        return {
+            "id": user.id,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+        }
 
 class SellerSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()

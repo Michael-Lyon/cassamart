@@ -290,19 +290,26 @@ class CategoryDetail(APIView):
             }
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
+
 class ProductListApiView(APIView):
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
+
     def get(self, request):
-        # Paginate the queryset
+        # Get all products
+        products = Product.objects.all().order_by("-created")
+
+        # Apply the filters
+        filtered_data = self.filterset_class(request.GET, queryset=products)
+
+        # Paginate the filtered queryset
         paginator = PageNumberPagination()
         paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
-        products = Product.objects.all().order_by("-created")
-        result_page = paginator.paginate_queryset(products, request)
-        filtered_data = OrderFilter(request.GET, queryset=result_page)
+        result_page = paginator.paginate_queryset(filtered_data.qs, request)
 
         # Serialize the paginated queryset
-        serializer = ProductSerializer(filtered_data, many=True, context={"request": request})
+        serializer = ProductSerializer(
+            result_page, many=True, context={"request": request})
 
         response_data = {
             "data": serializer.data,
@@ -316,6 +323,7 @@ class ProductListApiView(APIView):
             }
         }
         return Response(response_data, status=status.HTTP_200_OK)
+
 
 class ProductDetailApiView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
