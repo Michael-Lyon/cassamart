@@ -1,6 +1,6 @@
 import django_filters
 
-from store.models import Checkout, Product
+from store.models import Checkout, Product, Store
 
 
 class OrderFilter(django_filters.FilterSet):
@@ -27,8 +27,12 @@ class ProductFilter(django_filters.FilterSet):
 
 
 
+class StoreFilter(django_filters.FilterSet):
+    title = django_filters.CharFilter(lookup_expr='icontains')
 
-
+    class Meta:
+        model = Store
+        fields = ['title',]
 
 
 # import django_filters

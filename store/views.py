@@ -24,7 +24,7 @@ from python_paystack.objects.transactions import Transaction
 from python_paystack.paystack_config import PaystackConfig
 from django.db.models import Sum
 
-from store.store_filters import OrderFilter, ProductFilter
+from store.store_filters import OrderFilter, ProductFilter, StoreFilter
 from . import utils
 from .my_permission  import IsSellerIsOwner, isSeller
 from .models import (Cart, CartItem, Category, Checkout, Discount, Product, Store, WishlistItem)
@@ -44,6 +44,8 @@ User = get_user_model()
 
 
 class StoreListApiView(APIView):
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = StoreFilter
     def get(self, request):
         """
         The function retrieves a paginated list of all stores, serializes the data, and returns it in a
@@ -57,11 +59,14 @@ class StoreListApiView(APIView):
         information such as count, next page link, and previous page link. The response includes a
         success status, a message indicating a successful check, and no errors.
         """
+        stores = Store.objects.all()
+        filtered_data = self.filterset_class(request.GET, queryset=stores)
+
         # Paginate the queryset
         paginator = PageNumberPagination()
         paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
-        stores = Store.objects.all()
-        result_page = paginator.paginate_queryset(stores, request)
+        # Apply the filters
+        result_page = paginator.paginate_queryset(filtered_data.qs, request)
 
         # Serialize the paginated queryset
         serializer = AllStoreDetailSerializer(result_page, many=True, context={"request": request})
@@ -137,16 +142,43 @@ class StoreDetailApiView(APIView):
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
 class StoreDetailUpdateView(generics.RetrieveUpdateAPIView):
+    """
+    Endpoint: /api/store/<id>/
+    Method: PUT
+    Authentication: JWTAuthentication
+    Permissions: IsAuthenticated, isSeller
+
+    URL Parameters:
+    - id: The ID of the store to be updated.
+
+    Request Body:
+    - JSON object containing the new details of the store.
+    - 'image' field (optional) containing the image data as a file.
+
+    Response:
+    - 200 OK: If the update is successful. Returns a JSON object containing the updated store details.
+    - 403 FORBIDDEN: If the user is not authorized to update the store. Returns a JSON object with "status": "error" and an error message.
+
+    Note: Only the owner of the store can update the store details.
+    """
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated, isSeller)
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
     lookup_field = "id"
+    parser_classes = (MultiPartParser, JSONParser)
 
     def perform_update(self, serializer):
         # Ensure that only the store owner can update the store details
         user = self.request.user
         store = self.get_object()
+
+        # Handle images separately
+        if 'image' in self.request.FILES:
+            for image_data in self.request.FILES.getlist('image'):
+                if image_data:
+                    store.image = image_data
+                    store.save()
 
         if user == store.owner:
             serializer.save()
