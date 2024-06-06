@@ -14,7 +14,7 @@ class TransactionAdmin(admin.ModelAdmin):
 
 @admin.register(BankDetail)
 class BankDetailAdmin(admin.ModelAdmin):
-    list_display = ['user', 'name', 'account_number',
+    list_display = ['user', 'account_name', 'account_number',
                     'bank_code', 'recipient_code']
     search_fields = ['user__username', 'name',
                     'account_number', 'bank_code', 'recipient_code']

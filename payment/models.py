@@ -9,9 +9,10 @@ User = get_user_model()
 class BankDetail(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="bank_details")
-    name = models.CharField(max_length=100)
+    account_name = models.CharField(max_length=100)
     account_number = models.CharField(max_length=100)
     bank_code = models.CharField(max_length=10)
+    bank_name = models.CharField(max_length=100, blank=True, null=True)
     recipient_code = models.CharField(max_length=100, null=True, blank=True)
 
 

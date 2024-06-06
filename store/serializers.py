@@ -119,7 +119,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_store(self, obj):
         my_store = obj.store
-        return StoreInlineSerializer(my_store, context=self.context).data
+        return StoreSerializer(my_store, context=self.context).data
+        # return StoreSerializer(my_store, context=self.context).data
 
     def get_images(self, obj):
         request = self.context.get('request')

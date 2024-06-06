@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "python_paystack",
     'rest_framework_swagger',
     'drf_yasg',
+    'django_filters',
     ]
 
 

@@ -12,14 +12,20 @@ class TransactionSerializer(serializers.ModelSerializer):
 
 
 class BankDetailSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = BankDetail
-        fields = ['id', 'user', 'name', 'account_number',
-                'bank_code', 'recipient_code']
+        fields = ['id', 'account_name', 'account_number',
+                'bank_code', 'bank_name']
 
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        # Customize the representation here
-        return create_response(data=representation, message="Created/Retrieved Successfully", status="success")
+
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
+    #     return create_response(data=representation, status="success", message="Created/Retreeived Successfully")
+
+
+class BankDetailInlineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BankDetail
+        fields = ['account_name', 'account_number',
+                    'bank_code', 'bank_name']

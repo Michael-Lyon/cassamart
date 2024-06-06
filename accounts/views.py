@@ -14,6 +14,8 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from payment.models import BankDetail
+from payment.serializers import BankDetailSerializer
 from store.models import Store
 from store.serializers import AllStoreDetailSerializer, StoreSerializer
 
@@ -362,6 +364,8 @@ class ProfileView(APIView):
         user = request.user
         profile = Profile.objects.get(user=user)
         addresses = Address.objects.filter(user=user)
+        banks = BankDetail.objects.filter(
+            user=user) if BankDetail.objects.filter(user=user).exists() else None
         address_data = AddressSerializer(addresses, many=True).data
         # Check if the user is a seller
         profile_data = ProfileSerializer(instance=profile,).data
@@ -369,12 +373,14 @@ class ProfileView(APIView):
         profile_data["first_name"] = user.first_name
         profile_data["last_name"] = user.last_name
         profile_data["email"] = user.email
+        print(banks)
         if profile.is_seller:
             store = StoreSerializer(instance=Store.objects.get(owner=user), context={"request": request}).data
             result = {
                 'profile': profile_data,
                 'store': store,
-                "address":address_data
+                "address":address_data,
+                "bank_details": BankDetailSerializer(banks, many=True).data if banks else []
             }
             return Response(result, status=status.HTTP_200_OK)
         else:

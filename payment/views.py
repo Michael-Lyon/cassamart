@@ -4,7 +4,8 @@ from django.shortcuts import render
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics, mixins, serializers, status
-from accounts.models import Wallet
+from accounts.models import Profile, Wallet
+from casamart.notification_sender import send_push_notification
 from payment.models import BankDetail, Transaction
 from payment.serializers import BankDetailSerializer
 from rest_framework.views import APIView
@@ -30,9 +31,16 @@ class BankDetailView(generics.ListCreateAPIView):
         return BankDetail.objects.filter(user=user)
 
     def perform_create(self, serializer):
-        print(serializer)
         serializer.save(user=self.request.user)
 
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response.data = create_response(
+            data=response.data['results'],
+            message="Created/Retrieved Successfully",
+            status="success",
+        )
+        return Response(response.data)
 
 
 class GetBanksView(APIView):
@@ -126,6 +134,9 @@ class GoodsReceived(APIView):
                     manager, bank_detail, price):
                     cart_item.received = True
                     cart_item.save()
+                    #TODO: CREATE A BACKGROUND TASK TO CHECK ON TRANSACTIONS AND CONFIRM THEM AND SEND A NOTOFICATION TO SELLER THAT PAYMENT IS COMPLETED
+                send_push_notification(
+                    Profile.objects.get(user=owner).fcm_token, "Order Recieved", "Order Recieved by buyer and payment has been initiated")
                 return create_response(message="Transfer Initiated Success", status="success")
 
             return create_response(message="No bank detail found")

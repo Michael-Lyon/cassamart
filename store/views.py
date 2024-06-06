@@ -2,7 +2,7 @@ from datetime import timedelta, datetime
 from decimal import Decimal
 import json
 import os
-
+from django_filters.rest_framework import DjangoFilterBackend
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
@@ -18,10 +18,13 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.pagination import PageNumberPagination
 from accounts.models import Address, Profile
 from casamart.notification_sender import send_push_notification
+from casamart.utils import create_response
 from python_paystack.managers import TransactionsManager
 from python_paystack.objects.transactions import Transaction
 from python_paystack.paystack_config import PaystackConfig
 from django.db.models import Sum
+
+from store.store_filters import OrderFilter, ProductFilter
 from . import utils
 from .my_permission  import IsSellerIsOwner, isSeller
 from .models import (Cart, CartItem, Category, Checkout, Discount, Product, Store, WishlistItem)
@@ -42,6 +45,18 @@ User = get_user_model()
 
 class StoreListApiView(APIView):
     def get(self, request):
+        """
+        The function retrieves a paginated list of all stores, serializes the data, and returns it in a
+        response along with pagination information.
+
+        :param request: The `request` parameter in the `get` method is typically an object that contains
+        information about the current HTTP request. It includes details such as the request method (GET,
+        POST, etc.), headers, user authentication details, and query parameters. In this context, the
+        `request` parameter is used
+        :return: A paginated response containing data from the Store queryset, along with pagination
+        information such as count, next page link, and previous page link. The response includes a
+        success status, a message indicating a successful check, and no errors.
+        """
         # Paginate the queryset
         paginator = PageNumberPagination()
         paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
@@ -64,8 +79,26 @@ class StoreListApiView(APIView):
         }
         return Response(response_data, status=status.HTTP_200_OK)
 
+# This class is an API view in Django REST framework that retrieves store details and associated
+# products with pagination support.
 class StoreDetailApiView(APIView):
     def get(self, request, pk):
+        """
+        This function retrieves store details and associated products with pagination support, handling
+        cases where the store does not exist.
+        
+        :param request: The `request` parameter in the `get` method is typically an object that contains
+        information about the current HTTP request. It includes details such as the request method (GET,
+        POST, etc.), headers, user authentication details, and any data sent in the request body
+        :param pk: The `pk` parameter in the `get` method represents the primary key of the Store object
+        that you want to retrieve details for. It is used to uniquely identify a specific Store in the
+        database
+        :return: The code snippet provided is a Django view function that retrieves store details and
+        associated products based on the store's primary key (pk). If the store with the given primary
+        key exists, it returns a JSON response containing the store details, products, pagination
+        information, and a success message with an HTTP status code of 200. If the store does not exist,
+        it returns a JSON response indicating that the store
+        """
         try:
             paginator = PageNumberPagination()
             paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
@@ -258,15 +291,18 @@ class CategoryDetail(APIView):
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
 
 class ProductListApiView(APIView):
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ProductFilter
     def get(self, request):
         # Paginate the queryset
         paginator = PageNumberPagination()
         paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
         products = Product.objects.all().order_by("-created")
         result_page = paginator.paginate_queryset(products, request)
+        filtered_data = OrderFilter(request.GET, queryset=result_page)
 
         # Serialize the paginated queryset
-        serializer = ProductSerializer(result_page, many=True, context={"request": request})
+        serializer = ProductSerializer(filtered_data, many=True, context={"request": request})
 
         response_data = {
             "data": serializer.data,
@@ -751,14 +787,39 @@ class CheckoutView(APIView):
             return Response(response_data, status=stat.HTTP_402_PAYMENT_REQUIRED)
 
 
+# The `MyOrders` class retrieves orders associated with the authenticated user's store using Django
+# filters and returns the data in a serialized format.
 class MyOrders(APIView):
+    """
+    ## My Orders
+
+    This endpoint retrieves the orders for a seller. It can be filtered using the following parameters:
+
+    #### Filters
+
+    - **status**: Filter by order status. Possible values: `pending`, `not-paid`, `paid`.
+    - **received_status**: Filter by received status. Possible values: `true`, `false`.
+
+    - **products**: Filter by products. Possible values: product name
+    #### Example
+
+    To get all paid orders created between January 1, 2024, and December 31, 2024, the URL would be: ~created_after=2024-01-01&created_before=2024-12-31~
+
+    `GET /api/orders?status=paid&&received_status=true&product=apple`
+    """
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = OrderFilter
+
     def get(self, request):
         store = request.user.my_store.get()
         checkouts = checkouts = Checkout.objects.filter(
             cart__items__store=store).distinct()
-        serializer = CheckoutSerializer(checkouts, many=True, context={'request': request})
+        filtered_data  = OrderFilter(request.GET, queryset=checkouts)
+        print(f"HEYYYYYY: {filtered_data.qs}")
+        serializer = CheckoutSerializer(
+            filtered_data.qs, many=True, context={'request': request})
         response_data = {
             "data": serializer.data,
             "errors": None,
@@ -781,15 +842,15 @@ class MyStore(APIView):
             cart__items__store=store).distinct()
         orders = CheckoutSerializer(
             checkouts, many=True, context={'request': request})
-        paid_checkouts = checkouts.filter(payment_status=True)
+        # paid_checkouts = checkouts.filter(payment_status=True)
 
-        total_paid_amount = paid_checkouts.aggregate(
-            total_amount=Sum('total_amount'))['total_amount']
+        # total_paid_amount = paid_checkouts.aggregate(
+        #     total_amount=Sum('total_amount'))['total_amount']
 
         response_data = {
             "data": {
                 "recent_orders": orders.data,
-                "total_revenue": total_paid_amount,
+                # "total_revenue": total_paid_amount,
                 "total_orders": checkouts.count(),
                 "my_products": store.total_products()
                 },
@@ -801,14 +862,73 @@ class MyStore(APIView):
         return Response(response_data, status=status.HTTP_200_OK)
 
 
-class BuyerOrders(APIView):
+class GoodsDelivered(APIView):
+    """ ###GOODS DELIVERED ENDPOINT
+    
+    **POST**:
+    Indicate a goods has been received.
+
+    This endpoint through post gets a product id which indicates that the user has received the product and then makes payment to the owner of the product
+
+    **PayLoad:**
+    - product_id: The product id to resolve.
+
+    """
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
 
+    def post(self, request):
+        data = request.data
+        user = request.user
+
+        product_id = int(data.get('product_id', None))
+        if product_id:
+            try:
+                cart = Cart.objects.get(user=user)
+                cart_item = CartItem.objects.get(
+                    cart=cart, product__id=product_id, product__store__owner=user)
+                send_push_notification(
+                    Profile.objects.get(user=cart_item.cart.user).fcm_token, "Order Delivered", "Order has been delivered, please verify receipient ")
+                cart_item.delivered = True
+                cart_item.save()
+            except (Cart.DoesNotExist, CartItem.DoesNotExist):
+                return create_response(message="Cart or Product not found")
+
+
+
+        return create_response(message="Updated Successfully", status="success")
+
+
+
+
+class BuyerOrders(APIView):
+    """
+    ## My Orders
+
+    This endpoint retrieves the orders for a seller. It can be filtered using the following parameters:
+
+    #### Filters
+
+    - **status**: Filter by order status. Possible values: `pending`, `not-paid`, `paid`.
+    - **received_status**: Filter by received status. Possible values: `true`, `false`.
+
+    - **products**: Filter by products. Possible values: product name
+    #### Example
+
+    To get all paid orders created between January 1, 2024, and December 31, 2024, the URL would be: ~created_after=2024-01-01&created_before=2024-12-31~
+
+    `GET /api/orders?status=paid&&received_status=true&product=apple`
+    """
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = OrderFilter
+
     def get(self, request):
         checkouts = Checkout.objects.filter(user=request.user)
+        filtered_data = OrderFilter(request.GET, queryset=checkouts)
         serializer = CheckoutSerializer(
-            checkouts, many=True, context={'request': request})
+            filtered_data.qs, many=True, context={'request': request})
         response_data = {
             "data": serializer.data,
             "errors": None,
@@ -996,7 +1116,7 @@ class SendMessageNotificationView(APIView):
             return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            profile = Profile.ovebjects.get(user__id=receiver_id)
+            profile = Profile.objects.get(user__id=receiver_id)
             send_push_notification(profile.fcm_token, "New Message", message)
             response_data.update({
                 "status": "success",

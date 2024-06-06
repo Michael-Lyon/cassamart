@@ -9,6 +9,8 @@ import traceback
 from store.models import Store
 
 from .models import Address, Profile
+from payment.models import BankDetail
+from payment.serializers import BankDetailInlineSerializer, BankDetailSerializer
 
 User = get_user_model()
 
@@ -21,7 +23,8 @@ class AddressSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['phone_number', 'address', "is_buyer", "is_seller"]
+        fields = ['phone_number',
+                'address', "is_buyer", "is_seller", ]
 
 class SellerSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()

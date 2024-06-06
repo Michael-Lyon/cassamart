@@ -18,6 +18,7 @@ urlpatterns = [
 
      path("seller/my-order/", views.MyOrders.as_view(), name="my_orders"),
      path("seller/my-store/", views.MyStore.as_view(), name="my_store"),
+     path("seller/goods-delivered/", views.GoodsDelivered.as_view(), name="goods_delivered"),
 
      #  Regular Links
      path("my-orders/", views.BuyerOrders.as_view(), name="buyer_orders"),
