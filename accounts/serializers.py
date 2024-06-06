@@ -28,12 +28,18 @@ class ProfileSerializer(serializers.ModelSerializer):
                     "is_buyer", "is_seller", "user_detail"]
 
     def get_user_detail(self, obj):
-        user = obj
+        if  isinstance(obj, User):
+            return {
+                "id": obj.id,
+                "email": obj.email,
+                "first_name": obj.first_name,
+                "last_name": obj.last_name
+            }
         return {
-            "id": user.id,
-            "email": user.email,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
+            "id": obj.user.id,
+            "email": obj.user.email,
+            "first_name": obj.user.first_name,
+            "last_name": obj.user.last_name
         }
 
 class SellerSerializer(serializers.ModelSerializer):
