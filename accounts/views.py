@@ -369,15 +369,15 @@ class ProfileView(APIView):
         address_data = AddressSerializer(addresses, many=True).data
         # Check if the user is a seller
         profile_data = ProfileSerializer(instance=profile,).data
-        # profile_data["user_id"] = user.id
-        # profile_data["first_name"] = user.first_name
-        # profile_data["last_name"] = user.last_name
-        # profile_data["email"] = user.email
+        profile_data["user_id"] = user.id
+        profile_data["first_name"] = user.first_name
+        profile_data["last_name"] = user.last_name
+        profile_data["email"] = user.email
         print(banks)
         if profile.is_seller:
             store = StoreSerializer(instance=Store.objects.get(owner=user), context={"request": request}).data
             result = {
-                # 'profile': profile_data,
+                'profile': profile_data,
                 'store': store,
                 "address":address_data,
                 "bank_details": BankDetailSerializer(banks, many=True).data if banks else []
