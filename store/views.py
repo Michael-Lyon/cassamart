@@ -19,15 +19,17 @@ from rest_framework.pagination import PageNumberPagination
 from accounts.models import Address, Profile
 from casamart.notification_sender import send_push_notification
 from casamart.utils import create_response
+from payment.models import BankDetail
 from python_paystack.managers import TransactionsManager
 from python_paystack.objects.transactions import Transaction
 from python_paystack.paystack_config import PaystackConfig
 from django.db.models import Sum
+from django.shortcuts import get_object_or_404
 
 from store.store_filters import OrderFilter, ProductFilter, StoreFilter
 from . import utils
 from .my_permission  import IsSellerIsOwner, isSeller
-from .models import (Cart, CartItem, Category, Checkout, Discount, Product, Store, WishlistItem)
+from .models import (CanceledCheckout, Cart, CartItem, Category, Checkout, Discount, Product, Store, WishlistItem)
 from .serializers import (AllStoreDetailSerializer, CartItemSerializer,
                             CartSerializer, CategorySerializer,
                             CheckoutSerializer, ImageSerializer, ProductSerializer,
@@ -724,7 +726,7 @@ class CheckoutView(APIView):
 
         As sooon as the code is typed in and the discount is applied and the user
         doesn't use it at the time it'll have been expired.
-        """
+    """
 
 
     def get(self, request):
@@ -827,6 +829,78 @@ class CheckoutView(APIView):
             return Response(response_data, status=stat.HTTP_402_PAYMENT_REQUIRED)
 
 
+
+class CancelCheckout(APIView):
+    """
+    ### This view is used to cancel an order
+    **GET request**
+    - no parameters are expected. This is merely too check that a user has bankdetails saved or not. your response would be
+    ```json
+        {
+            "data": null,
+            "errors": null,
+            "status": "success",
+            "pagination": null,
+            message": "exists" / "not-exists"
+        }
+    ```
+    **POST request**
+    - data to be sent to backend are:
+    - id of the checkout
+    - bank_id: id of the bank they'll like to receive
+    - reason: reason for cancellation
+    """
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        detail = BankDetail.objects.filter(user=user).exists()
+        if detail:
+            return Response(create_response(message="exists", status="success"))
+        return Response(create_response(message="not-exists", status="success"))
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        data = request.data
+        checkout_id = data.get('checkout_id', None)
+        bank_id = data.get('bank_id', None)
+        reason = data.get('reason', None)
+
+        if not checkout_id or not bank_id or not reason:
+            return Response(create_response(message="All fields are required",))
+
+        checkout:Checkout = Checkout.objects.filter(id=checkout_id) if Checkout.objects.filter(id=checkout_id).exists() else None
+
+        bank_detail = BankDetail.objects.get(id=bank_id) if BankDetail.objects.filter(id=bank_id).exists() else None
+
+        if not (checkout and bank_detail):
+            return Response(create_response(message="Checkout or Bank Id is invalid ",))
+
+        # Create a new CanceledCheckout instance
+        canceled_checkout = CanceledCheckout.objects.create(
+            checkout=checkout,
+            cancel_reason=reason,
+            refund_bank_details=bank_detail
+        )
+        canceled_checkout.save()
+        checkout.status = 'cancelled'
+        checkout.save()
+        # TODO: MAKE PUSH NOTIFICATIONS A BACKGROUND TASK
+        fcm_tokens = canceled_checkout.get_unique_store_owners()
+
+        # Send push notifications to the store owners
+        for fcm_token in fcm_tokens:
+            if fcm_token.strip() != "":
+                message = f"A user has canceled a checkout containing products from your store."
+                send_push_notification(fcm_token, title="Cancelled Order", body=message)
+        send_push_notification(Profile.objects.get(user=user).fcm_token, title="Cancelled Order", body="Your order has been canceled and currently under review. We'll get in touch with you in a bit.")
+        return Response(create_response(message="Order Cancelled", status="success",))
+
+
+
+
+
 # The `MyOrders` class retrieves orders associated with the authenticated user's store using Django
 # filters and returns the data in a serialized format.
 class MyOrders(APIView):
@@ -904,7 +978,6 @@ class MyStore(APIView):
 
 class GoodsDelivered(APIView):
     """ ###GOODS DELIVERED ENDPOINT
-    
     **POST**:
     Indicate a goods has been received.
 
@@ -912,7 +985,22 @@ class GoodsDelivered(APIView):
 
     **PayLoad:**
     - product_id: The product id to resolve.
+    - checkout_id: The checkout id to resolve.
 
+    ### EXPECTED RESPONSE
+    ```json
+    {
+        "data": null,
+        "errors": null,
+        "status": "success",
+        "message": "Updated Successfully",
+        "pagination": {
+            "count": null,
+            "next": null,
+            "previous": null
+        }
+    }
+    ```
     """
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
@@ -922,23 +1010,22 @@ class GoodsDelivered(APIView):
         user = request.user
 
         product_id = int(data.get('product_id', None))
-        if product_id:
+        checkout_id = int(data.get('checkout_id', None))
+        if product_id and checkout_id:
             try:
-                cart = Cart.objects.get(user=user)
-                cart_item = CartItem.objects.get(
-                    cart=cart, product__id=product_id, product__store__owner=user)
+                checkout = get_object_or_404(Checkout, pk=checkout_id)
+                cart_item = get_object_or_404(
+                    CartItem, product__id=product_id, cart=checkout.cart)
+
                 send_push_notification(
                     Profile.objects.get(user=cart_item.cart.user).fcm_token, "Order Delivered", "Order has been delivered, please verify receipient ")
                 cart_item.delivered = True
                 cart_item.save()
+                return Response(create_response(message="Updated Successfully", status="success"))
             except (Cart.DoesNotExist, CartItem.DoesNotExist):
-                return create_response(message="Cart or Product not found")
+                return Response(create_response(message="Cart or Product not found"))
 
-
-
-        return create_response(message="Updated Successfully", status="success")
-
-
+        return Response(create_response(message="Cart or Product not found"))
 
 
 class BuyerOrders(APIView):

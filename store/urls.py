@@ -39,6 +39,7 @@ urlpatterns = [
 
      path("cart/", views.CartView.as_view(), name="cart"),
      path("checkout/", views.CheckoutView.as_view(), name="checkout"),
+     path("checkout/cancel/", views.CancelCheckout.as_view(), name="cancel_checkout"),
 
      path('wishlist/', views.WishlistItemCreateView.as_view(), name='wishlist-create'),
      path('wishlist/list/', views.WishlistItemListView.as_view(), name='wishlist-list'),

@@ -1,3 +1,4 @@
+from .models import CanceledCheckout
 from django.contrib import admin
 
 from .models import Cart, CartItem, Category, Checkout, Product, Store, WishlistItem
@@ -34,3 +35,28 @@ class ProductAdmin(admin.ModelAdmin):
 
     get_owner.short_description = 'Owner'
     get_store.short_description = 'Store'
+
+
+@admin.register(CanceledCheckout)
+class CanceledCheckoutAdmin(admin.ModelAdmin):
+    list_display = ('checkout', 'cancel_reason',
+                    'canceled_at', 'refund_bank_details')
+    list_filter = ('canceled_at',)
+    search_fields = ('checkout__id', 'cancel_reason')
+    readonly_fields = ('checkout', 'canceled_at')
+    fieldsets = (
+        (None, {
+            'fields': ('checkout', 'canceled_at')
+        }),
+        ('Cancellation Details', {
+            'fields': ('cancel_reason', 'refund_bank_details')
+        }),
+        ('Store Owners', {
+            'fields': ('get_unique_store_owners',)
+        }),
+    )
+
+    def get_unique_store_owners(self, obj):
+        return ", ".join(obj.get_unique_store_owners())
+
+    get_unique_store_owners.short_description = 'Store Owners (FCM Tokens)'

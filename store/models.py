@@ -1,7 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import OuterRef, Subquery
 
-from accounts.models import Address
+from accounts.models import Address, Profile
+from payment.models import BankDetail
 
 
 class Category(models.Model):
@@ -91,7 +93,8 @@ class Checkout(models.Model): # ORDER
     STATUS_CHOICES = (
         ('pending', 'Pending'),
         ('paid', "Paid"),
-        ("not-paid", "Not Paid")
+        ("not-paid", "Not Paid"),
+        ('cancelled', 'Cancelled'),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     cart = models.OneToOneField(Cart, on_delete=models.CASCADE)
@@ -154,3 +157,31 @@ class WishlistItem(models.Model):
 class Wallet(models.Model):
     amount = models.DecimalField(max_digits=20, decimal_places=2, default=0.0)
     # bank_name
+
+
+class CanceledCheckout(models.Model):
+    checkout = models.OneToOneField(
+        Checkout, on_delete=models.CASCADE, related_name='canceled_checkout')
+    cancel_reason = models.TextField()
+    canceled_at = models.DateTimeField(auto_now_add=True)
+    refund_bank_details = models.ForeignKey(
+        BankDetail, on_delete=models.SET_NULL, null=True, blank=True)
+
+
+    def get_unique_store_owners(self) -> list[str]:
+        # Get the distinct store owners for the products in the checkout
+        store_owners = User.objects.filter(
+            my_store__products__checkouts=OuterRef('pk'),
+            is_seller=True
+        ).distinct()
+
+        # Get the FCM tokens from the associated Profile instances
+        fcm_tokens = Profile.objects.filter(
+            user__in=Subquery(store_owners.values('id'))
+        ).values_list('fcm_token', flat=True)
+
+        # Convert the queryset to a list
+        return list(fcm_tokens)
+
+    def __str__(self):
+        return f'Canceled Checkout: {self.checkout.id}'
