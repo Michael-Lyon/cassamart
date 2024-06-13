@@ -138,9 +138,9 @@ class GoodsReceived(APIView):
                     #TODO: CREATE A BACKGROUND TASK TO CHECK ON TRANSACTIONS AND CONFIRM THEM AND SEND A NOTOFICATION TO SELLER THAT PAYMENT IS COMPLETED
                 send_push_notification(
                     Profile.objects.get(user=owner).fcm_token, "Order Recieved", "Order Recieved by buyer and payment has been initiated")
-                return create_response(message="Transfer Initiated Success", status="success")
+                return Response(create_response(message="Transfer Initiated Success", status="success"))
 
-            return create_response(message="No bank detail found")
+            return Response(create_response(message="No bank detail found"))
 
 
     def transfer_and_create_transaction(self, manager, detail, amount):
