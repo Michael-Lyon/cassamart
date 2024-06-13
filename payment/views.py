@@ -132,14 +132,14 @@ class GoodsReceived(APIView):
                     if not is_recipient_created:
                         return Response(create_response(message="Payment Failed, Please try again later"))
 
-                if self.transfer_and_create_transaction(
-                    manager, bank_detail, price):
+                if self.transfer_and_create_transaction(manager, bank_detail, price):
                     cart_item.received = True
                     cart_item.save()
                     #TODO: CREATE A BACKGROUND TASK TO CHECK ON TRANSACTIONS AND CONFIRM THEM AND SEND A NOTOFICATION TO SELLER THAT PAYMENT IS COMPLETED
-                send_push_notification(
-                    Profile.objects.get(user=owner).fcm_token, "Order Recieved", "Order Recieved by buyer and payment has been initiated")
-                return Response(create_response(message="Transfer Initiated Success", status="success"))
+                    send_push_notification(
+                        Profile.objects.get(user=owner).fcm_token, "Order Recieved", "Order Recieved by buyer and payment has been initiated")
+                    return Response(create_response(message="Payment initiated", status="success"))
+                return Response(create_response(message="Something went wrong while initiating payment. Please try again later.", status="failed"))
 
             return Response(create_response(message="No bank detail found"))
 
@@ -147,8 +147,10 @@ class GoodsReceived(APIView):
     def transfer_and_create_transaction(self, manager, detail, amount):
         """Function initiate transfer and creates a transaction instance"""
         transfer_code, status = manager.transfer(detail=detail, amount=amount)
+        print(transfer_code, status)
         if transfer_code and status:
             transaction = Transaction.objects.create(
+                bank_details=detail,
                 amount=amount,
                 status=status,
                 transfer_code=transfer_code

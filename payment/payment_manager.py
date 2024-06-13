@@ -1,3 +1,4 @@
+from random import randint
 import traceback
 from .models import BankDetail
 from casamart.settings import PAYSTACK_SECRET
@@ -96,10 +97,12 @@ class PaystackManager:
                 json=data
             )
             data = response.json()
-            if data.get('status'):
-                transfer_code = data['data']['transfer_code']
-                status = data['data']['status']
-                return transfer_code, status
+            # TODO: REMOVE THESE DUMMY ONCE PAYSTACK IS LIVE/SET VARIABLES THAT COUL D SWITCH TO EITHER VERSIONS
+            return randint(0, 500), True
+            # if data.get('status'):
+            #     transfer_code = data['data']['transfer_code']
+            #     status = data['data']['status']
+                # return transfer_code, status
         except requests.RequestException as e:
             print(f"Error initiating transfer: {e}")
         return None, None
