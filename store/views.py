@@ -1016,9 +1016,11 @@ class GoodsDelivered(APIView):
                 checkout = get_object_or_404(Checkout, pk=checkout_id)
                 cart_item = get_object_or_404(
                     CartItem, product__id=product_id, cart=checkout.cart)
-
-                send_push_notification(
-                    Profile.objects.get(user=cart_item.cart.user).fcm_token, "Order Delivered", "Order has been delivered, please verify receipient ")
+                fcm_token = Profile.objects.get(
+                    user=cart_item.cart.user).fcm_token
+                if fcm_token:
+                    send_push_notification(
+                        token=fcm_token, title="Order Delivered", body="Order has been delivered, please verify receipient ")
                 cart_item.delivered = True
                 cart_item.save()
                 return Response(create_response(message="Updated Successfully", status="success"))
