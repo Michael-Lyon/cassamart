@@ -56,7 +56,7 @@ class PaystackManager:
         """
         data = {
             "type": "nuban",
-            "name": detail.name,
+            "name": detail.account_name,
             "account_number": detail.account_number,
             "bank_code": detail.bank_code,
             "currency": "NGN"
