@@ -13,10 +13,11 @@ from rest_framework.views import APIView
 from python_paystack.managers import Utils
 from rest_framework.response import Response
 from casamart.utils import create_response
-from store.models import Cart, CartItem
+from store.models import Cart, CartItem, Checkout
 from store import utils
 from rest_framework import status as stat
 from .payment_manager import PaystackManager
+from django.db import transaction
 
 
 bank_utils = Utils()
@@ -99,7 +100,6 @@ class GoodsReceived(APIView):
 
     **PayLoad:**
     - product_id: The product id to resolve.
-
     """
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
@@ -108,59 +108,58 @@ class GoodsReceived(APIView):
         data = request.data
         user = request.user
 
-        product_id = int(data.get('product_id', None))
-        if product_id:
-            try:
-                cart = Cart.objects.filter(
-                    user=user).order_by('-created').first()
-                cart_item = CartItem.objects.get(
-                    cart=cart, product__id=product_id)
-            except (Cart.DoesNotExist, CartItem.DoesNotExist):
-                return Response(create_response(message="Cart or Product not found"))
+        product_id = data.get('product_id')
+        if not product_id:
+            return Response(create_response(message="Product ID is required"), status=status.HTTP_400_BAD_REQUEST)
 
-            product = cart_item.product
-            price = product.price
-            owner = product.store.owner
+        try:
+            product_id = int(product_id)
+        except ValueError:
+            return Response(create_response(message="Invalid Product ID"), status=status.HTTP_400_BAD_REQUEST)
 
-            manager = PaystackManager()
-            bank_detail = BankDetail.objects.filter(user=owner).first()
-            print(bank_detail.__dict__)
-            if bank_detail:
-                if not bank_detail.recipient_code:
-                    is_recipient_created = manager.create_transfer_recipient(
-                        detail=bank_detail)
-                    if not is_recipient_created:
-                        return Response(create_response(message="Payment Failed, Please try again later"))
+        try:
+            cart = Cart.objects.filter(user=user).order_by('-created').first()
+            cart_item = CartItem.objects.get(cart=cart, product__id=product_id)
+        except (Cart.DoesNotExist, CartItem.DoesNotExist):
+            return Response(create_response(message="Cart or Product not found"), status=status.HTTP_404_NOT_FOUND)
 
-                if self.transfer_and_create_transaction(manager, bank_detail, price):
-                    cart_item.received = True
-                    cart_item.save()
-                    #TODO: CREATE A BACKGROUND TASK TO CHECK ON TRANSACTIONS AND CONFIRM THEM AND SEND A NOTOFICATION TO SELLER THAT PAYMENT IS COMPLETED
-                    send_push_notification(
-                        Profile.objects.get(user=owner).fcm_token, "Order Recieved", "Order Recieved by buyer and payment has been initiated")
-                    return Response(create_response(message="Payment initiated", status="success"))
-                return Response(create_response(message="Something went wrong while initiating payment. Please try again later.", status="failed"))
+        product = cart_item.product
+        price = product.price
+        owner = product.store.owner
 
-            return Response(create_response(message="No bank detail found"))
+        manager = PaystackManager()
+        bank_detail = BankDetail.objects.filter(user=owner).first()
+        if not bank_detail:
+            return Response(create_response(message="No bank detail found"), status=status.HTTP_404_NOT_FOUND)
 
+        if not bank_detail.recipient_code:
+            is_recipient_created = manager.create_transfer_recipient(
+                detail=bank_detail)
+            if not is_recipient_created:
+                return Response(create_response(message="Payment Failed, Please try again later"), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        with transaction.atomic():
+            if self.transfer_and_create_transaction(manager, bank_detail, price):
+                cart_item.received = True
+                cart_item.save()
+                Checkout.objects.get(cart=cart).check_received_status()
+                send_push_notification(Profile.objects.get(
+                    user=owner).fcm_token, "Order Received", "Order Received by buyer and payment has been initiated")
+                return Response(create_response(message="Payment initiated", status="success"), status=status.HTTP_200_OK)
+            return Response(create_response(message="Something went wrong while initiating payment. Please try again later.", status="failed"), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def transfer_and_create_transaction(self, manager, detail, amount):
-        """Function initiate transfer and creates a transaction instance"""
+        """Function to initiate transfer and create a transaction instance"""
         transfer_code, status = manager.transfer(detail=detail, amount=amount)
-        print(transfer_code, status)
         if transfer_code and status:
-            transaction = Transaction.objects.create(
+            Transaction.objects.create(
                 bank_details=detail,
                 amount=amount,
                 status=status,
                 transfer_code=transfer_code
             )
-            transaction.save()
             return True
         return False
-
-
-
 
 
 

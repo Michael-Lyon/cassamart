@@ -39607,3 +39607,5 @@ django.db.utils.IntegrityError: null value in column "bank_details_id" of relati
 DETAIL:  Failing row contains (1, 2000.00, 291, True, 2024-06-13 14:20:20.485711+00, 2024-06-13 14:20:20.485726+00, null).
 
 [35;1mHTTP POST /api/payments/goods-received/ 500 [9.58, 127.0.0.1:51079][0m
+Unauthorized: /api/my-orders/
+[31;1mHTTP GET /api/my-orders/ 401 [0.02, 127.0.0.1:51320][0m

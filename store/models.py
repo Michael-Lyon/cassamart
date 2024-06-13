@@ -112,6 +112,15 @@ class Checkout(models.Model): # ORDER
     def __str__(self):
         return f"Checkout {self.pk}"
 
+
+    def check_received_status(self):
+        all_received_and_delivered = all(
+            item.received and item.delivered for item in self.cart.cartitem_set.all()
+        )
+        if all_received_and_delivered:
+            self.received_status = True
+            self.save()
+
     class Meta:
         ordering = ['-created']
 
