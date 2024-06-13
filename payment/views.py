@@ -92,7 +92,7 @@ class AccountNumberResolver(APIView):
 
 class GoodsReceived(APIView):
     """
-    POST:
+    **POST**:
     Indicate a goods has been received.
 
     This endpoint through post gets a product id which indicates that the user has received the product and then makes payment to the owner of the product
