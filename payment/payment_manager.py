@@ -1,3 +1,4 @@
+import traceback
 from .models import BankDetail
 from casamart.settings import PAYSTACK_SECRET
 import requests
@@ -10,7 +11,7 @@ class PaystackManager:
     such as getting banks and making payments.
     """
 
-    BASE_URL = "https://api.paystack.co/bank"
+    BASE_URL = "https://api.paystack.co"
     RESOLVE_URL = "/resolve"
     TRANSFER_RECIPIENT_URL = "/transferrecipient"
     TRANSFER_URL = "/transfer"
@@ -24,7 +25,7 @@ class PaystackManager:
     def get_banks(self) -> Optional[Dict[str, str]]:
         """Retrieves a list of banks from the Paystack API."""
         try:
-            response = requests.get(self.BASE_URL, headers=self.headers)
+            response = requests.get(self.BASE_URL + "/banks", headers=self.headers)
             data = response.json()
             if data.get('status'):
                 return data['data']
@@ -74,6 +75,7 @@ class PaystackManager:
                 detail.save()
                 return detail.recipient_code
         except requests.RequestException as e:
+            traceback.print_exc()
             print(f"Error creating transfer recipient: {e}")
         return None
 
@@ -102,6 +104,7 @@ class PaystackManager:
             print(f"Error initiating transfer: {e}")
         return None, None
 
+    # TODO: CREATE A BACKGROUND PROCESS THAT CONFIRMS/VERIFIES PAYMENTS
     def verify_transfer(self, reference: str) -> Optional[str]:
         """
         Verifies the status of a transaction.

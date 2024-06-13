@@ -116,7 +116,7 @@ class GoodsReceived(APIView):
                 cart_item = CartItem.objects.get(
                     cart=cart, product__id=product_id)
             except (Cart.DoesNotExist, CartItem.DoesNotExist):
-                return create_response(message="Cart or Product not found")
+                return Response(create_response(message="Cart or Product not found"))
 
             product = cart_item.product
             price = product.price
@@ -124,12 +124,13 @@ class GoodsReceived(APIView):
 
             manager = PaystackManager()
             bank_detail = BankDetail.objects.filter(user=owner).first()
+            print(bank_detail.__dict__)
             if bank_detail:
                 if not bank_detail.recipient_code:
                     is_recipient_created = manager.create_transfer_recipient(
                         detail=bank_detail)
                     if not is_recipient_created:
-                        return create_response(message="Payment Failed, Please try again later")
+                        return Response(create_response(message="Payment Failed, Please try again later"))
 
                 if self.transfer_and_create_transaction(
                     manager, bank_detail, price):
