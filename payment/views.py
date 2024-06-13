@@ -111,7 +111,8 @@ class GoodsReceived(APIView):
         product_id = int(data.get('product_id', None))
         if product_id:
             try:
-                cart = Cart.objects.get(user=user)
+                cart = Cart.objects.filter(
+                    user=user).order_by('-created_at').first()
                 cart_item = CartItem.objects.get(
                     cart=cart, product__id=product_id)
             except (Cart.DoesNotExist, CartItem.DoesNotExist):
