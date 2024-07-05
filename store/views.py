@@ -877,15 +877,21 @@ class CancelCheckout(APIView):
         if not (checkout and bank_detail):
             return Response(create_response(message="Checkout or Bank Id is invalid ",))
 
-        # Create a new CanceledCheckout instance
-        canceled_checkout = CanceledCheckout.objects.create(
-            checkout=checkout,
-            cancel_reason=reason,
-            refund_bank_details=bank_detail
-        )
-        canceled_checkout.save()
-        checkout.status = 'cancelled'
-        checkout.save()
+        try:
+            # Check if a CanceledCheckout already exists for this Checkout
+            existing_canceled_checkout = CanceledCheckout.objects.get(
+                checkout=checkout)
+            return Response(create_response(message="This checkout has already been canceled."))
+
+        except CanceledCheckout.DoesNotExist:
+            # If it doesn't exist, create a new CanceledCheckout instance
+            canceled_checkout = CanceledCheckout.objects.create(
+                checkout=checkout,
+                cancel_reason=reason,
+                refund_bank_details=bank_detail
+            )
+            checkout.status = 'cancelled'
+            checkout.save()
         # TODO: MAKE PUSH NOTIFICATIONS A BACKGROUND TASK
         fcm_tokens = canceled_checkout.get_unique_store_owners()
 

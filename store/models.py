@@ -180,17 +180,17 @@ class CanceledCheckout(models.Model):
     def get_unique_store_owners(self) -> list[str]:
         # Get the distinct store owners for the products in the checkout
         store_owners = User.objects.filter(
-            my_store__products__checkouts=OuterRef('pk'),
-            is_seller=True
+            my_store__products__cartitem__cart=self.checkout.cart,
+            profile__is_seller=True
         ).distinct()
 
         # Get the FCM tokens from the associated Profile instances
         fcm_tokens = Profile.objects.filter(
-            user__in=Subquery(store_owners.values('id'))
-        ).values_list('fcm_token', flat=True)
+            user__in=store_owners
+        ).values_list('fcm_token', flat=True).distinct()
 
-        # Convert the queryset to a list
-        return list(fcm_tokens)
+        # Convert the queryset to a list and filter out None values
+        return list(filter(None, fcm_tokens))
 
     def __str__(self):
         return f'Canceled Checkout: {self.checkout.id}'
