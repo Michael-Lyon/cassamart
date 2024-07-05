@@ -870,7 +870,7 @@ class CancelCheckout(APIView):
         if not checkout_id or not bank_id or not reason:
             return Response(create_response(message="All fields are required",))
 
-        checkout:Checkout = Checkout.objects.filter(id=checkout_id) if Checkout.objects.filter(id=checkout_id).exists() else None
+        checkout:Checkout = Checkout.objects.filter(id=checkout_id).first() if Checkout.objects.filter(id=checkout_id).exists() else None
 
         bank_detail = BankDetail.objects.get(id=bank_id) if BankDetail.objects.filter(id=bank_id).exists() else None
 
@@ -1020,7 +1020,7 @@ class GoodsDelivered(APIView):
                     user=cart_item.cart.user).fcm_token
                 if fcm_token:
                     send_push_notification(
-                        token=fcm_token, title="Order Delivered", body="Order has been delivered, please verify receipient ")
+                        token=fcm_token, title="Order Delivered", body="Order has been delivered, please verify receipient")
                 cart_item.delivered = True
                 cart_item.save()
                 return Response(create_response(message="Updated Successfully", status="success"))
