@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-from django.db import models
+from django.db import models, transaction
 
 # Create your models here.
 User = get_user_model()
@@ -26,6 +26,14 @@ class Address(models.Model):
 
     def __str__(self):
         return self.address
+
+    def save(self, *args, **kwargs):
+        if self.is_default:
+            with transaction.atomic():
+                # Set all other addresses for this user to not default
+                Address.objects.filter(
+                    user=self.user, is_default=True).update(is_default=False)
+        super(Address, self).save(*args, **kwargs)
 
 
 class Wallet(models.Model):

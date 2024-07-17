@@ -797,6 +797,17 @@ class CheckoutView(APIView):
                 cart.save()
                 # send mails to the oowners of the goods that they have a new order
                 utils.send_order_mail(cart)
+                # TODO: MAKE PUSH NOTIFICATIONS A BACKGROUND TASK
+                fcm_tokens = checkout.get_unique_store_owners()
+
+                # Send push notifications to the store owners
+                for fcm_token in fcm_tokens:
+                    if fcm_token.strip() != "":
+                        message = f"A user has canceled a checkout containing products from your store."
+                        send_push_notification(
+                            fcm_token, title="Confirmed Order", body=message)
+                send_push_notification(Profile.objects.get(user=user).fcm_token, title="Confirmed Order",
+                                    body="Your order has been confirmed and would bbe delivered to you shortly.")
 
                 # serializer = CheckoutSerializer(checkout)
                 response_data = {

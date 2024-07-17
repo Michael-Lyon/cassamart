@@ -161,6 +161,7 @@ class CartSerializer(serializers.ModelSerializer):
 class CheckoutSerializer(serializers.ModelSerializer):
     cart = CartSerializer()
     delivery_address = AddressSerializer()
+    user = ProfileSerializer()
     class Meta:
         model = Checkout
         fields = '__all__'

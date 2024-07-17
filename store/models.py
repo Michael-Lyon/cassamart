@@ -121,6 +121,21 @@ class Checkout(models.Model): # ORDER
             self.received_status = True
             self.save()
 
+    def get_unique_store_owners(self) -> list[str]:
+        # Get the distinct store owners for the products in the checkout
+        store_owners = User.objects.filter(
+            my_store__products__cartitem__cart=self.cart,
+            profile__is_seller=True
+        ).distinct()
+
+        # Get the FCM tokens from the associated Profile instances
+        fcm_tokens = Profile.objects.filter(
+            user__in=store_owners
+        ).values_list('fcm_token', flat=True).distinct()
+
+        # Convert the queryset to a list and filter out None values
+        return list(filter(None, fcm_tokens))
+
     class Meta:
         ordering = ['-created']
 
