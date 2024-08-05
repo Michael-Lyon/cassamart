@@ -19,11 +19,11 @@ from payment.serializers import BankDetailSerializer
 from store.models import Store
 from store.serializers import AllStoreDetailSerializer, StoreSerializer
 
-from .models import Address, Profile
+from .models import Address, MyUserAuth, Profile
 from .serializers import (AddressSerializer, ProfileSerializer, BuyerSerializer, ChangePasswordSerializer, LoginSerializer, SellerSerializer)
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from .utils import get_code
+from .utils import get_code, send_verification_code
 
 User = get_user_model()
 
@@ -390,3 +390,86 @@ class ProfileView(APIView):
             }
             return Response(result, status=status.HTTP_200_OK)
 
+
+@api_view(['GET', 'POST'])
+def reset_password_view(request):
+    """
+    Reset Password for a user.
+
+    GET:
+    Send a verification code to the user's email address.
+
+    - `email` (request data): The email address of the user.
+
+    POST:
+    Reset the user's password using the verification code.
+
+    - `email` (request data): The email address of the user.
+    - `verification_code` (request data): The verification code received by the user.
+    - `password` (request data): The new password for the user.
+
+    Returns a JSON response with the following format:
+
+    {
+        "status": <bool>,
+        "message": <str>
+    }
+
+    - `status`: Indicates the status of the operation (True for success, False for failure).
+    - `message`: A message describing the result of the operation.
+
+    GET Example Response (HTTP 200 OK):
+    {
+        "status": true,
+        "message": "Verification code sent"
+    }
+
+    POST Example Response (HTTP 200 OK):
+    {
+        "status": true,
+        "message": "Password reset successfully"
+    }
+
+    Error Responses:
+    - HTTP 400 BAD REQUEST: If the required parameters are missing or invalid.
+    - HTTP 404 NOT FOUND: If the user associated with the provided email address is not found.
+    """
+
+    if request.method == 'GET':
+        print(request)
+        # Send verification code to the user
+        email = request.GET.get('email')
+        if not email:
+            return Response({'status': False, 'message': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({'status': False, 'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        code = get_code()
+        auth, created = MyUserAuth.objects.get_or_create(user=user)
+        auth.code = code
+        auth.save()
+        # Implement your own email sending logic
+        send_verification_code(email, code, "password")
+        return Response({'status': True, 'message': 'Verification code sent'}, status=status.HTTP_200_OK)
+
+    elif request.method == 'POST':
+        # Reset user password
+        email = request.data.get('email')
+        verification_code = request.data.get('verification_code')
+        password = request.data.get('password')
+
+        if not email or not verification_code or not password:
+            return Response({'status': False, 'message': 'Email, verification code, and password are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({'status': False, 'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        if MyUserAuth.expired.filter(user=user).exists():
+            return Response({'status': False, 'message': 'Invalid verification code'}, status=status.HTTP_400_BAD_REQUEST)
+        user.set_password(password)
+        user.save()
+        return Response({'status': True, 'message': 'Password reset successfully'}, status=status.HTTP_200_OK)

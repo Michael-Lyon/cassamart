@@ -5,6 +5,7 @@ from . import views
 app_name = "accounts"
 urlpatterns = [
     path("login/", views.LoginView.as_view(), name="login"),
+    path("forgot-password/", views.reset_password_view, name="forgot_password"),
 
     path("my-profile/", views.ProfileView.as_view(), name="profile"),
 

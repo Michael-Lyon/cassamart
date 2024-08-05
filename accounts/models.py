@@ -1,6 +1,12 @@
+
+from datetime import timedelta
+from django.utils import timezone
+from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.db import models, transaction
+
+from accounts.utils import get_code
 
 # Create your models here.
 User = get_user_model()
@@ -40,6 +46,27 @@ class Wallet(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="wallet")
     amount = models.DecimalField(max_digits=200, decimal_places=2, default=0.0)
 
+# MODELS TO STORE AUTHENTICTAION CODES
 
 
+class UserAuthExpiredManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(expires_at__lte=timezone.now())
 
+class MyUserAuth(models.Model):
+    user = models.OneToOneField(
+        User, related_name="user_auth_code", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
+    expires_at = models.DateTimeField(default=timezone.now)
+    code = models.CharField(max_length=10, default="123456")
+    expired = UserAuthExpiredManager()
+    objects = models.Manager()
+
+    def save(self, *args, **kwargs):
+        if not self.code:
+            self.code = get_code()
+        self.expires_at = timezone.now() + timedelta(minutes=5)
+        super().save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return f"{self.user} ({self.code})"
