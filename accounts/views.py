@@ -396,12 +396,12 @@ def reset_password_view(request):
     """
     Reset Password for a user.
 
-    GET:
+    GET
     Send a verification code to the user's email address.
 
     - `email` (request data): The email address of the user.
 
-    POST:
+    POST
     Reset the user's password using the verification code.
 
     - `email` (request data): The email address of the user.
@@ -438,7 +438,9 @@ def reset_password_view(request):
     if request.method == 'GET':
         print(request)
         # Send verification code to the user
-        email = request.GET.get('email')
+        email = request.data.get('email')
+        if not email:
+            email = request.GET.get('email')
         if not email:
             return Response({'status': False, 'message': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
         try:
