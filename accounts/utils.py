@@ -15,8 +15,8 @@ class UniqueRandomNumberGenerator:
          new_number = random.randint(0, 999999)
          new_number_str = f"{new_number:06d}"
          if new_number_str not in self.generated_numbers:
-             self.generated_numbers.add(new_number_str)
-             return new_number_str
+            self.generated_numbers.add(new_number_str)
+            return new_number_str
 
 
 

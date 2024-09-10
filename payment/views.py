@@ -154,7 +154,7 @@ class GoodsReceived(APIView):
         if transfer_code and status:
             Transaction.objects.create(
                 bank_details=detail,
-                amount=amount,
+                amount=amount - (amount * 0.01),
                 status=status,
                 transfer_code=transfer_code
             )

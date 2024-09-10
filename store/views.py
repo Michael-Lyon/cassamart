@@ -25,6 +25,7 @@ from python_paystack.objects.transactions import Transaction
 from python_paystack.paystack_config import PaystackConfig
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404
+from django.db import transaction
 
 from store.store_filters import OrderFilter, ProductFilter, StoreFilter
 from . import utils
@@ -682,7 +683,8 @@ class CartView(APIView):
             "data": None,
             "errors": "Invalid data",
             "status": "error",
-            "message": "Invalid data for cart item",
+            "message": serializer.errors,
+            # "message": "Product not found",
             "pagination": None
         }
 
@@ -779,67 +781,111 @@ class CheckoutView(APIView):
             }
             return Response(response_data, status=status.HTTP_200_OK)
 
-
     def post(self, request):
-        user = request.user
-        cart = Cart.objects.filter(user=user, paid=False).first()
-        data = request.data
-        address_id = int(data["delivery_address"])
-        # Calculate the total amount based on cart items
-        total_amount = data["total_amount"]
-        reference = data["reference"]
-        delivery_address = Address.objects.get(id=address_id)
-        if cart:
-            _status = utils.check_payment(reference)
-            if _status == 'success':
-                checkout = Checkout.objects.get_or_create(user=user, cart=cart, total_amount=total_amount, status='paid', delivery_address=delivery_address, payment_status=True)
+        try:
+            user = request.user
+            cart = Cart.objects.filter(user=user, paid=False).first()
+
+            if not cart:
+                raise ValueError("No active cart found for the user.")
+
+            data = request.data
+            address_id = int(data.get("delivery_address", 0))
+            total_amount = data.get("total_amount")
+            reference = data.get("reference")
+
+            if not address_id or not total_amount or not reference:
+                raise ValueError(
+                    "Missing required data: 'delivery_address', 'total_amount', or 'reference'.")
+
+            try:
+                delivery_address = Address.objects.get(id=address_id)
+            except ObjectDoesNotExist:
+                raise ValueError("Invalid delivery address ID.")
+
+            # Wrap the process in a transaction to ensure atomicity
+            with transaction.atomic():
+                # Check payment status
+                _status = utils.check_payment(reference)
+                if _status != 'success':
+                    return Response({
+                        "data": None,
+                        "errors": None,
+                        "status": "failure",
+                        "message": "Payment failed or not successful",
+                        "pagination": None
+                    }, status=status.HTTP_400_BAD_REQUEST)
+
+                # If payment is successful, create or get checkout and mark the cart as paid
+                checkout, created = Checkout.objects.get_or_create(
+                    user=user, cart=cart, total_amount=total_amount,
+                    status='paid', delivery_address=delivery_address,
+                    payment_status=True
+                )
+
+                # Mark the cart as paid only after successful processing
                 cart.paid = True
                 cart.save()
-                # send mails to the oowners of the goods that they have a new order
+
+                # Send email notifications to store owners about the order
                 utils.send_order_mail(cart)
-                # TODO: MAKE PUSH NOTIFICATIONS A BACKGROUND TASK
+
+                # Send email notifications to buyer about purchase
+                utils.send_buyer_order_mail(cart, user)
+
+                # Get FCM tokens of the store owners
                 fcm_tokens = checkout.get_unique_store_owners()
 
-                # Send push notifications to the store owners
+                # Send push notifications to store owners
                 for fcm_token in fcm_tokens:
-                    if fcm_token.strip() != "":
-                        message = f"A user has canceled a checkout containing products from your store."
+                    if fcm_token.strip():
+                        message = "A user has placed a confirmed order containing products from your store."
                         send_push_notification(
                             fcm_token, title="Confirmed Order", body=message)
-                send_push_notification(Profile.objects.get(user=user).fcm_token, title="Confirmed Order",
-                                    body="Your order has been confirmed and would bbe delivered to you shortly.")
 
-                # serializer = CheckoutSerializer(checkout)
-                response_data = {
+                # Send push notification to the user
+                user_fcm_token = Profile.objects.get(user=user).fcm_token
+                send_push_notification(user_fcm_token, title="Confirmed Order",
+                                    body="Your order has been confirmed and will be delivered shortly.")
+
+                # Successful transaction response
+                return Response({
                     "data": None,
                     "errors": None,
                     "status": "success",
                     "message": "Transaction successful",
                     "pagination": None
-                }
-                return Response(response_data, status=status.HTTP_202_ACCEPTED)
-            else:
-            # serializer = CheckoutSerializer(checkout)
-                response_data = {
-                    "data": None,
-                    "errors": None,
-                    "status": "success",
-                    "message": "No data avaiable",
-                    "pagination": None
-                }
-                return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+                }, status=status.HTTP_202_ACCEPTED)
 
-        else:
-            response_data = {
+        except ObjectDoesNotExist as e:
+            # Handle case where related objects (like Cart, Address) don't exist
+            return Response({
                 "data": None,
-                "errors": None,
+                "errors": str(e),
                 "status": "error",
-                "message": "Failed Transaction try again",
+                "message": "Object not found. Please check your inputs.",
                 "pagination": None
-            }
-            return Response(response_data, status=stat.HTTP_402_PAYMENT_REQUIRED)
+            }, status=status.HTTP_404_NOT_FOUND)
 
+        except ValueError as e:
+            # Handle missing or invalid data errors
+            return Response({
+                "data": None,
+                "errors": str(e),
+                "status": "error",
+                "message": "Invalid input data. " + str(e),
+                "pagination": None
+            }, status=status.HTTP_400_BAD_REQUEST)
 
+        except Exception as e:
+            # Handle unexpected exceptions
+            return Response({
+                "data": None,
+                "errors": str(e),
+                "status": "error",
+                "message": "An unexpected error occurred. Please try again.",
+                "pagination": None
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CancelCheckout(APIView):
     """

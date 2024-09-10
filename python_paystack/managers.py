@@ -160,6 +160,7 @@ class TransactionsManager(RetrieveableMixin, Manager):
             raise APIConnectionFailedError(message)
 
     def verify_transaction(self, transaction_reference: str, endpoint='/verify/'):
+        print("Here!!!!!")
         '''
         Verifies a payment using the transaction reference.
         Arguments:
@@ -175,6 +176,7 @@ class TransactionsManager(RetrieveableMixin, Manager):
         content = self.parse_response_content(content)
 
         status, message = self.get_content_status(content)
+        print(status, message)
 
         if status:
             data_dict = content['data']
@@ -186,7 +188,8 @@ class TransactionsManager(RetrieveableMixin, Manager):
 
             return transaction
         else:
-            raise APIConnectionFailedError(message)
+            return message
+            # raise APIConnectionFailedError(message)
             # raise APIConnectionFailedError(message)
 
     def charge_authorization(self, transaction: Transaction, endpoint='/charge_authorization'):

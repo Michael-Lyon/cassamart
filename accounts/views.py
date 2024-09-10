@@ -22,6 +22,7 @@ from store.serializers import AllStoreDetailSerializer, StoreSerializer
 from .models import Address, MyUserAuth, Profile
 from .serializers import (AddressSerializer, ProfileSerializer, BuyerSerializer, ChangePasswordSerializer, LoginSerializer, SellerSerializer)
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.pagination import PageNumberPagination
 from drf_yasg import openapi
 from .utils import get_code, send_verification_code
 
@@ -37,7 +38,6 @@ def get_tokens_for_user(user):
     }
 
 # Create your views here.
-
 class LoginView(APIView):
 
     @csrf_exempt
@@ -48,17 +48,27 @@ class LoginView(APIView):
             user = serializer.validated_data
             login(request, user, backend='accounts.authentication.EmailAuthBackend')
             auth_token = get_tokens_for_user(user=user)
-            return Response({"message": "User Logged in", "data": {
-                'id': user.id,
-                "last_name": user.last_name,
-                "first_name": user.first_name,
-                "username": user.username,
-                'email': user.email,
-                "jwt_token": auth_token
-            }})
+            response_data = {
+                "data": {
+                    'id': user.id,
+                    "last_name": user.last_name,
+                    "first_name": user.first_name,
+                    "username": user.username,
+                    'email': user.email,
+                    "jwt_token": auth_token
+                },
+                "errors": None,
+                "status": "success",
+                "message": "User created successfully",
+                "pagination": {
+                    "count": None,
+                    "next": None,
+                    "previous": None,
+                }
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
         # return Response({"message": "Account not verified or wrong login info", })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class FCMUpdateView(APIView):
     authentication_classes = (JWTAuthentication,)
@@ -103,11 +113,79 @@ class SellerCreateView(generics.CreateAPIView):
     serializer_class = SellerSerializer
     queryset = User.objects.all()
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        try:
+            # Validate the data
+            serializer.is_valid(raise_exception=True)
+            # Create the user
+            user = serializer.save()
+
+            # Prepare the response data
+            # Adjust pagination count as needed
+            response_data = {
+                "data": serializer.data,
+                "errors": None,
+                "status": "success",
+                "message": "User created successfully",
+                "pagination": {
+                    "count": None,
+                    "next": None,
+                    "previous": None,
+                }
+            }
+
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            # Handle error response
+            response_data = {
+                "data": None,
+                "errors": serializer.errors,
+                "status": "failure",
+                "message": "Something went wrong. Please try again.",
+                "pagination": None
+            }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class BuyerCreateView(generics.CreateAPIView):
     serializer_class = BuyerSerializer
     queryset = User.objects.all()
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        try:
+            # Validate the data
+            serializer.is_valid(raise_exception=True)
+            # Create the user
+            user = serializer.save()
+
+            # Prepare the response data
+            # Adjust pagination count as needed
+            response_data = {
+                "data": serializer.data,
+                "errors": None,
+                "status": "success",
+                "message": "User created successfully",
+                "pagination": {
+                    "count": None,
+                    "next": None,
+                    "previous": None,
+                }
+            }
+
+            return Response(response_data, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            # Handle error response
+            response_data = {
+                "data": None,
+                "errors": serializer.errors,
+                "status": "failure",
+                "message": "Something went wrong. Please try again.",
+                "pagination": None
+            }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
 class ChangePasswordView(generics.UpdateAPIView):
     queryset = User.objects.all()
@@ -134,7 +212,6 @@ class ChangePasswordView(generics.UpdateAPIView):
             serializer.save()
             return Response({'status': True, 'message': 'Password changed successfully'})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class AddressListCreateView(generics.ListCreateAPIView):
     serializer_class = AddressSerializer
@@ -176,7 +253,6 @@ class AddressListCreateView(generics.ListCreateAPIView):
             "pagination": None
         }
         return Response(response_data, status=response.status_code)
-
 
 class AddressDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AddressSerializer
@@ -232,7 +308,6 @@ class SellerProfileUpdateView(generics.UpdateAPIView):
 
     def get_object(self):
         return Profile.objects.get(user=self.request.user)
-
 
 class BuyerProfileUpdateView(generics.UpdateAPIView):
     serializer_class = ProfileSerializer
@@ -389,7 +464,6 @@ class ProfileView(APIView):
                 "address": address_data
             }
             return Response(result, status=status.HTTP_200_OK)
-
 
 @api_view(['GET', 'POST'])
 def reset_password_view(request):
