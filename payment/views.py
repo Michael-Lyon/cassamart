@@ -155,10 +155,16 @@ class GoodsReceived(APIView):
         if transfer_code and status:
             Transaction.objects.create(
                 bank_details=detail,
-                amount=Decimal(amount) - Decimal((amount * 0.01)),
+                amount=Decimal(amount) - Decimal(amount) * Decimal(0.01),
                 status=status,
                 transfer_code=transfer_code
             )
+            # Transaction.objects.create(
+            #     bank_details=detail,
+            #     amount=Decimal(amount) - Decimal((amount * 0.01)),
+            #     status=status,
+            #     transfer_code=transfer_code
+            # )
             return True
         return False
 
