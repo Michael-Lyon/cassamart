@@ -3,10 +3,14 @@ import datetime
 import os
 from pathlib import Path
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 import dj_database_url
-from dotenv import load_dotenv
 
 from python_paystack.paystack_config import PaystackConfig
+
+# from python_paystack.paystack_config import PaystackConfig
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,10 +43,13 @@ INSTALLED_APPS = [
     'accounts',
     "chat",
     "payment",
+    "manager",
 
 
     # 3RD PARTY packages
     'channels',
+    'cloudinary_storage',
+    'cloudinary',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
@@ -254,3 +261,32 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 PaystackConfig.SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY")
 PaystackConfig.PUBLIC_KEY = os.getenv("PAYSTACK_PUBLIC_KEY")
 FIREBASE_ADMIN_CREDENTIALS_FILE = os.getenv("FIREBASE_ADMIN_CREDENTIALS_FILE")
+
+# print(PaystackConfig.SECRET_KEY)
+
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.getenv('CLOUDINARY_API_KEY'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET'),
+    api_environment_variable=os.getenv('CLOUDINARY_URL'),
+    secure=True
+)
+
+# Cloudinary Configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    "API_ENVIRONMENT_VARIABLE" : os.getenv('CLOUDINARY_URL'),
+    "Secure": True
+}
+print(CLOUDINARY_STORAGE)
+
+# Use Cloudinary for media storage
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# You can keep using the local static files storage or configure Cloudinary for static files as well:
+# STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+
+MEDIA_URL = '/media/'  # This will automatically route through Cloudinary
+

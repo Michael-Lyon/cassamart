@@ -121,33 +121,45 @@ class GoodsReceived(APIView):
         try:
             cart = Cart.objects.filter(user=user).order_by('-created').first()
             cart_item = CartItem.objects.get(cart=cart, product__id=product_id)
+            product = cart_item.product
+            price = product.price
+            owner = product.store.owner
+
+            # Mark the item as received
+            cart_item.received = True
+            cart_item.save()
+
+            # Check if all items in the checkout are received and delivered
+            checkout = Checkout.objects.get(cart=cart)
+            checkout.check_received_status()
+
+            # If all items are received and delivered, initiate payment
+            if checkout.received_status:
+                manager = PaystackManager()
+                bank_detail = BankDetail.objects.filter(user=owner).first()
+
+                if not bank_detail:
+                    return Response(create_response(message="No bank detail found"), status=status.HTTP_404_NOT_FOUND)
+
+                # Create recipient if it doesn't exist
+                if not bank_detail.recipient_code:
+                    if not manager.create_transfer_recipient(detail=bank_detail):
+                        return Response(create_response(message="Payment Failed, Please try again later"), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+                # Perform payment in a transaction
+                with transaction.atomic():
+                    if self.transfer_and_create_transaction(manager, bank_detail, price):
+                        send_push_notification(Profile.objects.get(user=owner).fcm_token,
+                                               "Order Received",
+                                               "Order received by buyer and payment has been initiated")
+
+                        return Response(create_response(message="Payment initiated", status="success"), status=status.HTTP_200_OK)
+                    return Response(create_response(message="Something went wrong while initiating payment. Please try again later.", status="failed"), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+            return Response(create_response(message="Updated Successfully", status="success"))
+
         except (Cart.DoesNotExist, CartItem.DoesNotExist):
             return Response(create_response(message="Cart or Product not found"), status=status.HTTP_404_NOT_FOUND)
-
-        product = cart_item.product
-        price = product.price
-        owner = product.store.owner
-
-        manager = PaystackManager()
-        bank_detail = BankDetail.objects.filter(user=owner).first()
-        if not bank_detail:
-            return Response(create_response(message="No bank detail found"), status=status.HTTP_404_NOT_FOUND)
-
-        if not bank_detail.recipient_code:
-            is_recipient_created = manager.create_transfer_recipient(
-                detail=bank_detail)
-            if not is_recipient_created:
-                return Response(create_response(message="Payment Failed, Please try again later"), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-        with transaction.atomic():
-            if self.transfer_and_create_transaction(manager, bank_detail, price):
-                cart_item.received = True
-                cart_item.save()
-                Checkout.objects.get(cart=cart).check_received_status()
-                send_push_notification(Profile.objects.get(
-                    user=owner).fcm_token, "Order Received", "Order Received by buyer and payment has been initiated")
-                return Response(create_response(message="Payment initiated", status="success"), status=status.HTTP_200_OK)
-            return Response(create_response(message="Something went wrong while initiating payment. Please try again later.", status="failed"), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def transfer_and_create_transaction(self, manager, detail, amount):
         """Function to initiate transfer and create a transaction instance"""
@@ -155,47 +167,10 @@ class GoodsReceived(APIView):
         if transfer_code and status:
             Transaction.objects.create(
                 bank_details=detail,
-                amount=Decimal(amount) - Decimal(amount) * Decimal(0.01),
+                amount=Decimal(amount) - Decimal(amount) *
+                Decimal(0.01),  # Deducting transaction fee
                 status=status,
                 transfer_code=transfer_code
             )
-            # Transaction.objects.create(
-            #     bank_details=detail,
-            #     amount=Decimal(amount) - Decimal((amount * 0.01)),
-            #     status=status,
-            #     transfer_code=transfer_code
-            # )
             return True
         return False
-
-
-
-
-
-
-        # owners = {}
-        # id = data["id"]
-        #
-        # cart = Cart.objects.get(id=id, user=user)
-        # status = data['status']
-        # if status:
-        #     for cart_item in cart.cartitem_set.all():
-        #         product_owner = cart_item.product.category.store.owner
-        #         payment_amount = cart_item.product.price * cart_item.quantity
-        #         owners.setdefault(product_owner, 0)
-        #         owners[product_owner] += payment_amount
-        #         # Add each product owner money to thier wallet
-        #         created, wallet = Wallet.objects.get_or_create(
-        #             user=product_owner)
-        #         wallet.amount += payment_amount
-        #     # send mails to the onwers of the products that their accounts have been topped
-        #     utils.send_wallet_mail(owners)
-        #     response_data = {
-        #         "data": {"message": "Updated."},
-        #         "errors": None,
-        #         "status": "success",
-        #         "message": "Goods received updated successfully",
-        #         "pagination": None
-        #     }
-        #     return Response(response_data, status=status.HTTP_200_OK)
-        # return Response({"message": "Updated."}, status=stat.HTTP_409_CONFLICT)

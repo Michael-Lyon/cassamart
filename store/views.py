@@ -29,13 +29,14 @@ from django.db import transaction
 
 from store.store_filters import OrderFilter, ProductFilter, StoreFilter
 from . import utils
-from .my_permission  import IsSellerIsOwner, isSeller
-from .models import (CanceledCheckout, Cart, CartItem, Category, Checkout, Discount, Product, Store, WishlistItem)
+from .my_permission import IsSellerIsOwner, isSeller
+from .models import (CanceledCheckout, Cart, CartItem,
+                     Category, Checkout, Discount, Product, Store, WishlistItem)
 from .serializers import (AllStoreDetailSerializer, CartItemSerializer,
-                            CartSerializer, CategorySerializer,
-                            CheckoutSerializer, ImageSerializer, ProductSerializer,
-                            StoreSerializer, TicketSerializer, WishlistItemGetSerializer, WishlistItemSerializer
-                        )
+                          CartSerializer, CategorySerializer,
+                          CheckoutSerializer, ImageSerializer, ProductSerializer,
+                          StoreSerializer, TicketSerializer, WishlistItemGetSerializer, WishlistItemSerializer
+                          )
 from drf_yasg.utils import swagger_auto_schema
 from dotenv import load_dotenv
 from django.core.exceptions import ObjectDoesNotExist
@@ -49,6 +50,7 @@ User = get_user_model()
 class StoreListApiView(APIView):
     filter_backends = [DjangoFilterBackend]
     filterset_class = StoreFilter
+
     def get(self, request):
         """
         The function retrieves a paginated list of all stores, serializes the data, and returns it in a
@@ -72,7 +74,8 @@ class StoreListApiView(APIView):
         result_page = paginator.paginate_queryset(filtered_data.qs, request)
 
         # Serialize the paginated queryset
-        serializer = AllStoreDetailSerializer(result_page, many=True, context={"request": request})
+        serializer = AllStoreDetailSerializer(
+            result_page, many=True, context={"request": request})
 
         response_data = {
             "data": serializer.data,
@@ -89,6 +92,8 @@ class StoreListApiView(APIView):
 
 # This class is an API view in Django REST framework that retrieves store details and associated
 # products with pagination support.
+
+
 class StoreDetailApiView(APIView):
     def get(self, request, pk):
         """
@@ -111,38 +116,41 @@ class StoreDetailApiView(APIView):
             paginator = PageNumberPagination()
             paginator.page_size = PAGINATION_NUM  # You can adjust the page size as needed
             store = Store.objects.get(id=pk)
-            store_data = AllStoreDetailSerializer(store, context={"request": request})
+            store_data = AllStoreDetailSerializer(
+                store, context={"request": request})
             products = Product.objects.filter(store=store)
             result_page = paginator.paginate_queryset(products, request)
-            serializer = ProductSerializer(result_page, many=True, context={"request": request})
+            serializer = ProductSerializer(
+                result_page, many=True, context={"request": request})
             response_data = {
-            "data": {
-                'store_details': store_data.data,
-                'products': serializer.data
+                "data": {
+                    'store_details': store_data.data,
+                    'products': serializer.data
                 },
-            "errors": None,
-            "status": "success",
-            "message": "Check successful",
-            "pagination": {
-                "count": paginator.page.paginator.count,
-                "next": paginator.get_next_link(),
-                "previous": paginator.get_previous_link(),
+                "errors": None,
+                "status": "success",
+                "message": "Check successful",
+                "pagination": {
+                    "count": paginator.page.paginator.count,
+                    "next": paginator.get_next_link(),
+                    "previous": paginator.get_previous_link(),
                 }
             }
             return Response(response_data, status=status.HTTP_200_OK)
         except Store.DoesNotExist:
             response_data = {
-            "data": None,
-            "errors": None,
-            "status": "failed",
-            "message": "Store does not exist",
-            "pagination": {
-                "count": None,
-                "next": None,
-                "previous": None,
+                "data": None,
+                "errors": None,
+                "status": "failed",
+                "message": "Store does not exist",
+                "pagination": {
+                    "count": None,
+                    "next": None,
+                    "previous": None,
                 }
             }
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
+
 
 class StoreDetailUpdateView(generics.RetrieveUpdateAPIView):
     """
@@ -274,7 +282,8 @@ class CategoryList(APIView):
         result_page = paginator.paginate_queryset(categories, request)
 
         # Serialize the paginated queryset
-        serializer = CategorySerializer(result_page, many=True, context={"request":request})
+        serializer = CategorySerializer(
+            result_page, many=True, context={"request": request})
 
         response_data = {
             "data": serializer.data,
@@ -289,38 +298,40 @@ class CategoryList(APIView):
         }
         return Response(response_data, status=status.HTTP_200_OK)
 
+
 class CategoryDetail(APIView):
     def get(self, request, pk):
         try:
             paginator = PageNumberPagination()
             paginator.page_size = 30  # You can adjust the page size as needed
             category = Category.objects.get(id=pk)
-            products = Product.objects.filter(category=category).order_by("-created")
+            products = Product.objects.filter(
+                category=category).order_by("-created")
             result_page = paginator.paginate_queryset(products, request)
             serializer = ProductSerializer(
                 result_page, many=True, context={"request": request})
             response_data = {
-            "data": serializer.data,
-            "errors": None,
-            "status": "success",
-            "message": "Check successful",
-            "pagination": {
-                "count": paginator.page.paginator.count,
-                "next": paginator.get_next_link(),
-                "previous": paginator.get_previous_link(),
+                "data": serializer.data,
+                "errors": None,
+                "status": "success",
+                "message": "Check successful",
+                "pagination": {
+                    "count": paginator.page.paginator.count,
+                    "next": paginator.get_next_link(),
+                    "previous": paginator.get_previous_link(),
                 }
             }
             return Response(response_data, status=status.HTTP_200_OK)
         except Category.DoesNotExist:
             response_data = {
-            "data": None,
-            "errors": None,
-            "status": "failed",
-            "message": "Category does not exist",
-            "pagination": {
-                "count": None,
-                "next": None,
-                "previous": None,
+                "data": None,
+                "errors": None,
+                "status": "failed",
+                "message": "Category does not exist",
+                "pagination": {
+                    "count": None,
+                    "next": None,
+                    "previous": None,
                 }
             }
             return Response(response_data, status=status.HTTP_404_NOT_FOUND)
@@ -534,7 +545,9 @@ class ProductDetailUpdateApiView(generics.RetrieveUpdateAPIView):
 
         return Response(response_data, status=status.HTTP_200_OK)
 
-#TODO: CHECK AND MAKE SURE THE CARD IS ONL
+# TODO: CHECK AND MAKE SURE THE CARD IS ONL
+
+
 class CartView(APIView):
     """Endpoint: `/api/cart/`
 
@@ -690,7 +703,6 @@ class CartView(APIView):
 
         return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
-
     def put(self, request):
         user = request.user
         data = request.data
@@ -712,12 +724,14 @@ class CartView(APIView):
 
         try:
             cart = Cart.objects.get(user=user, paid=False)
-            cart_item = CartItem.objects.get(cart=cart, product__id=data['product'])
+            cart_item = CartItem.objects.get(
+                cart=cart, product__id=data['product'])
             cart_item.delete()
         except (Cart.DoesNotExist, CartItem.DoesNotExist):
             return Response(status=stat.HTTP_404_NOT_FOUND)
 
         return Response(status=stat.HTTP_204_NO_CONTENT)
+
 
 class CheckoutView(APIView):
     authentication_classes = (JWTAuthentication,)
@@ -729,7 +743,6 @@ class CheckoutView(APIView):
         As sooon as the code is typed in and the discount is applied and the user
         doesn't use it at the time it'll have been expired.
     """
-
 
     def get(self, request):
         """
@@ -749,7 +762,8 @@ class CheckoutView(APIView):
             # Calculate the total sum the user ought to pay and also try to find the discount if there's any for the user
             # TODO: CHECK IF THE CODE IS A LIST THEN FILTER BY IT
             # AND FILTER THE PRODUCTS AND GIVE THE DISCOUNT
-            total_amount = sum(item.product.price * item.quantity for item in products)
+            total_amount = sum(item.product.price *
+                               item.quantity for item in products)
 
             # Return the cart items and the total price to be paid by the user
             serializer = CartSerializer(cart, context={'request': request})
@@ -757,9 +771,11 @@ class CheckoutView(APIView):
             data["total_amount"] = total_amount
 
             # INITAILIZE Paystack Transaction
-            transaction = Transaction(email=user.email, amount=int(total_amount * 100))
+            transaction = Transaction(
+                email=user.email, amount=int(total_amount * 100))
 
-            transaction_data = TransactionsManager().initialize_transaction(method="STANDARD", transaction=transaction)
+            transaction_data = TransactionsManager().initialize_transaction(
+                method="STANDARD", transaction=transaction)
 
             response = json.loads(transaction_data.to_json())
             data["paystack_details"] = response
@@ -846,7 +862,7 @@ class CheckoutView(APIView):
                 # Send push notification to the user
                 user_fcm_token = Profile.objects.get(user=user).fcm_token
                 send_push_notification(user_fcm_token, title="Confirmed Order",
-                                    body="Your order has been confirmed and will be delivered shortly.")
+                                       body="Your order has been confirmed and will be delivered shortly.")
 
                 # Successful transaction response
                 return Response({
@@ -886,6 +902,7 @@ class CheckoutView(APIView):
                 "message": "An unexpected error occurred. Please try again.",
                 "pagination": None
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class CancelCheckout(APIView):
     """
@@ -927,9 +944,11 @@ class CancelCheckout(APIView):
         if not checkout_id or not bank_id or not reason:
             return Response(create_response(message="All fields are required",))
 
-        checkout:Checkout = Checkout.objects.filter(id=checkout_id).first() if Checkout.objects.filter(id=checkout_id).exists() else None
+        checkout: Checkout = Checkout.objects.filter(id=checkout_id).first(
+        ) if Checkout.objects.filter(id=checkout_id).exists() else None
 
-        bank_detail = BankDetail.objects.get(id=bank_id) if BankDetail.objects.filter(id=bank_id).exists() else None
+        bank_detail = BankDetail.objects.get(
+            id=bank_id) if BankDetail.objects.filter(id=bank_id).exists() else None
 
         if not (checkout and bank_detail):
             return Response(create_response(message="Checkout or Bank Id is invalid ",))
@@ -956,12 +975,11 @@ class CancelCheckout(APIView):
         for fcm_token in fcm_tokens:
             if fcm_token.strip() != "":
                 message = f"A user has canceled a checkout containing products from your store."
-                send_push_notification(fcm_token, title="Cancelled Order", body=message)
-        send_push_notification(Profile.objects.get(user=user).fcm_token, title="Cancelled Order", body="Your order has been canceled and currently under review. We'll get in touch with you in a bit.")
+                send_push_notification(
+                    fcm_token, title="Cancelled Order", body=message)
+        send_push_notification(Profile.objects.get(user=user).fcm_token, title="Cancelled Order",
+                               body="Your order has been canceled and currently under review. We'll get in touch with you in a bit.")
         return Response(create_response(message="Order Cancelled", status="success",))
-
-
-
 
 
 # The `MyOrders` class retrieves orders associated with the authenticated user's store using Django
@@ -993,7 +1011,7 @@ class MyOrders(APIView):
         store = request.user.my_store.get()
         checkouts = checkouts = Checkout.objects.filter(
             cart__items__store=store).distinct()
-        filtered_data  = OrderFilter(request.GET, queryset=checkouts)
+        filtered_data = OrderFilter(request.GET, queryset=checkouts)
         print(f"HEYYYYYY: {filtered_data.qs}")
         serializer = CheckoutSerializer(
             filtered_data.qs, many=True, context={'request': request})
@@ -1030,7 +1048,7 @@ class MyStore(APIView):
                 # "total_revenue": total_paid_amount,
                 "total_orders": checkouts.count(),
                 "my_products": store.total_products()
-                },
+            },
             "errors": None,
             "status": "success",
             "message": "User's orders retrieved successfully",
@@ -1072,26 +1090,37 @@ class GoodsDelivered(APIView):
         data = request.data
         user = request.user
 
-        product_id = int(data.get('product_id', None))
-        checkout_id = int(data.get('checkout_id', None))
-        if product_id and checkout_id:
-            try:
-                checkout = get_object_or_404(Checkout, pk=checkout_id)
-                cart_item = get_object_or_404(
-                    CartItem, product__id=product_id, cart=checkout.cart)
-                fcm_token = Profile.objects.get(
-                    user=cart_item.cart.user).fcm_token
-                if fcm_token:
-                    send_push_notification(
-                        token=fcm_token, title="Order Delivered", body="Order has been delivered, please verify receipient")
-                cart_item.delivered = True
-                cart_item.save()
-                return Response(create_response(message="Updated Successfully", status="success"))
-            except (Cart.DoesNotExist, CartItem.DoesNotExist):
-                return Response(create_response(message="Cart or Product not found"))
+        product_id = data.get('product_id')
+        checkout_id = data.get('checkout_id')
 
-        return Response(create_response(message="Cart or Product not found"))
+        if not product_id or not checkout_id:
+            return Response(create_response(message="Product ID and Checkout ID are required"), status=status.HTTP_400_BAD_REQUEST)
 
+        try:
+            checkout = get_object_or_404(Checkout, pk=checkout_id)
+            cart_item = get_object_or_404(
+                CartItem, product__id=product_id, cart=checkout.cart)
+
+            # Mark the item as delivered
+            cart_item.delivered = True
+            cart_item.save()
+
+            # Send push notification to buyer
+            fcm_token = Profile.objects.get(user=checkout.user).fcm_token
+            if fcm_token:
+                send_push_notification(
+                    token=fcm_token,
+                    title="Order Delivered",
+                    body="Order has been delivered, please verify recipient"
+                )
+
+            # Check if all items in the checkout are delivered and update checkout status
+            checkout.check_received_status()
+
+            return Response(create_response(message="Updated Successfully", status="success"))
+
+        except (CartItem.DoesNotExist, Checkout.DoesNotExist):
+            return Response(create_response(message="Cart or Product not found"), status=status.HTTP_404_NOT_FOUND)
 
 class BuyerOrders(APIView):
     """

@@ -4,14 +4,14 @@ from django.db.models import OuterRef, Subquery
 
 from accounts.models import Address, Profile
 from payment.models import BankDetail
+from cloudinary.models import CloudinaryField
 
 
 class Category(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     created = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='categories/',
-                            default="/media/default.png")
+    image = CloudinaryField('image',  blank=True, null=True)
 
     class Meta:
         ordering = ['title']
@@ -23,11 +23,13 @@ class Category(models.Model):
 
 
 class Store(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="my_store")
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="my_store")
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
     created = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='stores/', default="/media/default.png")
+    image = CloudinaryField('image',  blank=True, null=True)
+
     class Meta:
         ordering = ['title']
         verbose_name = "store"
@@ -41,15 +43,17 @@ class Store(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField(
-        upload_to='store/products/', default="/media/default.png")
+    image = CloudinaryField('image', blank=True, null=True)
 
     def __str__(self):
         return f"Image {self.id}"
 
+
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name="products", on_delete=models.CASCADE)
-    store = models.ForeignKey(Store, related_name="products", on_delete=models.CASCADE, default=1)
+    category = models.ForeignKey(
+        Category, related_name="products", on_delete=models.CASCADE)
+    store = models.ForeignKey(
+        Store, related_name="products", on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, db_index=True)
     images = models.ManyToManyField(Image, blank=True)
@@ -89,7 +93,7 @@ class CartItem(models.Model):
         return f"{self.cart} - {self.product}"
 
 
-class Checkout(models.Model): # ORDER
+class Checkout(models.Model):  # ORDER
     STATUS_CHOICES = (
         ('pending', 'Pending'),
         ('paid', "Paid"),
@@ -111,7 +115,6 @@ class Checkout(models.Model): # ORDER
 
     def __str__(self):
         return f"Checkout {self.pk}"
-
 
     def check_received_status(self):
         all_received_and_delivered = all(
@@ -151,7 +154,6 @@ class Discount(models.Model):
         return f"{self.user} is to pay {self.amount} on {self.product} from {self.product.store}"
 
 
-
 class Ticket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -164,7 +166,8 @@ class Ticket(models.Model):
 
 
 class WishlistItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wishlist_items')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='wishlist_items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
 
@@ -190,7 +193,6 @@ class CanceledCheckout(models.Model):
     canceled_at = models.DateTimeField(auto_now_add=True)
     refund_bank_details = models.ForeignKey(
         BankDetail, on_delete=models.SET_NULL, null=True, blank=True)
-
 
     def get_unique_store_owners(self) -> list[str]:
         # Get the distinct store owners for the products in the checkout

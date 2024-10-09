@@ -7,7 +7,7 @@ from .models import Cart, CartItem, Category, Checkout, Product, Store, Ticket, 
 
 
 class CategoryInlineSerializer(serializers.Serializer):
-    owner = serializers.CharField(read_only=True )
+    owner = serializers.CharField(read_only=True)
     title = serializers.CharField(read_only=True)
     slug = serializers.SlugField(read_only=True)
     image = serializers.ImageField(read_only=True)
@@ -15,6 +15,7 @@ class CategoryInlineSerializer(serializers.Serializer):
         view_name="store:category_detail",
         lookup_field='pk'
     )
+
 
 class StoreInlineSerializer(serializers.Serializer):
     id = serializers.CharField(read_only=True)
@@ -27,10 +28,11 @@ class StoreInlineSerializer(serializers.Serializer):
         view_name="store:store_detail",
         lookup_field='pk'
     )
+
     class Meta:
         model = Store
         fields = ['id', 'owner_profile', 'title',
-                'slug', 'image', 'detail_url']
+                  'slug', 'image', 'detail_url']
 
 
 class ProductsInlineSerializer(serializers.Serializer):
@@ -38,7 +40,8 @@ class ProductsInlineSerializer(serializers.Serializer):
     title = serializers.CharField(read_only=True)
     image = serializers.ImageField(read_only=True)
     description = serializers.CharField(read_only=True)
-    price = serializers.DecimalField(read_only=True, max_digits=10, decimal_places=2)
+    price = serializers.DecimalField(
+        read_only=True, max_digits=10, decimal_places=2)
     slug = serializers.SlugField(read_only=True)
     detail_edit_url = serializers.HyperlinkedIdentityField(
         view_name="store:product_detail_update",
@@ -50,11 +53,11 @@ class AllStoreDetailSerializer(serializers.ModelSerializer):
     chat_owner = serializers.SerializerMethodField()
     created = serializers.DateTimeField()
     owner_profile = ProfileSerializer(source='owner', read_only=True)
+
     class Meta:
         model = Store
         fields = ["id", "image", "chat_owner",
-                "title", "created", "owner_profile"]
-
+                  "title", "created", "owner_profile"]
 
     def get_chat_owner(self, obj):
         owner = obj.owner
@@ -73,6 +76,7 @@ class StoreSerializer(serializers.ModelSerializer):
     # title = serializers.ReadOnlyField()
     # slug = serializers.ReadOnlyField()
     owner_profile = ProfileSerializer(source='owner', read_only=True)
+
     class Meta:
         model = Store
         fields = ["id", 'title', "image", "owner_profile"]
@@ -104,9 +108,11 @@ class ProductSerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
     store = serializers.SerializerMethodField()
     images = serializers.SerializerMethodField()
+
     class Meta:
         model = Product
-        fields = ["id", 'title', "images",  "description", "price", "stock", "available", "chat_owner", 'category', "store"]
+        fields = ["id", 'title', "images",  "description", "price",
+                  "stock", "available", "chat_owner", 'category', "store"]
         extra_kwargs = {
             'store': {'required': False, },
             # 'category': {'required': False},
@@ -137,9 +143,10 @@ class ProductSerializer(serializers.ModelSerializer):
         return None
 
 
-
 class CartItemSerializer(serializers.ModelSerializer):
-    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
+    product = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all())
+
     class Meta:
         model = CartItem
         fields = '__all__'
@@ -151,8 +158,11 @@ class CartItemSerializer(serializers.ModelSerializer):
             instance.product, context={'request': self.context.get('request')}).data
         return representation
 
+
 class CartSerializer(serializers.ModelSerializer):
-    items = CartItemSerializer(source='cartitem_set', many=True, read_only=True)
+    items = CartItemSerializer(
+        source='cartitem_set', many=True, read_only=True)
+
     class Meta:
         model = Cart
         fields = ['user',  'paid', 'items']
@@ -162,6 +172,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
     cart = CartSerializer()
     delivery_address = AddressSerializer()
     user = ProfileSerializer()
+
     class Meta:
         model = Checkout
         fields = '__all__'
@@ -174,7 +185,9 @@ class TicketSerializer(serializers.ModelSerializer):
 
 
 class WishlistItemSerializer(serializers.ModelSerializer):
-    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
+    product = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all())
+
     class Meta:
         model = WishlistItem
         fields = ("id", 'product', 'added_at')
@@ -199,9 +212,10 @@ class WishlistItemSerializer(serializers.ModelSerializer):
 
         return WishlistItem.objects.create(user=user, product=product)
 
+
 class WishlistItemGetSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
+
     class Meta:
         model = WishlistItem
         fields = ("id", 'added_at', 'product')
-
